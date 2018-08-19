@@ -9,5 +9,8 @@
         <module name="SSMdome" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SSMdome" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

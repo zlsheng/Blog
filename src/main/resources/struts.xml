@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!--开启Struts2动态调用-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <constant name="struts.action.extension" value="do"/>
+
+
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <package name="test" namespace="/test" extends="struts-default">
+        <action name="login" class="com.zhaols.action.UserAction" method="test">
+            <result name="success" >/WEB-INF/pages/user/user_list.html</result>
+        </action>
+    </package>
+</struts>
