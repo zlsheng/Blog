@@ -19,6 +19,7 @@
         <mybatis.version>3.4.5</mybatis.version>
         <jackson.version>2.8.5</jackson.version>
         <struts2.version>2.5.13</struts2.version>
+        <log4j.version>2.11.0</log4j.version>
   </properties>
 
   <dependencies>
@@ -70,7 +71,7 @@
       <dependency>
           <groupId>org.aspectj</groupId>
           <artifactId>aspectjrt</artifactId>
-          <version>1.8.6</version>
+          <version>1.8.13</version>
       </dependency>
 
       <!--Mybatis核心包-->
@@ -87,14 +88,6 @@
           <version>1.3.1</version>
       </dependency>
 
-      <!--oracle驱动包-->
-      <dependency>
-          <groupId>com.oracle</groupId>
-          <artifactId>ojdbc6</artifactId>
-          <version>11.2.0.3</version>
-      </dependency>
-
-
     <!--Mybatis核心包-->
       <dependency>
           <groupId>org.mybatis</groupId>
@@ -110,10 +103,15 @@
       </dependency>
 
       <!--oracle驱动包-->
-      <dependency>
+      <!--<dependency>
           <groupId>com.oracle</groupId>
           <artifactId>ojdbc6</artifactId>
           <version>11.2.0.3</version>
+      </dependency>-->
+          <dependency>
+          <groupId>com.oracle</groupId>
+          <artifactId>ojdbc</artifactId>
+          <version>6</version>
       </dependency>
 
       <!--jstl 标签库-->
@@ -124,9 +122,15 @@
       </dependency>
 
       <dependency>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-          <version>1.2.17</version>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${log4j.version}</version>
       </dependency>
 
       <dependency>
@@ -179,11 +183,11 @@
           <artifactId>struts2-core</artifactId>
           <version>${struts2.version}</version>
       </dependency>
-      <dependency>
+     <!-- <dependency>
           <groupId>org.apache.struts</groupId>
           <artifactId>struts2-convention-plugin</artifactId>
           <version>${struts2.version}</version>
-      </dependency>
+      </dependency>-->
 
       <dependency>
           <groupId>org.apache.struts</groupId>
@@ -195,6 +199,72 @@
           <groupId>org.apache.struts</groupId>
           <artifactId>struts2-spring-plugin</artifactId>
          <version>${struts2.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.struts</groupId>
+          <artifactId>struts2-json-plugin</artifactId>
+          <version>${struts2.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm</artifactId>
+          <version>6.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm-commons</artifactId>
+          <version>6.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm-tree</artifactId>
+          <version>6.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+          <version>2.6</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>3.7</version>
+      </dependency>
+
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.3.3</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.freemarker</groupId>
+          <artifactId>freemarker</artifactId>
+          <version>2.3.28</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.javassist</groupId>
+          <artifactId>javassist</artifactId>
+          <version>3.23.1-GA</version>
+      </dependency>
+
+      <dependency>
+          <groupId>ognl</groupId>
+          <artifactId>ognl</artifactId>
+          <version>3.1.15</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.struts.xwork</groupId>
+          <artifactId>xwork-core</artifactId>
+          <version>2.3.32</version>
       </dependency>
   </dependencies>
 
