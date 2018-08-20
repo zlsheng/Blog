@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:s="http://www.springframework.org/schema/beans">
 <head>
     <meta charset="UTF-8">
     <title>TEST_USER</title>
@@ -7,5 +7,28 @@
 <body>
 <h1 style="color: red">这里是用户列表</h1>
 <h2 style="color: blue">测试</h2>
+<table border="1">
+    <thead>
+    <tr>登录账户</tr>
+    <tr>昵称</tr>
+    <tr>性别</tr>
+    <tr>真实姓名</tr>
+    <tr>邮箱</tr>
+    </thead>
+    <tbody>
+    <s:iterator value="userSys"  id="userSys" status="st"><!-- 有id属性 -->
+        <tr>
+        <s:property value="#userSys.uLoginId"/>        <!-- 输出article里的属性时需要加上# -->
+        <s:property value="#userSys.uNickname"/>
+        <s:property value="#userSys.uSex"/>
+        <s:property value="#userSys.uName"/>
+        <s:property value="#userSys.uEmail"/>
+        </tr>
+    </s:iterator>
+
+
+
+    </tbody>
+</table>
 </body>
 </html>

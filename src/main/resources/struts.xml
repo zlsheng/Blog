@@ -1,15 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
-
 <struts>
     <!--开启Struts2动态调用-->
     <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
     <constant name="struts.action.extension" value="do"/>
-    <package name="test" namespace="/test" extends="struts-default">
-        <action name="login" class="com.zhaols.action.UserAction">
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.objectFactory" value="spring" />
+
+    <package name="default" extends="struts-default"   namespace="/">
+        <!-- 关键地方  struts2.5 为了提升安全性新添加的属性 不添加无法实现动态调用-->
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="login_*" class="com.zhaols.SSMdome.action.UserAction">
             <result name="success" >/WEB-INF/pages/user/user_list.html</result>
         </action>
     </package>
