@@ -10,7 +10,12 @@ public class UserAction {
 
     private UserSys userSys;
     public String getUser(){
-        userSys = userSysService.getUserById("1");
+        try{
+            userSys = userSysService.getUserById("1");
+        }catch(Exception e){
+        e.printStackTrace();
+        }
+
         System.out.println(userSys.getuLoginId());
         System.out.println(userSys.getuEmail());
         System.out.println(userSys.getuName());

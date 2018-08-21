@@ -32,12 +32,21 @@
     select 
     <include refid="Base_Column_List" />
     from USER_SYS
-    where U_ID = #{Id,jdbcType=VARCHAR}
+    where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from USER_SYS
-    where U_ID = #{Id,jdbcType=VARCHAR}
+    where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </delete>
+    <!--根据 登录名查询用户信息-->
+  <select id="getUserByUloginid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from USER_SYS
+    where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+  </select>
+
+
   <insert id="insert" parameterType="com.zhaols.SSMdome.entity.UserSys" >
     insert into USER_SYS (U_ID, U_LOGINID, U_NICKNAME, 
       U_PASSWORD, U_SIGNATURE, U_SEX, 

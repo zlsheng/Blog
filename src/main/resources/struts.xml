@@ -9,11 +9,30 @@
     <constant name="struts.i18n.encoding" value="UTF-8"/>
     <constant name="struts.objectFactory" value="spring" />
 
-    <package name="default" extends="struts-default"   namespace="/">
+    <constant name="struts.devMode" value="true" />
+    <!-- 错误处理页面，其他配置文件可以继承这个package
+    <package name="default" namespace="/" extends="struts-default">-->
+        <!-- 全局结果集，所有action都可以使用
+        <global-results>
+            <result name="myerror">/page/error/myerror.jsp</result>
+            <result name="error">/page/error/error.jsp</result>
+        </global-results>
+        <global-exception-mappings>-->
+            <!-- 可以配置多个，如果捕获的异常类型不知道会被error2拦截 ，优先匹配明确类型的exception-->
+            <!-- 自定义异常
+            <exception-mapping result="myerror"	exception="cn.qlq.Exception.MyException"></exception-mapping>-->
+            <!-- 未知异常
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
+    </package>-->
+
+    <package name="nec-default" extends="struts-default"   namespace="/">
         <!-- 关键地方  struts2.5 为了提升安全性新添加的属性 不添加无法实现动态调用-->
         <global-allowed-methods>regex:.*</global-allowed-methods>
-        <action name="login_*" class="com.zhaols.SSMdome.action.UserAction">
+        <action name="login1_*" class="com.zhaols.SSMdome.action.UserAction">
             <result name="success" >/WEB-INF/pages/user/user_list.html</result>
         </action>
     </package>
+
+    <include file="action/loginAction.xml"/>
 </struts>

@@ -2,6 +2,7 @@ package com.zhaols.SSMdome.entity;
 
 import java.util.Date;
 
+
 public class SysResources {
     /**
      * 主键
