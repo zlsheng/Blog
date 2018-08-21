@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="admin" namespace="/admin" extends="nec-default">
+        <action name="login_*" class="com.zhaols.SSMdome.action.LoginAction" method="{1}">
+            <result name="login">/WEB-INF/pages/login/login.html</result>
+            <result name="success">/WEB-INF/pages/user/user_list.html</result>
+            <result name="unauthorized">/WEB-INF/pages/common/error.html</result>
+        </action>
+    </package>
+</struts>

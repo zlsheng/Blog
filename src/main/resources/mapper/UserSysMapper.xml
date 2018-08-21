@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaols.SSMdome.mapper.UserSysMapper" >
+  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.UserSys" >
+    <id column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <result column="U_LOGINID" property="uLoginid" jdbcType="VARCHAR" />
+    <result column="U_NICKNAME" property="uNickname" jdbcType="VARCHAR" />
+    <result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
+    <result column="U_SIGNATURE" property="uSignature" jdbcType="VARCHAR" />
+    <result column="U_SEX" property="uSex" jdbcType="DECIMAL" />
+    <result column="U_BIRTHDAY" property="uBirthday" jdbcType="TIMESTAMP" />
+    <result column="U_NAME" property="uName" jdbcType="VARCHAR" />
+    <result column="U_EMAIL" property="uEmail" jdbcType="VARCHAR" />
+    <result column="U_INTRO" property="uIntro" jdbcType="VARCHAR" />
+    <result column="U_HEADPORTRAIT" property="uHeadportrait" jdbcType="VARCHAR" />
+    <result column="U_AGE" property="uAge" jdbcType="DECIMAL" />
+    <result column="U_USERSTATEID" property="uUserstateid" jdbcType="VARCHAR" />
+    <result column="U_RANK" property="uRank" jdbcType="DECIMAL" />
+    <result column="U_SCORE" property="uScore" jdbcType="DECIMAL" />
+    <result column="U_REGISTERTIME" property="uRegistertime" jdbcType="TIMESTAMP" />
+    <result column="U_LOGINTIME" property="uLogintime" jdbcType="TIMESTAMP" />
+    <result column="U_LOGINIP" property="uLoginip" jdbcType="VARCHAR" />
+    <result column="U_ACTIVATECODE" property="uActivatecode" jdbcType="VARCHAR" />
+    <result column="U_SALT" property="uSalt" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    U_ID, U_LOGINID, U_NICKNAME, U_PASSWORD, U_SIGNATURE, U_SEX, U_BIRTHDAY, U_NAME, 
+    U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
+    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from USER_SYS
+    where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from USER_SYS
+    where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+  </delete>
+    <!--根据 登录名查询用户信息-->
+  <select id="getUserByUloginid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from USER_SYS
+    where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+  </select>
+
+
+  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.UserSys" >
+    insert into USER_SYS (U_ID, U_LOGINID, U_NICKNAME, 
+      U_PASSWORD, U_SIGNATURE, U_SEX, 
+      U_BIRTHDAY, U_NAME, U_EMAIL, 
+      U_INTRO, U_HEADPORTRAIT, U_AGE, 
+      U_USERSTATEID, U_RANK, U_SCORE, 
+      U_REGISTERTIME, U_LOGINTIME, U_LOGINIP, 
+      U_ACTIVATECODE, U_SALT)
+    values (#{uId,jdbcType=VARCHAR}, #{uLoginid,jdbcType=VARCHAR}, #{uNickname,jdbcType=VARCHAR}, 
+      #{uPassword,jdbcType=VARCHAR}, #{uSignature,jdbcType=VARCHAR}, #{uSex,jdbcType=DECIMAL}, 
+      #{uBirthday,jdbcType=TIMESTAMP}, #{uName,jdbcType=VARCHAR}, #{uEmail,jdbcType=VARCHAR}, 
+      #{uIntro,jdbcType=VARCHAR}, #{uHeadportrait,jdbcType=VARCHAR}, #{uAge,jdbcType=DECIMAL}, 
+      #{uUserstateid,jdbcType=VARCHAR}, #{uRank,jdbcType=DECIMAL}, #{uScore,jdbcType=DECIMAL}, 
+      #{uRegistertime,jdbcType=TIMESTAMP}, #{uLogintime,jdbcType=TIMESTAMP}, #{uLoginip,jdbcType=VARCHAR}, 
+      #{uActivatecode,jdbcType=VARCHAR}, #{uSalt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.UserSys" >
+    insert into USER_SYS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="uLoginid != null" >
+        U_LOGINID,
+      </if>
+      <if test="uNickname != null" >
+        U_NICKNAME,
+      </if>
+      <if test="uPassword != null" >
+        U_PASSWORD,
+      </if>
+      <if test="uSignature != null" >
+        U_SIGNATURE,
+      </if>
+      <if test="uSex != null" >
+        U_SEX,
+      </if>
+      <if test="uBirthday != null" >
+        U_BIRTHDAY,
+      </if>
+      <if test="uName != null" >
+        U_NAME,
+      </if>
+      <if test="uEmail != null" >
+        U_EMAIL,
+      </if>
+      <if test="uIntro != null" >
+        U_INTRO,
+      </if>
+      <if test="uHeadportrait != null" >
+        U_HEADPORTRAIT,
+      </if>
+      <if test="uAge != null" >
+        U_AGE,
+      </if>
+      <if test="uUserstateid != null" >
+        U_USERSTATEID,
+      </if>
+      <if test="uRank != null" >
+        U_RANK,
+      </if>
+      <if test="uScore != null" >
+        U_SCORE,
+      </if>
+      <if test="uRegistertime != null" >
+        U_REGISTERTIME,
+      </if>
+      <if test="uLogintime != null" >
+        U_LOGINTIME,
+      </if>
+      <if test="uLoginip != null" >
+        U_LOGINIP,
+      </if>
+      <if test="uActivatecode != null" >
+        U_ACTIVATECODE,
+      </if>
+      <if test="uSalt != null" >
+        U_SALT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="uLoginid != null" >
+        #{uLoginid,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null" >
+        #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSignature != null" >
+        #{uSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        #{uSex,jdbcType=DECIMAL},
+      </if>
+      <if test="uBirthday != null" >
+        #{uBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uName != null" >
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null" >
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uIntro != null" >
+        #{uIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="uHeadportrait != null" >
+        #{uHeadportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="uAge != null" >
+        #{uAge,jdbcType=DECIMAL},
+      </if>
+      <if test="uUserstateid != null" >
+        #{uUserstateid,jdbcType=VARCHAR},
+      </if>
+      <if test="uRank != null" >
+        #{uRank,jdbcType=DECIMAL},
+      </if>
+      <if test="uScore != null" >
+        #{uScore,jdbcType=DECIMAL},
+      </if>
+      <if test="uRegistertime != null" >
+        #{uRegistertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uLogintime != null" >
+        #{uLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uLoginip != null" >
+        #{uLoginip,jdbcType=VARCHAR},
+      </if>
+      <if test="uActivatecode != null" >
+        #{uActivatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="uSalt != null" >
+        #{uSalt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.SSMdome.entity.UserSys" >
+    update USER_SYS
+    <set >
+      <if test="uNickname != null" >
+        U_NICKNAME = #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSignature != null" >
+        U_SIGNATURE = #{uSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        U_SEX = #{uSex,jdbcType=DECIMAL},
+      </if>
+      <if test="uBirthday != null" >
+        U_BIRTHDAY = #{uBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uName != null" >
+        U_NAME = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null" >
+        U_EMAIL = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uIntro != null" >
+        U_INTRO = #{uIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="uHeadportrait != null" >
+        U_HEADPORTRAIT = #{uHeadportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="uAge != null" >
+        U_AGE = #{uAge,jdbcType=DECIMAL},
+      </if>
+      <if test="uUserstateid != null" >
+        U_USERSTATEID = #{uUserstateid,jdbcType=VARCHAR},
+      </if>
+      <if test="uRank != null" >
+        U_RANK = #{uRank,jdbcType=DECIMAL},
+      </if>
+      <if test="uScore != null" >
+        U_SCORE = #{uScore,jdbcType=DECIMAL},
+      </if>
+      <if test="uRegistertime != null" >
+        U_REGISTERTIME = #{uRegistertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uLogintime != null" >
+        U_LOGINTIME = #{uLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uLoginip != null" >
+        U_LOGINIP = #{uLoginip,jdbcType=VARCHAR},
+      </if>
+      <if test="uActivatecode != null" >
+        U_ACTIVATECODE = #{uActivatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="uSalt != null" >
+        U_SALT = #{uSalt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=VARCHAR}
+      and U_LOGINID = #{uLoginid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.UserSys" >
+    update USER_SYS
+    set U_NICKNAME = #{uNickname,jdbcType=VARCHAR},
+      U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+      U_SIGNATURE = #{uSignature,jdbcType=VARCHAR},
+      U_SEX = #{uSex,jdbcType=DECIMAL},
+      U_BIRTHDAY = #{uBirthday,jdbcType=TIMESTAMP},
+      U_NAME = #{uName,jdbcType=VARCHAR},
+      U_EMAIL = #{uEmail,jdbcType=VARCHAR},
+      U_INTRO = #{uIntro,jdbcType=VARCHAR},
+      U_HEADPORTRAIT = #{uHeadportrait,jdbcType=VARCHAR},
+      U_AGE = #{uAge,jdbcType=DECIMAL},
+      U_USERSTATEID = #{uUserstateid,jdbcType=VARCHAR},
+      U_RANK = #{uRank,jdbcType=DECIMAL},
+      U_SCORE = #{uScore,jdbcType=DECIMAL},
+      U_REGISTERTIME = #{uRegistertime,jdbcType=TIMESTAMP},
+      U_LOGINTIME = #{uLogintime,jdbcType=TIMESTAMP},
+      U_LOGINIP = #{uLoginip,jdbcType=VARCHAR},
+      U_ACTIVATECODE = #{uActivatecode,jdbcType=VARCHAR},
+      U_SALT = #{uSalt,jdbcType=VARCHAR}
+    where U_ID = #{uId,jdbcType=VARCHAR}
+      and U_LOGINID = #{uLoginid,jdbcType=VARCHAR}
+  </update>
+</mapper>

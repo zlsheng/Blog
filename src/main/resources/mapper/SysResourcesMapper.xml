@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaols.SSMdome.mapper.SysResourcesMapper">
+  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.SysResources">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="DISPLAY" jdbcType="VARCHAR" property="display" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="TYPE" jdbcType="CHAR" property="type" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="SORTBY" jdbcType="DECIMAL" property="sortby" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="PLATFORM" jdbcType="DECIMAL" property="platform" />
+    <result column="SUBSYSTEM_ID" jdbcType="VARCHAR" property="subsystemId" />
+    <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
+    <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="SENSITIVITY" jdbcType="DECIMAL" property="sensitivity" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CODE, DISPLAY, DESCRIPTION, PARENT_CODE, TYPE, URL, STATUS, SORTBY, ICON, PLATFORM, 
+    SUBSYSTEM_ID, UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME, 
+    SENSITIVITY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_RESOURCES
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SYS_RESOURCES
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysResources">
+    insert into SYS_RESOURCES (ID, CODE, DISPLAY, 
+      DESCRIPTION, PARENT_CODE, TYPE, 
+      URL, STATUS, SORTBY, ICON, 
+      PLATFORM, SUBSYSTEM_ID, UPDATOR, 
+      UPDATOR_NAME, UPDATE_TIME, CREATOR, 
+      CREATOR_NAME, CREATE_TIME, SENSITIVITY
+      )
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{display,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, 
+      #{url,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{sortby,jdbcType=DECIMAL}, #{icon,jdbcType=VARCHAR}, 
+      #{platform,jdbcType=DECIMAL}, #{subsystemId,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, 
+      #{updatorName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{creatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{sensitivity,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysResources">
+    insert into SYS_RESOURCES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="display != null">
+        DISPLAY,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="sortby != null">
+        SORTBY,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="platform != null">
+        PLATFORM,
+      </if>
+      <if test="subsystemId != null">
+        SUBSYSTEM_ID,
+      </if>
+      <if test="updator != null">
+        UPDATOR,
+      </if>
+      <if test="updatorName != null">
+        UPDATOR_NAME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+      <if test="creatorName != null">
+        CREATOR_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="sensitivity != null">
+        SENSITIVITY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null">
+        #{display,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="sortby != null">
+        #{sortby,jdbcType=DECIMAL},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=DECIMAL},
+      </if>
+      <if test="subsystemId != null">
+        #{subsystemId,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null">
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null">
+        #{updatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null">
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sensitivity != null">
+        #{sensitivity,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.SSMdome.entity.SysResources">
+    update SYS_RESOURCES
+    <set>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null">
+        DISPLAY = #{display,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=CHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="sortby != null">
+        SORTBY = #{sortby,jdbcType=DECIMAL},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        PLATFORM = #{platform,jdbcType=DECIMAL},
+      </if>
+      <if test="subsystemId != null">
+        SUBSYSTEM_ID = #{subsystemId,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null">
+        UPDATOR = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null">
+        UPDATOR_NAME = #{updatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null">
+        CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sensitivity != null">
+        SENSITIVITY = #{sensitivity,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysResources">
+    update SYS_RESOURCES
+    set CODE = #{code,jdbcType=VARCHAR},
+      DISPLAY = #{display,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=CHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      SORTBY = #{sortby,jdbcType=DECIMAL},
+      ICON = #{icon,jdbcType=VARCHAR},
+      PLATFORM = #{platform,jdbcType=DECIMAL},
+      SUBSYSTEM_ID = #{subsystemId,jdbcType=VARCHAR},
+      UPDATOR = #{updator,jdbcType=VARCHAR},
+      UPDATOR_NAME = #{updatorName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      SENSITIVITY = #{sensitivity,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.SysResources">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="DISPLAY" jdbcType="VARCHAR" property="display" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="TYPE" jdbcType="CHAR" property="type" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
+    <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+    <!--根据用户id获取权限信息-->
+  <select id="getSysResourceListByUid" resultMap="BaseResultMap" parameterType="java.lang.String">
+      SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id IN (
+       SELECT role_id FROM sys_role_user WHERE user_id = #{userid,jdbcType=VARCHAR}
+       )
+) ORDER BY ID
+  </select>
+</mapper>

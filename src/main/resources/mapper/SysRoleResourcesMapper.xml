@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaols.SSMdome.mapper.SysRoleResourcesMapper">
+  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    <id column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+    <id column="RESOURCE_ID" jdbcType="VARCHAR" property="resourceId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    delete from SYS_ROLE_RESOURCES
+    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+      and RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    insert into SYS_ROLE_RESOURCES (ROLE_ID, RESOURCE_ID)
+    values (#{roleId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    insert into SYS_ROLE_RESOURCES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="resourceId != null">
+        RESOURCE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    <id column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+    <id column="RESOURCE_ID" jdbcType="VARCHAR" property="resourceId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    delete from SYS_ROLE_RESOURCES
+    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+      and RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    insert into SYS_ROLE_RESOURCES (ROLE_ID, RESOURCE_ID)
+    values (#{roleId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysRoleResourcesKey">
+    insert into SYS_ROLE_RESOURCES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="resourceId != null">
+        RESOURCE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

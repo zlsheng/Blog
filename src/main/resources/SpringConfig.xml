@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 引入属性文件,config.properties位于src/main/resources目录下 -->
+    <context:property-placeholder location="classpath:properties/jdbc.properties" />
+
+    <!-- 自动扫描dao和service包(自动注入) -->
+    <context:component-scan base-package="com.zhaols.SSMdome" />
+
+    <!--开启Aop支持-->
+    <aop:aspectj-autoproxy/>
+
+    <!--连接数据库步骤
+        1. 配置数据源 DataSource
+        2. 配置 Session工厂
+            注入   1 DataSource
+                   2 mybatisConfig.xml配置文件
+                   3 定义类别名的包   entity包名
+        3. 配置 mapper 接口所在路径
+    -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatisConfig.xml"/>
+        <property name="typeAliasesPackage" value="com.zhaols.SSMdome.entity"/>
+        <!--<property name="mapperLocations" value="classpath:mapper/*.xml"/>-->
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.zhaols.SSMdome.mapper"/>
+    </bean>
+
+    <!--事物处理-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- service 事务处理-->
+    <aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="txAdvice"  pointcut="execution(* com.zhaols.*.server..*Service.*(..))"/>
+    </aop:config>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="save*" />
+            <tx:method name="insert*" />
+            <tx:method name="update*" />
+            <tx:method name="add*" />
+            <tx:method name="remove*" />
+            <tx:method name="delete*" />
+            <tx:method name="create*" />
+            <tx:method name="add*" />
+            <tx:method name="start*" />
+            <tx:method name="execute*" />
+            <tx:method name="major*" />
+            <tx:method name="jump*" />
+            <tx:method name="aidant*" />
+            <tx:method name="init*" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!--=============================   Shiro 配置 ===================================-->
+
+    <!-- shiro Web 过滤器-->
+        <!-- 注入参数配置
+                1. securityManager
+                2. loginUrl         认证提交地址
+                3. successUrl       认证成功统一跳转到first.action
+                4. unauthorizedUrl  指定没有权限操作时跳转页面
+                5. 自定义filter配置-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/admin/login_toLogin.do"/>
+        <property name="successUrl" value="/admin/login_index.do"/>
+        <property name="unauthorizedUrl" value="/admin/login_error.do"/>
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 静态资源放行-->
+                /layui/** = anon
+                <!--**/*.js = anon
+                **/*.eot = anon
+                **/*.svg = anon
+                **/*.woff = anon
+                **/*.ttf = anon
+                **/*.jpg = anon
+                **/*.png = anon
+                **/*.gif = anon-->
+
+
+
+                <!-- 验证码，可匿名访问
+                /validatecode.jsp = anon-->
+                <!-- 配置记住我或认证通过可以访问的地址
+                /index.jsp = user
+                /first.action = user
+                /welcome.jsp = user-->
+                <!-- 删除用户需要有删除用户的权限
+                /user_deleteUser.action = perms[user:delete]-->
+                <!-- 请求 logout.action地址，shiro去清除session-->
+
+                /admin/login_toLogin.do = anon
+                /admin/login_error.do = anon
+                /logout.do = logout
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <bean  id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--注入 realm-->
+        <property name="realm" ref="Myrealm"/>
+        <!--注入Session管理器-->
+        <property name="sessionManager" ref="sessionManager"/>
+        <!--记住我-->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+
+    <!--注入 realm-->
+    <bean id="Myrealm" class="com.zhaols.SSMdome.shiro.MyRemalm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+
+    <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5" />
+        <property name="hashIterations" value="2" />
+    </bean>
+
+    <!-- 会话session管理器 -->
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒 -->
+        <property name="globalSessionTimeout" value="600000" />
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true" />
+    </bean>
+
+
+    <!-- 自定义form认证过虑器 -->
+    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置-->
+    <bean id="formAuthenticationFilter" class="com.zhaols.SSMdome.shiro.MyFormAuthenticationFilter">
+        <!-- 表单中账号的input名称-->
+        <property name="usernameParam" value="username" />
+        <!-- 表单中密码的input名称-->
+        <property name="passwordParam" value="password" />
+        <!-- 记住我input的名称-->
+        <property name="rememberMeParam" value="rememberMe" />
+    </bean>
+
+    <!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie" />
+    </bean>
+    <!-- 记住我cookie -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- rememberMe是cookie的名字 -->
+        <constructor-arg value="rememberMe" />
+        <!-- 记住我cookie生效时间30天 -->
+        <property name="maxAge" value="2592000" />
+    </bean>
+
+    <!--======================================     freemarker 配置     ===============================-->
+    <bean id="viewResolverFtl"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        <property name="suffix" value=".html" />
+        <property name="contentType" value="text/html;charset=gbk" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="requestContextAttribute" value="request"/>
+        <property name="cache" value="false" />
+    </bean>
+</beans>
