@@ -94,9 +94,32 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <!-- kaptcha 配置-->
+    <servlet>
+        <servlet-name>kaptcha</servlet-name>
+        <servlet-class>
+            com.google.code.kaptcha.servlet.KaptchaServlet
+        </servlet-class>
+        <init-param>
+            <param-name>kaptcha.border</param-name>
+            <param-value>no</param-value>
+        </init-param>
+        <init-param>
+            <param-name>kaptcha.textproducer.char.length</param-name>
+            <param-value>4</param-value>
+        </init-param>
+    </servlet>
+
+
     <servlet-mapping>
         <servlet-name>freemarker</servlet-name>
         <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>kaptcha</servlet-name>
+        <url-pattern>/images/kaptcha.jpg</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>/WEB-INF/pages/login/login.html</welcome-file>

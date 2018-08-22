@@ -100,6 +100,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                 <!-- 验证码，可匿名访问
                 /validatecode.jsp = anon-->
                 /admin/login_error.do = anon
+                /images/kaptcha.jpg = anon
                 /logout.do = logout
                 /admin/login_logout.do = anon
                 /** = authc
