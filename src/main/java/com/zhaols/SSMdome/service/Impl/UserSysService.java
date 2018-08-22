@@ -27,15 +27,4 @@ public class UserSysService implements IUserSysService {
     public UserSys getUserById(String id) throws Exception{
         return userSysMapper.selectByPrimaryKey(id);
     }
-
-    @Override
-    public UserSys getUserByUloginid(String username) throws Exception {
-        return  userSysMapper.getUserByUloginid(username);
-
-    }
-
-    @Override
-    public List<SysResources> getSysResourcesByID(String userid) throws Exception{
-        return sysResourcesMapper.getSysResourceListByUid(userid);
-    }
 }

@@ -40,10 +40,7 @@
   </delete>
     <!--根据 登录名查询用户信息-->
   <select id="getUserByUloginid" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    <include refid="Base_Column_List" />
-    from USER_SYS
-    where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+    select * from USER_SYS where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
 
 

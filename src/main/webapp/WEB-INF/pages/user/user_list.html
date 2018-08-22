@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:s="http://www.springframework.org/schema/beans">
+<#include "../common/public.html"/>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TEST_USER</title>
+    <title>系统首页</title>
 </head>
 <body>
-<h1 style="color: red">这里是用户首页</h1>
-<h2 style="color: blue">测试</h2>
+        <center>
+            <h1 style="color: red">欢迎登录</h1>
+            <h2 style="color: blue">内容正在开发中，敬请谅解....</h2>
+            <form action="${base}/logout.do">
+                <button onclick="logout()">退出登录</button>
+            </form>
+        </center>
 </body>
+
 </html>

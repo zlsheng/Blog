@@ -12,8 +12,4 @@ import java.util.List;
  */
 public interface IUserSysService {
     public UserSys getUserById(String id) throws Exception;
-
-    UserSys getUserByUloginid(String username) throws Exception;
-
-    List<SysResources> getSysResourcesByID(String userid) throws Exception;
 }

@@ -1,7 +1,6 @@
 package com.zhaols.SSMdome.action;
 
 import com.zhaols.SSMdome.entity.ActiveUser;
-import com.zhaols.SSMdome.utils.MyException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpSession;
  * @date 2018-08-21 13:46
  */
 public class LoginAction {
+    private String errorMsg = "";
 
     //登录方法
     public String toLogin() throws Exception{
@@ -27,13 +27,17 @@ public class LoginAction {
         if (exceptionClassName != null) {
             if (UnknownAccountException.class.getName().equals(exceptionClassName)) {
                 // 最终会抛给异常处理器
-                throw new MyException("账号不存在");
+                //throw new MyException("账号不存在");
+                errorMsg = "账号不存在";
             } else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
-                throw new MyException("用户名/密码错误");
+                //throw new MyException("用户名/密码错误");
+                errorMsg = "用户名/密码错误";
             } else if ("randomCodeError".equals(exceptionClassName)) {
-                throw new MyException("验证码错误 ");
+               // throw new MyException("验证码错误 ");
+                errorMsg = "验证码错误";
             } else {
-                throw new Exception("不是账户错误，也不是密码错误");// 最终在异常处理器生成未知错误
+                //throw new Exception("不是账户错误，也不是密码错误");// 最终在异常处理器生成未知错误
+                errorMsg = "系统内部错误";
             }
         }
         // 此方法不处理登陆成功（认证成功），shiro认证成功会自动跳转到上一个请求路径
@@ -55,5 +59,18 @@ public class LoginAction {
     }
     public String error(){
         return "unauthorized";
+    }
+
+    public void logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 }

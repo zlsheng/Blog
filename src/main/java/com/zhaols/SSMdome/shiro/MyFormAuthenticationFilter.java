@@ -5,8 +5,11 @@ package com.zhaols.SSMdome.shiro;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
 public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
@@ -35,5 +38,12 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 		return super.onAccessDenied(request, response);
 	}
 
-		
+	@Override
+	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+		HttpServletResponse httpResponse=(HttpServletResponse) response;
+		HttpServletRequest httpRequest=(HttpServletRequest)request;
+		httpResponse.sendRedirect(httpRequest.getContextPath() + "/admin/login_index.do");
+		return true;
+		//return super.onLoginSuccess(token, subject, request, response);
+	}
 }

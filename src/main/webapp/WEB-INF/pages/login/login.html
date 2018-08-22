@@ -1,6 +1,5 @@
 <#include "../common/public.html"/>
 <html>
-
     <head>
         <title>后 台 登 录</title>
         <link rel="stylesheet" type="text/css" href="${base}/layui/css/myCss/style.css" />
@@ -16,6 +15,7 @@
 				<h1>后台管理系统</h1>
 				<h2>Background Management System Login</h2>
 			</header>
+            <form class="layui-form" action="${base}/admin/login_toLogin.do" method="post">
                     <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
                         <div class="layui-form-item">
                             <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
@@ -29,7 +29,7 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs7">
                                     <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                                    <input type="text" name="validateCode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                                    <input type="text" name="randomcode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
                                 </div>
                                 <div class="layui-col-xs5">
                                     <div style="margin-left: 10px;">
@@ -43,7 +43,11 @@
                             <a  class="layadmin-user-jump-change layadmin-link layui-from-a" style="margin-top: 7px;">忘记密码？</a>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn layui-btn-fluid" lay-submit id="LAY-user-login">登 入</button>
+                            <!--<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="user_login">登 入</button>-->
+                            <input class="layui-btn layui-btn-fluid" lay-submit lay-filter="user_login" type="submit" value="登 入"/>
+                            <#if errorMsg != ''>
+                                <span style="color: red"><i class="layui-icon layui-icon-tips" style="font-size: 16px; color: red;"></i>&nbsp;${errorMsg}</span>
+                            </#if>
                         </div>
                         <div class="layui-trans layui-form-item layadmin-user-login-other">
                             <label>社交账号登入</label>
@@ -54,18 +58,14 @@
                             <a  class="layadmin-user-jump-change layadmin-link layui-from-a">注册帐号</a>
                         </div>
                     </div>
+            </form>
         </div>
     </body>
 </html>
 <script>
     //Demo
     layui.use('form', function(){
-        var form = layui.form;
-
-        //监听提交
-        form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
+        var form = layui.form,
+            $ = layui.$;
     });
 </script>

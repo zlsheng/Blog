@@ -96,30 +96,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
             <value>
                 <!-- 静态资源放行-->
                 /layui/** = anon
-                <!--**/*.js = anon
-                **/*.eot = anon
-                **/*.svg = anon
-                **/*.woff = anon
-                **/*.ttf = anon
-                **/*.jpg = anon
-                **/*.png = anon
-                **/*.gif = anon-->
-
-
 
                 <!-- 验证码，可匿名访问
                 /validatecode.jsp = anon-->
-                <!-- 配置记住我或认证通过可以访问的地址
-                /index.jsp = user
-                /first.action = user
-                /welcome.jsp = user-->
-                <!-- 删除用户需要有删除用户的权限
-                /user_deleteUser.action = perms[user:delete]-->
-                <!-- 请求 logout.action地址，shiro去清除session-->
-
-                /admin/login_toLogin.do = anon
                 /admin/login_error.do = anon
                 /logout.do = logout
+                /admin/login_logout.do = anon
                 /** = authc
             </value>
         </property>
@@ -143,8 +125,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <!-- 凭证匹配器 -->
     <bean id="credentialsMatcher"
           class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <property name="hashAlgorithmName" value="md5" />
-        <property name="hashIterations" value="2" />
+        <property name="hashAlgorithmName" value="MD5" />
+        <property name="hashIterations" value="1024" />
     </bean>
 
     <!-- 会话session管理器 -->
@@ -186,7 +168,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
         <property name="suffix" value=".html" />
-        <property name="contentType" value="text/html;charset=gbk" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
         <property name="exposeRequestAttributes" value="true" />
         <property name="exposeSessionAttributes" value="true" />
         <property name="exposeSpringMacroHelpers" value="true" />

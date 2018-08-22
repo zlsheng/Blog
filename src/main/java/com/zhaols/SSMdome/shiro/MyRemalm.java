@@ -3,6 +3,8 @@ package com.zhaols.SSMdome.shiro;
 import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.entity.UserSys;
+import com.zhaols.SSMdome.mapper.SysResourcesMapper;
+import com.zhaols.SSMdome.mapper.UserSysMapper;
 import com.zhaols.SSMdome.service.IUserSysService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -10,6 +12,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -26,14 +29,12 @@ import java.util.List;
 public class MyRemalm extends AuthorizingRealm {
 
     @Autowired
-    private IUserSysService userSysService;
+    private SysResourcesMapper sysResourcesMapper;
 
-    // 设置realm的名称
-    @Override
-    public void setName(String name) {
-        super.setName("MyRemalm");
-    }
-    
+    @Autowired
+    private UserSysMapper userSysMapper;
+
+
     /**
     *   功能描述: 授权
     *
@@ -48,7 +49,7 @@ public class MyRemalm extends AuthorizingRealm {
         List<SysResources> sysResourcesList = null;
 
         try{
-            sysResourcesList = userSysService.getSysResourcesByID(activeUser.getUserid());
+            sysResourcesList = sysResourcesMapper.getSysResourceListByUid(activeUser.getUserid());
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -80,7 +81,7 @@ public class MyRemalm extends AuthorizingRealm {
         String username = (String) token.getPrincipal();
         UserSys userSys = null;
         try{
-            userSys = userSysService.getUserByUloginid("username");
+            userSys = userSysMapper.getUserByUloginid(username);
         }catch(Exception e ){
             e.printStackTrace();
         }
@@ -106,10 +107,11 @@ public class MyRemalm extends AuthorizingRealm {
         }
         // 将用户菜单 设置到activeUser
         activeUser.setMenus(menus);*/
-
+       /* Object obj = new SimpleHash("MD5", "admin123", activeUser.getUserid(), 1024);
+        System.out.println(obj);*/
         // 将activeUser设置simpleAuthenticationInfo
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser, password,
-                ByteSource.Util.bytes(salt), this.getName());
+                ByteSource.Util.bytes(salt), "MyRemalm");
 
         return simpleAuthenticationInfo;
 
