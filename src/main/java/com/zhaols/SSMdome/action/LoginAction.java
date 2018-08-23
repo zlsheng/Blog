@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 public class LoginAction {
     //private String basePath = "";
     private String errorMsg = "";
+    private ActiveUser activeUser;
 
     //登录方法
     public String toLogin() throws Exception{
@@ -43,13 +44,11 @@ public class LoginAction {
     //跳转主页
     public String index(){
         HttpSession session  =ServletActionContext.getRequest().getSession();
-        //从shiro的session中取activeUser
+
         Subject subject = SecurityUtils.getSubject();
-        //取身份信息
-        ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
-        //通过model传到页面
-        System.out.println(activeUser.getUsername() + "  =================================");
-        //session.setAttribute("activeUser", activeUser);
+
+        activeUser = (ActiveUser) subject.getPrincipal();
+
         return "success";
     }
     public String error(){
@@ -67,5 +66,13 @@ public class LoginAction {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public ActiveUser getActiveUser() {
+        return activeUser;
+    }
+
+    public void setActiveUser(ActiveUser activeUser) {
+        this.activeUser = activeUser;
     }
 }
