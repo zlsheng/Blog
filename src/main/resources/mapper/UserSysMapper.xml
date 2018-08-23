@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhaols.SSMdome.mapper.UserSysMapper" >
-  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.UserSys" >
+  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.SysUser" >
     <id column="U_ID" property="uId" jdbcType="VARCHAR" />
     <result column="U_LOGINID" property="uLoginid" jdbcType="VARCHAR" />
     <result column="U_NICKNAME" property="uNickname" jdbcType="VARCHAR" />
@@ -31,21 +31,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from USER_SYS
+    from SYS_USER
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from USER_SYS
+    delete from SYS_USER
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </delete>
     <!--根据 登录名查询用户信息-->
   <select id="getUserByUloginid" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select * from USER_SYS where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+    select * from SYS_USER where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
 
 
-  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.UserSys" >
-    insert into USER_SYS (U_ID, U_LOGINID, U_NICKNAME, 
+  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysUser" >
+    insert into SYS_USER (U_ID, U_LOGINID, U_NICKNAME,
       U_PASSWORD, U_SIGNATURE, U_SEX, 
       U_BIRTHDAY, U_NAME, U_EMAIL, 
       U_INTRO, U_HEADPORTRAIT, U_AGE, 
@@ -60,8 +60,8 @@
       #{uRegistertime,jdbcType=TIMESTAMP}, #{uLogintime,jdbcType=TIMESTAMP}, #{uLoginip,jdbcType=VARCHAR}, 
       #{uActivatecode,jdbcType=VARCHAR}, #{uSalt,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.UserSys" >
-    insert into USER_SYS
+  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysUser" >
+    insert into SYS_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uId != null" >
         U_ID,
@@ -187,8 +187,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.SSMdome.entity.UserSys" >
-    update USER_SYS
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.SSMdome.entity.SysUser" >
+    update SYS_USER
     <set >
       <if test="uNickname != null" >
         U_NICKNAME = #{uNickname,jdbcType=VARCHAR},
@@ -248,8 +248,8 @@
     where U_ID = #{uId,jdbcType=VARCHAR}
       and U_LOGINID = #{uLoginid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.UserSys" >
-    update USER_SYS
+  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysUser" >
+    update SYS_USER
     set U_NICKNAME = #{uNickname,jdbcType=VARCHAR},
       U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
       U_SIGNATURE = #{uSignature,jdbcType=VARCHAR},

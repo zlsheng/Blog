@@ -21,6 +21,11 @@
     <param-value>classpath:SpringConfig.xml</param-value>
   </context-param>
 
+    <context-param>
+        <param-name>isLog4jAutoInitializationDisabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <!--shiro Filter配置-->
     <!-- 配置Shiro过滤器,先让Shiro过滤系统接收到的请求 -->
     <!-- 这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"/> -->
@@ -66,34 +71,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+
     <!--添加Spring监听-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
-
-    <!-- freemarker 配置-->
-    <servlet>
-        <servlet-name>freemarker</servlet-name>
-        <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
-        <init-param>
-            <param-name>TemplatePath</param-name>
-            <param-value>/</param-value>
-        </init-param>
-        <!--<init-param>
-            <param-name>ContentType</param-name>
-            <param-value>text/html; charset=UTF-8</param-value>
-        </init-param>-->
-        <init-param>
-            <param-name>NoCache</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>template_update_delay</param-name>
-            <param-value>0</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
 
     <!-- kaptcha 配置-->
     <servlet>
@@ -109,13 +95,11 @@
             <param-name>kaptcha.textproducer.char.length</param-name>
             <param-value>4</param-value>
         </init-param>
+        <init-param>
+            <param-name>kaptcha.textproducer.font.color</param-name>
+            <param-value>146,111,173</param-value>
+        </init-param>
     </servlet>
-
-
-    <servlet-mapping>
-        <servlet-name>freemarker</servlet-name>
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>kaptcha</servlet-name>

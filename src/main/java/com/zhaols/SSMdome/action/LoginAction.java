@@ -1,6 +1,7 @@
 package com.zhaols.SSMdome.action;
 
 import com.zhaols.SSMdome.entity.ActiveUser;
+import com.zhaols.SSMdome.shiro.CaptchaException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
  * @date 2018-08-21 13:46
  */
 public class LoginAction {
+    //private String basePath = "";
     private String errorMsg = "";
 
     //登录方法
@@ -28,7 +30,7 @@ public class LoginAction {
                 errorMsg = "账号不存在";
             } else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
                 errorMsg = "用户名/密码错误";
-            } else if ("org.apache.shiro.authc.AuthenticationException".equals(exceptionClassName)) {
+            } else if (CaptchaException.class.getName().equals(exceptionClassName)) {
                     errorMsg = "验证码错误";
                 } else {
                     errorMsg = "系统内部错误";

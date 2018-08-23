@@ -3,7 +3,7 @@ package com.zhaols.SSMdome.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class UserSys  {
+public class SysUser {
 
     private String uId;
 

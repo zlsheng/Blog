@@ -2,17 +2,15 @@ package com.zhaols.SSMdome.shiro;
 
 import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysResources;
-import com.zhaols.SSMdome.entity.UserSys;
+import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
 import com.zhaols.SSMdome.mapper.UserSysMapper;
-import com.zhaols.SSMdome.service.IUserSysService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -79,22 +77,22 @@ public class MyRemalm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
-        UserSys userSys = null;
+        SysUser sysUser = null;
         try{
-            userSys = userSysMapper.getUserByUloginid(username);
+            sysUser = userSysMapper.getUserByUloginid(username);
         }catch(Exception e ){
             e.printStackTrace();
         }
-        if (userSys == null ){
+        if (sysUser == null ){
             return null;
         }
-        String password = userSys.getuPassword();
-        String salt = userSys.getuSalt();
+        String password = sysUser.getuPassword();
+        String salt = sysUser.getuSalt();
 
         ActiveUser activeUser = new ActiveUser();
-        activeUser.setUserid(userSys.getuId());
-        activeUser.setUserCode(userSys.getuLoginId());
-        activeUser.setUsername(userSys.getuName());
+        activeUser.setUserid(sysUser.getuId());
+        activeUser.setUserCode(sysUser.getuLoginId());
+        activeUser.setUsername(sysUser.getuName());
 
         // 根据用户id取出菜单
        /* List<SysPermission> menus = null;

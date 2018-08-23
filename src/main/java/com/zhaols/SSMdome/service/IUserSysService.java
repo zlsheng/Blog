@@ -1,9 +1,6 @@
 package com.zhaols.SSMdome.service;
 
-import com.zhaols.SSMdome.entity.SysResources;
-import com.zhaols.SSMdome.entity.UserSys;
-
-import java.util.List;
+import com.zhaols.SSMdome.entity.SysUser;
 
 /**
  * @author zhaols
@@ -11,5 +8,5 @@ import java.util.List;
  * @date 2018-08-20 14:15
  */
 public interface IUserSysService {
-    public UserSys getUserById(String id) throws Exception;
+    public SysUser getUserById(String id) throws Exception;
 }

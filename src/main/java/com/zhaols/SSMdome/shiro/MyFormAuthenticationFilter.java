@@ -39,7 +39,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
     private void doCaptchaValidate(HttpServletRequest request, CaptchaUsernamePasswordToken token) {
         String captcha = (String) request.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         if (captcha != null && !captcha.equalsIgnoreCase(token.getCaptcha())) {
-            throw new IllegalStateException("验证码错误！");
+            throw new CaptchaException("验证码错误");
         }
     }
 

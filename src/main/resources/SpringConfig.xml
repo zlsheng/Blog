@@ -25,7 +25,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                    3 定义类别名的包   entity包名
         3. 配置 mapper 接口所在路径
     -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
@@ -141,7 +141,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
 
 
     <!-- 自定义form认证过虑器 -->
-    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置-->
     <bean id="formAuthenticationFilter" class="com.zhaols.SSMdome.shiro.MyFormAuthenticationFilter">
         <!-- 表单中账号的input名称-->
         <property name="usernameParam" value="username" />
@@ -164,16 +163,29 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     </bean>
 
     <!--======================================     freemarker 配置     ===============================-->
-    <bean id="viewResolverFtl"
-          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="viewClass"
-                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="classpath:/WEB-INF/pages/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 针对freemarker的视图配置 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true" />
+        <property name="prefix" value="" />
         <property name="suffix" value=".html" />
-        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <property name="requestContextAttribute" value="request" />
+        <property name="exposeSpringMacroHelpers" value="true" />
         <property name="exposeRequestAttributes" value="true" />
         <property name="exposeSessionAttributes" value="true" />
-        <property name="exposeSpringMacroHelpers" value="true" />
-        <property name="requestContextAttribute" value="request"/>
-        <property name="cache" value="false" />
     </bean>
 </beans>
