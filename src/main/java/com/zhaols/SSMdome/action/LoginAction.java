@@ -1,6 +1,7 @@
 package com.zhaols.SSMdome.action;
 
 import com.zhaols.SSMdome.entity.ActiveUser;
+import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.shiro.CaptchaException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -10,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author zhaols

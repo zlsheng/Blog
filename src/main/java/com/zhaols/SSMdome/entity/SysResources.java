@@ -100,6 +100,11 @@ public class SysResources {
     private Short sensitivity;
 
     /**
+     * 排序
+     */
+    private Integer sort;
+
+    /**
      * 主键
      * @return ID 主键
      */
@@ -401,5 +406,13 @@ public class SysResources {
      */
     public void setSensitivity(Short sensitivity) {
         this.sensitivity = sensitivity;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

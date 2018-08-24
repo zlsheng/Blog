@@ -36,7 +36,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatisConfig.xml"/>
         <property name="typeAliasesPackage" value="com.zhaols.SSMdome.entity"/>
-        <!--<property name="mapperLocations" value="classpath:mapper/*.xml"/>-->
     </bean>
 
 

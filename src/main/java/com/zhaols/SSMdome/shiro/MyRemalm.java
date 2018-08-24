@@ -4,7 +4,7 @@ import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
-import com.zhaols.SSMdome.mapper.UserSysMapper;
+import com.zhaols.SSMdome.mapper.SysUserMapper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -30,7 +30,7 @@ public class MyRemalm extends AuthorizingRealm {
     private SysResourcesMapper sysResourcesMapper;
 
     @Autowired
-    private UserSysMapper userSysMapper;
+    private SysUserMapper sysUserMapper;
 
 
     /**
@@ -79,7 +79,7 @@ public class MyRemalm extends AuthorizingRealm {
         String username = (String) token.getPrincipal();
         SysUser sysUser = null;
         try{
-            sysUser = userSysMapper.getUserByUloginid(username);
+            sysUser = sysUserMapper.getUserByUloginid(username);
         }catch(Exception e ){
             e.printStackTrace();
         }
@@ -95,16 +95,15 @@ public class MyRemalm extends AuthorizingRealm {
         activeUser.setUsername(sysUser.getuName());
 
         // 根据用户id取出菜单
-       /* List<SysPermission> menus = null;
+        List<SysResources> menus = null;
         try {
-            // 通过service取出菜单
-            menus = sysService.findMenuListByUserId(sysUser.getId());
+            menus = sysResourcesMapper.findMenuListByUserId(sysUser.getuId());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         // 将用户菜单 设置到activeUser
-        activeUser.setMenus(menus);*/
+        activeUser.setMenus(menus);
         /*Object obj = new SimpleHash("MD5", "admin123", activeUser.getUserid(), 1024);
         System.out.println(obj);*/
         // 将activeUser设置simpleAuthenticationInfo

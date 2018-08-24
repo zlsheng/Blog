@@ -7,8 +7,8 @@
 <struts>
     <package name="admin" namespace="/admin" extends="nec-default">
         <action name="login_*" class="com.zhaols.SSMdome.action.LoginAction" method="{1}">
-            <result name="login" type="freemarker">/WEB-INF/pages/login/login.html</result>
-            <result name="success" type="freemarker">/WEB-INF/pages/user/user_list.html</result>
+            <result name="login" type="freemarker">/WEB-INF/pages/system/login.html</result>
+            <result name="success" type="freemarker">/WEB-INF/pages/system/home.html</result>
             <result name="unauthorized" type="freemarker">/WEB-INF/pages/common/error.html</result>
         </action>
     </package>

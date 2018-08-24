@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhaols.SSMdome.mapper.UserSysMapper" >
-  <resultMap id="BaseResultMap" type="com.zhaols.SSMdome.entity.SysUser" >
+<mapper namespace="com.zhaols.SSMdome.mapper.SysUserMapper" >
+  <resultMap id="ResultSysUserMap" type="com.zhaols.SSMdome.entity.SysUser" >
     <id column="U_ID" property="uId" jdbcType="VARCHAR" />
     <result column="U_LOGINID" property="uLoginid" jdbcType="VARCHAR" />
     <result column="U_NICKNAME" property="uNickname" jdbcType="VARCHAR" />
@@ -28,8 +28,8 @@
     U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
     U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+  <select id="selectByPrimaryKey" resultMap="ResultSysUserMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
     from SYS_USER
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
@@ -39,25 +39,23 @@
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </delete>
     <!--根据 登录名查询用户信息-->
-  <select id="getUserByUloginid" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="getUserByUloginid" resultMap="ResultSysUserMap" parameterType="java.lang.String">
     select * from SYS_USER where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
-
-
   <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysUser" >
     insert into SYS_USER (U_ID, U_LOGINID, U_NICKNAME,
-      U_PASSWORD, U_SIGNATURE, U_SEX, 
-      U_BIRTHDAY, U_NAME, U_EMAIL, 
-      U_INTRO, U_HEADPORTRAIT, U_AGE, 
-      U_USERSTATEID, U_RANK, U_SCORE, 
-      U_REGISTERTIME, U_LOGINTIME, U_LOGINIP, 
+      U_PASSWORD, U_SIGNATURE, U_SEX,
+      U_BIRTHDAY, U_NAME, U_EMAIL,
+      U_INTRO, U_HEADPORTRAIT, U_AGE,
+      U_USERSTATEID, U_RANK, U_SCORE,
+      U_REGISTERTIME, U_LOGINTIME, U_LOGINIP,
       U_ACTIVATECODE, U_SALT)
-    values (#{uId,jdbcType=VARCHAR}, #{uLoginid,jdbcType=VARCHAR}, #{uNickname,jdbcType=VARCHAR}, 
-      #{uPassword,jdbcType=VARCHAR}, #{uSignature,jdbcType=VARCHAR}, #{uSex,jdbcType=DECIMAL}, 
-      #{uBirthday,jdbcType=TIMESTAMP}, #{uName,jdbcType=VARCHAR}, #{uEmail,jdbcType=VARCHAR}, 
-      #{uIntro,jdbcType=VARCHAR}, #{uHeadportrait,jdbcType=VARCHAR}, #{uAge,jdbcType=DECIMAL}, 
-      #{uUserstateid,jdbcType=VARCHAR}, #{uRank,jdbcType=DECIMAL}, #{uScore,jdbcType=DECIMAL}, 
-      #{uRegistertime,jdbcType=TIMESTAMP}, #{uLogintime,jdbcType=TIMESTAMP}, #{uLoginip,jdbcType=VARCHAR}, 
+    values (#{uId,jdbcType=VARCHAR}, #{uLoginid,jdbcType=VARCHAR}, #{uNickname,jdbcType=VARCHAR},
+      #{uPassword,jdbcType=VARCHAR}, #{uSignature,jdbcType=VARCHAR}, #{uSex,jdbcType=DECIMAL},
+      #{uBirthday,jdbcType=TIMESTAMP}, #{uName,jdbcType=VARCHAR}, #{uEmail,jdbcType=VARCHAR},
+      #{uIntro,jdbcType=VARCHAR}, #{uHeadportrait,jdbcType=VARCHAR}, #{uAge,jdbcType=DECIMAL},
+      #{uUserstateid,jdbcType=VARCHAR}, #{uRank,jdbcType=DECIMAL}, #{uScore,jdbcType=DECIMAL},
+      #{uRegistertime,jdbcType=TIMESTAMP}, #{uLogintime,jdbcType=TIMESTAMP}, #{uLoginip,jdbcType=VARCHAR},
       #{uActivatecode,jdbcType=VARCHAR}, #{uSalt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysUser" >

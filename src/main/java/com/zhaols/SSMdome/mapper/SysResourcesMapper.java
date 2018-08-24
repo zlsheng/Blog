@@ -50,4 +50,15 @@ public interface SysResourcesMapper {
      *@CreateTime: 2018-08-21  10:49
      */
     List<SysResources> getSysResourceListByUid(String userid);
+
+
+    /**
+     *   功能描述: 根据登录用户id查询用户菜单列表
+     *
+     *@Author: zhaols
+     *@CreateTime: 2018-08-21  10:49
+     */
+    List<SysResources> findMenuListByUserId(String userid);
+
+
 }

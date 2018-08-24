@@ -4,7 +4,7 @@ import com.zhaols.SSMdome.entity.SysUser;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserSysMapper {
+public interface SysUserMapper {
     /**
      *
      * @mbggenerated 2018-08-20

@@ -1,0 +1,101 @@
+<#include "../common/_public.html"/>
+<html lang="en">
+<head>
+    <title>系统首页</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><i class="layui-icon layui-icon-release" style="font-size: 40px; "></i><span style="font-size: 30px;">Basic</span></div>
+        <#-- 头部区域 用于用户信息展示 -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+
+                    <#--<img src="http://t.cn/RCzsdCq" class="layui-nav-img">-->
+                        <i class="layui-icon layui-icon-friends" style="font-size: 20px; "></i>
+                        欢迎您【 ${activeUser.username}】
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="${base}/logout.do">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <#--左侧导航区域使用垂直状态栏  layui-bg-green-->
+            <ul class="layui-nav layui-nav-tree "  lay-filter="menu">
+                <#if activeUser.menus?? && (activeUser.menus?size > 0)>
+                <#-- 有菜单权限-->
+                    <#list activeUser.menus as menu_1>
+                        <#if menu_1.parentCode??>
+
+                        <#else>
+                            <li class="layui-nav-item">
+                                <a class="" href="javascript:;" id="menu_${menu_1_index+1}">${menu_1.display}</a>
+                                    <#list activeUser.menus as menu_2>
+                                        <#if menu_2.parentCode?? && (menu_1.id) == (menu_2.parentCode)>
+                                            <dl class="layui-nav-child">
+                                                <dd><a href="javascript:;" id="Submenu_${menu_1_index+1}">${menu_2.display}</a></dd>
+                                            </dl>
+                                        </#if>
+                                    </#list>
+                            </li>
+                        </#if>
+                    </#list>
+                <#else>
+                <#-- 无菜单权限-->
+
+                </#if>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+    <#--lay-allowClose="true"  显示关闭按钮-->
+        <div class="layui-tab layui-tab-brief" lay-filter="Home_tab" >
+            <ul class="layui-tab-title">
+                <li class="layui-this">首页</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    系统首页
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <#--底部固定区域 -->
+        <center>
+            <a href="https://github.com/zlsheng/SSMdome">Github</a> | <a href="https://gitee.com/zlsheng/SSMdome">Gitee</a> |
+            <a href="">支持</a>
+        </center>
+    </div>
+</div>
+</body>
+</html>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','layer'], function(){
+        var element = layui.element,
+                layer=layui.layer;
+        element.on('nav(menu)', function(elem){
+            layer.msg(elem.text());
+            /*element.tabAdd('tab(Home_tab)', {
+                title: elem.text()
+                ,content: 'test内容' //支持传入html
+                ,id: new Date().getDate()
+            });*/
+        });
+
+    });
+</script>

@@ -1,72 +1,11 @@
-<#include "../common/public.html"/>
+<#include "../common/_public.html"/>
 <html lang="en">
 <head>
     <title>系统首页</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 </head>
-
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo"><i class="layui-icon layui-icon-release" style="font-size: 40px; "></i><span style="font-size: 30px;">Basic</span></div>
-        <!-- 头部区域 用于用户信息展示 -->
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-
-                    <#--<img src="http://t.cn/RCzsdCq" class="layui-nav-img">-->
-                        <i class="layui-icon layui-icon-friends" style="font-size: 20px; "></i>
-                        欢迎您 ${activeUser.username}
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a href="${base}/logout.do">退出</a></li>
-        </ul>
-    </div>
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域使用垂直状态栏 -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">所有商品</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">解决方案</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
-    </div>
-
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
-    </div>
-</div>
-</body>
-<#--<body>
+<body>
         <center>
             <h1 style="color: red">欢迎登录</h1>
             <h2 style="color: blue">内容正在开发中，敬请谅解....</h2>
@@ -95,7 +34,7 @@
                 </div>
             </div>
         </div>
-</body>-->
+</body>
 </html>
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script>

@@ -3,7 +3,9 @@
                 "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 <mappers>
-    <mapper resource="mapper/UserSysMapper.xml"/>
+    <mapper resource="mapper/SysUserMapper.xml"/>
+    <mapper resource="mapper/SysResourcesMapper.xml"/>
+    <mapper resource="mapper/SysRoleMapper.xml"/>
 </mappers>
 
 </configuration>
