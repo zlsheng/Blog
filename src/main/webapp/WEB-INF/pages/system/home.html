@@ -36,14 +36,13 @@
                 <#-- 有菜单权限-->
                     <#list activeUser.menus as menu_1>
                         <#if menu_1.parentCode??>
-
                         <#else>
                             <li class="layui-nav-item">
-                                <a class="" href="javascript:;" id="menu_${menu_1_index+1}">${menu_1.display}</a>
+                                <a class="" href="javascript:;" lay-data="${menu_1.url!}" id="menu_">${menu_1.display}</a>
                                     <#list activeUser.menus as menu_2>
                                         <#if menu_2.parentCode?? && (menu_1.id) == (menu_2.parentCode)>
                                             <dl class="layui-nav-child">
-                                                <dd><a href="javascript:;" id="Submenu_${menu_1_index+1}">${menu_2.display}</a></dd>
+                                                <dd><a href="javascript:;" lay-data="${menu_2.url!}" id="Submenu_${menu_2_index+1}">${menu_2.display}</a></dd>
                                             </dl>
                                         </#if>
                                     </#list>
@@ -60,9 +59,9 @@
 
     <div class="layui-body">
     <#--lay-allowClose="true"  显示关闭按钮-->
-        <div class="layui-tab layui-tab-brief" lay-filter="Home_tab" >
+        <div class="layui-tab layui-tab-brief" lay-filter="Home_tab" lay-allowClose="true"  >
             <ul class="layui-tab-title">
-                <li class="layui-this">首页</li>
+                <li class="layui-this" id="home_page">首页</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
@@ -87,15 +86,20 @@
     //JavaScript代码区域
     layui.use(['element','layer'], function(){
         var element = layui.element,
-                layer=layui.layer;
+                layer=layui.layer,
+                $ = layui.$;
         element.on('nav(menu)', function(elem){
-            layer.msg(elem.text());
-            /*element.tabAdd('tab(Home_tab)', {
-                title: elem.text()
-                ,content: 'test内容' //支持传入html
-                ,id: new Date().getDate()
-            });*/
-        });
+            //layer.msg(elem.attr('id'));
+              var url =  elem.attr('lay-data');
+              if(url != "" && url.length > 0 ){
 
+                  element.tabAdd('Home_tab', {
+                      title: elem.text()
+                      ,content: elem.text() //支持传入html
+                      ,id: elem.attr('id')
+                  });
+                  element.tabChange('Home_tab', elem.attr('id'));
+              }
+        });
     });
 </script>
