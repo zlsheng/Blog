@@ -22,11 +22,12 @@
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="SENSITIVITY" jdbcType="DECIMAL" property="sensitivity" />
     <result column="SORT" jdbcType="INTEGER" property="sort" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, CODE, DISPLAY, DESCRIPTION, PARENT_CODE, TYPE, URL, STATUS, SORTBY, ICON, PLATFORM, 
     SUBSYSTEM_ID, UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME, 
-    SENSITIVITY,SORT
+    SENSITIVITY,SORT,ICON
   </sql>
     <!--根据用户id获取权限信息-->
     <select id="getSysResourceListByUid" resultMap="ResultSysResourcesMap" parameterType="java.lang.String">

@@ -38,11 +38,18 @@
                         <#if menu_1.parentCode??>
                         <#else>
                             <li class="layui-nav-item">
-                                <a class="" href="javascript:;" lay-data="${menu_1.url!}" id="menu_">${menu_1.display}</a>
+                                <a class="" href="javascript:;" lay-data="${menu_1.url!}" id="menu_">
+                                    <i class="${menu_1.icon}" style="font-size: 14px; "></i>
+                                    &nbsp;
+                                    ${menu_1.display}</a>
                                     <#list activeUser.menus as menu_2>
                                         <#if menu_2.parentCode?? && (menu_1.id) == (menu_2.parentCode)>
                                             <dl class="layui-nav-child">
-                                                <dd><a href="javascript:;" lay-data="${menu_2.url!}" id="Submenu_${menu_2_index+1}">${menu_2.display}</a></dd>
+                                                <dd><a href="javascript:;" lay-data="${menu_2.url!}" id="Submenu_${menu_2_index+1}">
+                                                    &emsp;
+                                                    <i class="${menu_2.icon}" style="font-size: 14px; "></i>
+                                                    &nbsp;
+                                                    ${menu_2.display}</a></dd>
                                             </dl>
                                         </#if>
                                     </#list>
@@ -51,7 +58,6 @@
                     </#list>
                 <#else>
                 <#-- 无菜单权限-->
-
                 </#if>
             </ul>
         </div>
@@ -91,15 +97,20 @@
         element.on('nav(menu)', function(elem){
             //layer.msg(elem.attr('id'));
               var url =  elem.attr('lay-data');
-              if(url != "" && url.length > 0 ){
+            var exist=$("li[lay-id='tab_" + elem.attr('id') + "']").length;
+            //alert(exist);
+            if(exist < 1 ){
+                if(url != "" && url.length > 0 ){
+                    element.tabAdd('Home_tab', {
+                        title: elem.text()
+                        ,content: elem.text() //支持传入html
+                        ,id: 'tab_' + elem.attr('id')
+                    });
+                }
+            }
+            element.tabChange('Home_tab', 'tab_' + elem.attr('id'));
 
-                  element.tabAdd('Home_tab', {
-                      title: elem.text()
-                      ,content: elem.text() //支持传入html
-                      ,id: elem.attr('id')
-                  });
-                  element.tabChange('Home_tab', elem.attr('id'));
-              }
+
         });
     });
 </script>
