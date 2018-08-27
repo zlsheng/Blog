@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="layui-col-xs5">
                                     <div style="margin-left: 10px;">
-                                        <img src="${base}/images/kaptcha.jpg" class="layadmin-user-login-codeimg"  alt="点击更换" title="点击更换" id="LAY-user-get-vercode">
+                                        <a ><img src="${base}/images/kaptcha.jpg" class="layadmin-user-login-codeimg"  alt="点击更换" title="点击更换" id="kaptchaImage"></a>
                                     </div>
                                 </div>
                             </div>
@@ -67,12 +67,10 @@
     layui.use('form', function(){
         var form = layui.form,
             $ = layui.$;
-
+        $('#kaptchaImage').click(function () {
+            var str = '${request.contextPath}/images/kaptcha.jpg?'+ Math.floor(Math.random()*100);
+            // alert(str);
+            $('#kaptchaImage').attr('src', str);
+        });
     });
-
-    function changeImg (){
-        var str = '${request.contextPath}/Kaptcha.jpg?'+ Math.floor(Math.random()*100);
-        $('#kaptchaImage').attr('src', str);
-
-    }
 </script>
