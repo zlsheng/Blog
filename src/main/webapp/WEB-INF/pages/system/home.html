@@ -4,6 +4,7 @@
     <title>系统首页</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="${base}/layui/css/myCss/style.css">
 </head>
 
 <body class="layui-layout-body">
@@ -14,8 +15,6 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-
-                    <#--<img src="http://t.cn/RCzsdCq" class="layui-nav-img">-->
                         <i class="layui-icon layui-icon-friends" style="font-size: 20px; "></i>
                         欢迎您【 ${activeUser.username}】
                 </a>
@@ -63,21 +62,21 @@
         </div>
     </div>
 
-    <div class="layui-body">
+    <div class="layui-body" style="background:#ffffff ;padding:0px; ">
     <#--lay-allowClose="true"  显示关闭按钮-->
-        <div class="layui-tab layui-tab-brief" lay-filter="Home_tab" lay-allowClose="true"  >
-            <ul class="layui-tab-title">
-                <li class="layui-this" id="home_page">首页</li>
+        <div class="layui-tab layui-tab-brief" lay-unauto  lay-filter="Home_tab" lay-allowClose="true" >
+            <ul class="layui-tab-title" >
+                <li class="layui-this" id="home_page" >首页</li>
             </ul>
-            <div class="layui-tab-content">
+            <div class="layui-tab-content" style="background:#eeeeee" >
                 <div class="layui-tab-item layui-show">
-                    系统首页
+                    <iframe src="${base}/system/user_getUser.do" width="100%" height="90%" scrolling="no" style="left: 0; right: 0; bottom: 0;"  frameborder="0" class="layui-iframe"></iframe>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="layui-footer">
+    <div class="layui-footer" style="padding:0px; ">
         <#--底部固定区域 -->
         <center>
             <a href="https://github.com/zlsheng/SSMdome">Github</a> | <a href="https://gitee.com/zlsheng/SSMdome">Gitee</a> |
@@ -103,7 +102,7 @@
                 if(url != "" && url.length > 0 ){
                     element.tabAdd('Home_tab', {
                         title: elem.text()
-                        ,content: elem.text() //支持传入html
+                        ,content: '<iframe style="left: 0; right: 0; bottom: 0;" src="http://www.layui.com" width="100%" height="100%" scrolling="no" frameborder="0" class="layui-iframe"></iframe>'
                         ,id: 'tab_' + elem.attr('id')
                     });
                 }

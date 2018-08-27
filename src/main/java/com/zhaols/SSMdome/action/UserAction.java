@@ -1,26 +1,30 @@
 package com.zhaols.SSMdome.action;
 
+import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.service.IUserSysService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserAction {
     @Autowired
     private IUserSysService userSysService;
 
+    private ActiveUser activeUser;
+
     private SysUser sysUser;
+
     public String getUser(){
+        Subject subject = SecurityUtils.getSubject();
+        activeUser = (ActiveUser) subject.getPrincipal();
+
         try{
-            sysUser = userSysService.getUserById("1");
+            sysUser = userSysService.getUserById(activeUser.getUserid());
         }catch(Exception e){
         e.printStackTrace();
         }
 
-        System.out.println(sysUser.getuLoginId());
-        System.out.println(sysUser.getuEmail());
-        System.out.println(sysUser.getuName());
-        System.out.println(sysUser.getuNickname());
-        System.out.println(sysUser.getuSex());
         return "success";
     }
 
@@ -30,5 +34,13 @@ public class UserAction {
 
     public void setSysUser(SysUser sysUser) {
         this.sysUser = sysUser;
+    }
+
+    public ActiveUser getActiveUser() {
+        return activeUser;
+    }
+
+    public void setActiveUser(ActiveUser activeUser) {
+        this.activeUser = activeUser;
     }
 }

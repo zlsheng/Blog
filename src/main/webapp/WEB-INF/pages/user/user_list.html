@@ -1,11 +1,4 @@
 <#include "../common/_public.html"/>
-<html lang="en">
-<head>
-    <title>系统首页</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
-</head>
-<body>
         <center>
             <h1 style="color: red">欢迎登录</h1>
             <h2 style="color: blue">内容正在开发中，敬请谅解....</h2>
@@ -18,24 +11,23 @@
         <div class="layui-fluid">
             <fieldset class="layui-elem-field layui-field-title">
                 <legend>流体容器（宽度自适应，不固定）</legend>
-            </fieldset>
+
             <div class="layui-row">
                 <div class="layui-col-sm3">
-                    <div class="grid-demo grid-demo-bg1">25%</div>
+                    <div class="grid-demo grid-demo-bg1">${sysUser.uName}</div>
                 </div>
                 <div class="layui-col-sm3">
-                    <div class="grid-demo">25%</div>
+                    <div class="grid-demo">${sysUser.uNickname}</div>
                 </div>
                 <div class="layui-col-sm3">
-                    <div class="grid-demo grid-demo-bg1">25%</div>
+                    <div class="grid-demo grid-demo-bg1">${sysUser.uLoginId}</div>
                 </div>
                 <div class="layui-col-sm3">
-                    <div class="grid-demo">25%</div>
+                    <div class="grid-demo">${sysUser.uSex}</div>
                 </div>
             </div>
+            </fieldset>
         </div>
-</body>
-</html>
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script>
     //JavaScript代码区域

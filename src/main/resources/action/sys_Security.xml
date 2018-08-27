@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="system" namespace="/system" extends="nec-default">
+        <action name="user_*" class="com.zhaols.SSMdome.action.UserAction" method="{1}">
+            <result name="success" type="freemarker">/WEB-INF/pages/system/userHome.html</result>
+        </action>
+    </package>
+</struts>

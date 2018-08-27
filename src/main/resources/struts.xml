@@ -29,10 +29,8 @@
     <package name="nec-default" extends="struts-default"   namespace="/">
         <!-- 关键地方  struts2.5 为了提升安全性新添加的属性 不添加无法实现动态调用-->
         <global-allowed-methods>regex:.*</global-allowed-methods>
-        <action name="login1_*" class="com.zhaols.SSMdome.action.UserAction">
-            <result name="success" >/WEB-INF/pages/user/user_list.html</result>
-        </action>
     </package>
 
     <include file="action/loginAction.xml"/>
+    <include file="action/sys_Security.xml"/>
 </struts>
