@@ -50,52 +50,69 @@
 
         <div class="layui-card-body">
             <div class="layui-card-body">
-                <table class="layui-table" lay-filter="user_table" >
-                    <thead>
-                    <tr>
-                        <th style="width: 20px"></th>
-                        <th style="text-align:center;vertical-align:middle;">账户</th>
-                        <th style="text-align:center;vertical-align:middle;">头像</th>
-                        <th style="text-align:center;vertical-align:middle;">昵称</th>
-                        <th style="text-align:center;vertical-align:middle;">性别</th>
-                        <th style="text-align:center;vertical-align:middle;">生日</th>
-                        <th style="text-align:center;vertical-align:middle;">邮箱</th>
-                        <th style="text-align:center;vertical-align:middle;">真实姓名</th>
-                        <th style="text-align:center;vertical-align:middle;">年龄</th>
-                        <th style="text-align:center;vertical-align:middle;">等级</th>
-                        <th style="text-align:center;vertical-align:middle;">积分</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                     <#list sysUserlist as sysUser>
-                     <tr>
-                         <td style="text-align:center;vertical-align:middle;"><input type="checkbox"></td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uLoginId!}</td>
-                         <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!defalut.jpg}" style="display: inline-block; width: 50px ; height: 50px;"></td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uNickname!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uSex!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${(sysUser.uBirthday?string('yyyy-MM-dd'))!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uEmail!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uName!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uAge!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uRank!}</td>
-                         <td style="text-align:center;vertical-align:middle;">${sysUser.uScore!}</td>
-                     </tr>
-                     </#list>
-                    </tbody>
-                </table>
+                <div class="layui-form">
+                    <table class="layui-table" lay-filter="user_table" >
+                        <#--<input type="hidden" id="rate_curr" value="${sysUser.uScore!}">-->
+                        <thead>
+                        <tr>
+                            <th style="width: 20px"></th>
+                            <th style="text-align:center;vertical-align:middle;">账户</th>
+                            <th style="text-align:center;vertical-align:middle;">头像</th>
+                            <th style="text-align:center;vertical-align:middle;">昵称</th>
+                            <th style="text-align:center;vertical-align:middle;">性别</th>
+                            <th style="text-align:center;vertical-align:middle;">生日</th>
+                            <th style="text-align:center;vertical-align:middle;">邮箱</th>
+                            <th style="text-align:center;vertical-align:middle;">真实姓名</th>
+                            <th style="text-align:center;vertical-align:middle;">年龄</th>
+                            <th style="text-align:center;vertical-align:middle;">等级</th>
+                            <th style="text-align:center;vertical-align:middle;">积分</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                         <#list sysUserlist as sysUser>
+                         <tr>
+                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" lay-skin="primary" value="${sysUser.uId}"></td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uLoginId!}</td>
+                             <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!defalut.jpg}" style="display: inline-block; width: 50px ; height: 50px;"></td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uNickname!}</td>
+                             <td style="text-align:center;vertical-align:middle;">
+                                <#if sysUser.uSex?? >
+                                    <#if sysUser.uSex == 0>男</#if>
+                                    <#if sysUser.uSex == 1>女</#if>
+                                    <#if sysUser.uSex == 2>保密</#if>
+                                </#if>
+                             </td>
+                             <td style="text-align:center;vertical-align:middle;">${(sysUser.uBirthday?string('yyyy-MM-dd'))!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uEmail!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uName!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uAge!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uRank!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uScore!}
+                                 <#--<div id="rate_${sysUser.uScore!}_${sysUser_index}"></div>-->
+                             </td>
+                         </tr>
+                         </#list>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script>
-    layui.use(['form','table'], function(){
+    layui.use(['form','table','rate'], function(){
         var form = layui.form,
-                table = layui.table;
-        /*table.init('user_table',{
-            height: 60
-        })*/
+                table = layui.table,
+                rate = layui.rate;
+       /* var rate_value = $("#rate_curr").val();
+        rate.render({
+            elem: '#user_rate'  //绑定元素
+            ,length:6
+            ,value:3
+            ,half:true
+            ,readonly:true
+        });*/
 
     });
 </script>

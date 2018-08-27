@@ -16,11 +16,11 @@
                                 <div class="layui-col-md9">
                                     <input type="hidden" id="rate_curr" value="${sysUser.uScore!}">
                                     <font style="font-weight: bold" size="4"> 昵 称：【<span style="color: blue">${sysUser.uNickname!}</span>】</font><br/>
-                                    <font style="font-weight: bold" size="4"> 生 日：【<span style="color: blue">${sysUser.uBirthday!.now?string('yyyy-MM-dd')}</span>】</font><br/>
+                                    <font style="font-weight: bold" size="4"> 生 日：【<span style="color: blue">${(sysUser.uBirthday?string('yyyy-MM-dd'))!.now?string('yyyy-MM-dd')}</span>】</font><br/>
                                     <font style="font-weight: bold" size="4"> 邮 箱：【<span style="color: blue">${sysUser.uEmail!}</span>】<font><br/>
                                         <hr class="layui-bg-gray">  <#--分割线-->
                                     <font style="font-weight: bold" size="4"> 等 级：【<span style="color: blue">${sysUser.uRank!}</span>】<font><br/>
-                                    <font style="font-weight: bold" size="4"> 评 分：<font><div><div id="user_rate"></div><br/>
+                                    <font style="font-weight: bold" size="4"> 评 分：<font><div id="user_rate"></div><br/>
                                     <font style="font-weight: bold" size="4"> 简 介：<br/><font>
                                         <font style="font-weight: 500" size="3">&emsp;&emsp;${sysUser.uIntro!'主人很懒，什么都没写'} <font>
                                 </div>
