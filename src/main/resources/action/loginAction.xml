@@ -10,6 +10,7 @@
             <result name="login" type="freemarker">/WEB-INF/pages/system/login.html</result>
             <result name="success" type="freemarker">/WEB-INF/pages/system/home.html</result>
             <result name="unauthorized" type="freemarker">/WEB-INF/pages/common/error.html</result>
+            <result name="test" type="freemarker">/WEB-INF/pages/common/test_page.html</result>
         </action>
     </package>
 </struts>

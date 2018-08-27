@@ -1,7 +1,10 @@
 package com.zhaols.SSMdome.mapper;
 
+import com.zhaols.SSMdome.Superclass.SuperMapper;
 import com.zhaols.SSMdome.entity.SysUser;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface SysUserMapper {
@@ -49,6 +52,5 @@ public interface SysUserMapper {
     */
     SysUser getUserByUloginid(String username);
 
-
-
+    List<SysUser> getAll();
 }

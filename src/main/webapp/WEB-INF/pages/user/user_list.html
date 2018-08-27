@@ -1,38 +1,101 @@
 <#include "../common/_public.html"/>
-        <center>
-            <h1 style="color: red">欢迎登录</h1>
-            <h2 style="color: blue">内容正在开发中，敬请谅解....</h2>
-            <form action="${base}/logout.do">
-                <button onclick="logout()">退出登录</button>
-            </form>
-        </center>
+<link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+ <#--<a  onclick="updateCheckStatus(this,_n('#bjui-moreParams').val());" id ="ci_statusBtn">
+     <span class="fa fa-check font24 iconbg02"></span>启用</a>-->
 
 
-        <div class="layui-fluid">
-            <fieldset class="layui-elem-field layui-field-title">
-                <legend>流体容器（宽度自适应，不固定）</legend>
-
-            <div class="layui-row">
-                <div class="layui-col-sm3">
-                    <div class="grid-demo grid-demo-bg1">${sysUser.uName}</div>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layadmin-useradmin-formlist">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">登录名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="loginname" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-col-sm3">
-                    <div class="grid-demo">${sysUser.uNickname}</div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="telphone" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-col-sm3">
-                    <div class="grid-demo grid-demo-bg1">${sysUser.uLoginId}</div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-col-sm3">
-                    <div class="grid-demo">${sysUser.uSex}</div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-block">
+                        <select name="role">
+                            <option value="0">管理员</option>
+                            <option value="1">超级管理员</option>
+                            <option value="2">纠错员</option>
+                            <option value="3">采购员</option>
+                            <option value="4">推销员</option>
+                            <option value="5">运营人员</option>
+                            <option value="6">编辑</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
             </div>
-            </fieldset>
         </div>
+
+        <div class="layui-card-body">
+            <div class="layui-card-body">
+                <table class="layui-table" lay-filter="user_table" >
+                    <thead>
+                    <tr>
+                        <th style="width: 20px"></th>
+                        <th style="text-align:center;vertical-align:middle;">账户</th>
+                        <th style="text-align:center;vertical-align:middle;">头像</th>
+                        <th style="text-align:center;vertical-align:middle;">昵称</th>
+                        <th style="text-align:center;vertical-align:middle;">性别</th>
+                        <th style="text-align:center;vertical-align:middle;">生日</th>
+                        <th style="text-align:center;vertical-align:middle;">邮箱</th>
+                        <th style="text-align:center;vertical-align:middle;">真实姓名</th>
+                        <th style="text-align:center;vertical-align:middle;">年龄</th>
+                        <th style="text-align:center;vertical-align:middle;">等级</th>
+                        <th style="text-align:center;vertical-align:middle;">积分</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     <#list sysUserlist as sysUser>
+                     <tr>
+                         <td style="text-align:center;vertical-align:middle;"><input type="checkbox"></td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uLoginId!}</td>
+                         <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!defalut.jpg}" style="display: inline-block; width: 50px ; height: 50px;"></td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uNickname!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uSex!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${(sysUser.uBirthday?string('yyyy-MM-dd'))!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uEmail!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uName!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uAge!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uRank!}</td>
+                         <td style="text-align:center;vertical-align:middle;">${sysUser.uScore!}</td>
+                     </tr>
+                     </#list>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
+    layui.use(['form','table'], function(){
+        var form = layui.form,
+                table = layui.table;
+        /*table.init('user_table',{
+            height: 60
+        })*/
 
     });
 </script>

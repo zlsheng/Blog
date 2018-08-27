@@ -7,6 +7,8 @@ import com.zhaols.SSMdome.service.IUserSysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author zhaols
  * @Description: TODO: 添加功能描述
@@ -23,5 +25,10 @@ public class UserSysService implements IUserSysService {
 
     public SysUser getUserById(String id) throws Exception{
         return sysUserMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<SysUser> getUserList() {
+        return sysUserMapper.getAll();
     }
 }

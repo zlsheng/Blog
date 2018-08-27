@@ -53,6 +53,9 @@ public class LoginAction {
 
         return "success";
     }
+    public String getTestPage(){
+        return "test";
+    }
     public String error(){
         return "unauthorized";
     }

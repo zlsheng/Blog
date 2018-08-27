@@ -42,6 +42,9 @@
   <select id="getUserByUloginid" resultMap="ResultSysUserMap" parameterType="java.lang.String">
     select * from SYS_USER where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
+  <select id="getAll" resultMap="ResultSysUserMap" >
+    SELECT * FROM SYS_USER WHERE U_USERSTATEID = '11'
+  </select>
   <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysUser" >
     insert into SYS_USER (U_ID, U_LOGINID, U_NICKNAME,
       U_PASSWORD, U_SIGNATURE, U_SEX,

@@ -7,6 +7,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class UserAction {
     @Autowired
     private IUserSysService userSysService;
@@ -15,6 +17,12 @@ public class UserAction {
 
     private SysUser sysUser;
 
+    private List<SysUser> sysUserlist;
+
+    /**
+     * 首页展示用户信息
+     * @return
+     */
     public String getUser(){
         Subject subject = SecurityUtils.getSubject();
         activeUser = (ActiveUser) subject.getPrincipal();
@@ -26,6 +34,11 @@ public class UserAction {
         }
 
         return "success";
+    }
+
+    public String getUserList(){
+        sysUserlist = userSysService.getUserList();
+        return "userList";
     }
 
     public SysUser getSysUser() {
@@ -42,5 +55,13 @@ public class UserAction {
 
     public void setActiveUser(ActiveUser activeUser) {
         this.activeUser = activeUser;
+    }
+
+    public List<SysUser> getSysUserlist() {
+        return sysUserlist;
+    }
+
+    public void setSysUserlist(List<SysUser> sysUserlist) {
+        this.sysUserlist = sysUserlist;
     }
 }

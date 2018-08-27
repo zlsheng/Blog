@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="layui-body" style="background:#ffffff ;padding:0px; ">
+    <div class="layui-body" style="background:#ffffff">
     <#--lay-allowClose="true"  显示关闭按钮-->
         <div class="layui-tab layui-tab-brief" lay-unauto  lay-filter="Home_tab" lay-allowClose="true" >
             <ul class="layui-tab-title" >
@@ -70,13 +70,13 @@
             </ul>
             <div class="layui-tab-content" style="background:#eeeeee" >
                 <div class="layui-tab-item layui-show">
-                    <iframe src="${base}/system/user_getUser.do" width="100%" height="90%" scrolling="no" style="left: 0; right: 0; bottom: 0;"  frameborder="0" class="layui-iframe"></iframe>
+                    <iframe src="${base}/system/user_getUser.do" width="100%" height="89%" scrolling="no"frameborder="0" class="layui-iframe"></iframe>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="layui-footer" style="padding:0px; ">
+    <div class="layui-footer" >
         <#--底部固定区域 -->
         <center>
             <a href="https://github.com/zlsheng/SSMdome">Github</a> | <a href="https://gitee.com/zlsheng/SSMdome">Gitee</a> |
@@ -100,9 +100,10 @@
             //alert(exist);
             if(exist < 1 ){
                 if(url != "" && url.length > 0 ){
+                    url = '${request.contextPath}'  + elem.attr('lay-data');
                     element.tabAdd('Home_tab', {
                         title: elem.text()
-                        ,content: '<iframe style="left: 0; right: 0; bottom: 0;" src="http://www.layui.com" width="100%" height="100%" scrolling="no" frameborder="0" class="layui-iframe"></iframe>'
+                        ,content: '<iframe src='+ url +' width="100%" height="89%" scrolling="no" frameborder="0"></iframe>'
                         ,id: 'tab_' + elem.attr('id')
                     });
                 }
