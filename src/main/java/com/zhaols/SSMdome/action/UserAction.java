@@ -36,9 +36,27 @@ public class UserAction {
         return "success";
     }
 
+    /**
+    *   功能描述: 获取user列表展示
+    *
+    *@Author: zhaols
+    *@CreateTime: 2018-08-28  16:48
+    */
     public String getUserList(){
         sysUserlist = userSysService.getUserList();
         return "userList";
+    }
+    
+    
+    /**
+    *   功能描述: 跳转新增或编辑方法
+    *
+    *@Author: zhaols
+    *@CreateTime: 2018-08-28  16:49
+    */
+    public String toAddOrEdit(){
+
+        return "toAddOrEdit";
     }
 
     public SysUser getSysUser() {

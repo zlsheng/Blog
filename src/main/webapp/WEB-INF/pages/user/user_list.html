@@ -1,7 +1,5 @@
 <#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
- <#--<a  onclick="updateCheckStatus(this,_n('#bjui-moreParams').val());" id ="ci_statusBtn">
-     <span class="fa fa-check font24 iconbg02"></span>启用</a>-->
 
 
 <div class="layui-fluid">
@@ -37,17 +35,17 @@
 
         <div class="layui-card-body">
             <div class="layui-card-body">
-                <#--<div class="layui-btn-group ">-->
-                    <button class="layui-btn layui-btn-primary layui-btn-sm "><i class="layui-icon">&#xe654;</i>新增</button>
+                <div id="user_home_btu">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="test()"><i class="layui-icon">&#xe654;</i>新增</button>
                     &nbsp;
                     <button class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe642;</i>编辑</button>
                     &nbsp;
                     <button class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
                     &nbsp;
-                    <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh" onclick=""><i class="layui-icon">&#xe669;</i>刷新</button>
+                    <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh"><i class="layui-icon">&#xe669;</i>刷新</button>
                     &nbsp;
-                    <button id="refresh" class="layui-btn  layui-btn-danger layui-btn-sm closed" onclick=""><i class="layui-icon">&#x1006;</i>关闭</button>
-                <#--</div>-->
+                    <button id="refresh" class="layui-btn  layui-btn-danger layui-btn-sm closed"><i class="layui-icon">&#x1006;</i>关闭</button>
+                </div>
                 <div class="layui-form">
                     <table class="layui-table" lay-filter="user_table" >
                         <input type="hidden" id="rate_curr" value="20">
@@ -104,15 +102,22 @@
         var form = layui.form,
                 table = layui.table,
                 rate = layui.rate;
-       /* var rate_value = $("#rate_curr").val();
-        rate.render({
-            elem: '#user_rate'  //绑定元素
-            ,length:6
-            ,value:3
-            ,half:true
-            ,readonly:true
+
+       /* $('#user_home_btu .layui-btn').on('click', function(){
+
+
         });*/
 
     });
+    function test() {
+        layer.open({
+            type: 2,
+            content: ['${base}/system/user_toAddOrEdit.do', 'no'], //no 去除滚动条
+            title: false,
+           // closeBtn: 0,
+            area: ['550px', '500px']
+        });
+    }
+
 
 </script>

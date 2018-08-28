@@ -1,0 +1,63 @@
+<!DOCTYPE html><#include "../common/_public.html"/>
+<link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+<fieldset class="layui-elem-field">
+    <legend>用户新增</legend>
+    <form class="layui-form" action="" lay-filter="user_from_addOrEdit">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="uLoginid" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="uPassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <select name="uSex" lay-verify="required">
+                    <option value="">--请选择--</option>
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                    <option value="2">保密</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="uEmail" placeholder="请输入邮箱" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">个性签名</label>
+            <div class="layui-input-inline">
+                <textarea name="uSignature" placeholder="留下你的个性签名吧" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</fieldset>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    layui.use(['element','rate','layer','form'], function(){
+        var element = layui.element,
+                rate = layui.rate,
+                layer = layui.layer,
+                $ = layui.$,
+                form = layui.form;
+        //监听提交
+        form.on('submit(user_from_addOrEdit)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
