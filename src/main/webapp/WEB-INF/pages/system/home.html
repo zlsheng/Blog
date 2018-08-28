@@ -93,7 +93,7 @@
         var element = layui.element,
                 layer=layui.layer,
                 $ = layui.$;
-        element.on('nav(menu)', function(elem){
+       element.on('nav(menu)', function(elem){
             //layer.msg(elem.attr('id'));
               var url =  elem.attr('lay-data');
             var exist=$("li[lay-id='tab_" + elem.attr('id') + "']").length;
@@ -109,8 +109,19 @@
                 }
             }
             element.tabChange('Home_tab', 'tab_' + elem.attr('id'));
-
-
         });
+
+        var _tools = {
+            refresh: function(){
+                var curIframe = $(".layui-tab-content .layui-show").find('iframe');
+                var url = $(".layui-tab-content .layui-show").find('iframe').attr('src');
+                curIframe.attr('src',url);
+            },
+            closed: function () {
+                var id = $(".layui-tab-title .layui-this").attr('lay-id');
+                element.tabDelete('Home_tab',id);
+            }
+        }
+        window.tools = _tools;
     });
 </script>

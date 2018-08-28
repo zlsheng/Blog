@@ -8,6 +8,7 @@
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layadmin-useradmin-formlist">
             <div class="layui-form-item">
+
                 <div class="layui-inline">
                     <label class="layui-form-label">登录名</label>
                     <div class="layui-input-block">
@@ -15,28 +16,14 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">手机</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="telphone" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-block">
                         <select name="role">
-                            <option value="0">管理员</option>
-                            <option value="1">超级管理员</option>
-                            <option value="2">纠错员</option>
-                            <option value="3">采购员</option>
-                            <option value="4">推销员</option>
-                            <option value="5">运营人员</option>
-                            <option value="6">编辑</option>
+                            <#-- 做成动态 待完成-->
+                            <option value="0">系统管理员</option>
+                            <option value="1">VIP用户</option>
+                            <option value="2">SIP用户</option>
+                            <option value="3">普通用户</option>
                         </select>
                     </div>
                 </div>
@@ -50,9 +37,20 @@
 
         <div class="layui-card-body">
             <div class="layui-card-body">
+                <#--<div class="layui-btn-group ">-->
+                    <button class="layui-btn layui-btn-primary layui-btn-sm "><i class="layui-icon">&#xe654;</i>新增</button>
+                    &nbsp;
+                    <button class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe642;</i>编辑</button>
+                    &nbsp;
+                    <button class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
+                    &nbsp;
+                    <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh" onclick=""><i class="layui-icon">&#xe669;</i>刷新</button>
+                    &nbsp;
+                    <button id="refresh" class="layui-btn  layui-btn-danger layui-btn-sm closed" onclick=""><i class="layui-icon">&#x1006;</i>关闭</button>
+                <#--</div>-->
                 <div class="layui-form">
                     <table class="layui-table" lay-filter="user_table" >
-                        <#--<input type="hidden" id="rate_curr" value="${sysUser.uScore!}">-->
+                        <input type="hidden" id="rate_curr" value="20">
                         <thead>
                         <tr>
                             <th style="width: 20px"></th>
@@ -72,7 +70,7 @@
                          <#list sysUserlist as sysUser>
                          <tr>
                              <td style="text-align:center;vertical-align:middle;"><input type="checkbox" lay-skin="primary" value="${sysUser.uId}"></td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uLoginId!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${sysUser.uLoginid!}</td>
                              <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!defalut.jpg}" style="display: inline-block; width: 50px ; height: 50px;"></td>
                              <td style="text-align:center;vertical-align:middle;">${sysUser.uNickname!}</td>
                              <td style="text-align:center;vertical-align:middle;">
@@ -100,6 +98,7 @@
     </div>
 </div>
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script src="${base}/layui/lay/js/myJs.js" charset="UTF-8"></script>
 <script>
     layui.use(['form','table','rate'], function(){
         var form = layui.form,
@@ -115,4 +114,5 @@
         });*/
 
     });
+
 </script>

@@ -1,6 +1,5 @@
 package com.zhaols.SSMdome.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class SysUser {
@@ -27,7 +26,7 @@ public class SysUser {
     /**
      * 0 男  1 女  2 保密
      */
-    private BigDecimal uSex;
+    private Integer uSex;
 
     /**
      * 生日
@@ -57,7 +56,7 @@ public class SysUser {
     /**
      * 年龄
      */
-    private BigDecimal uAge;
+    private Integer uAge;
 
     /**
      * 用户状态
@@ -67,12 +66,12 @@ public class SysUser {
     /**
      * 等级
      */
-    private BigDecimal uRank;
+    private Integer uRank;
 
     /**
      * 积分
      */
-    private BigDecimal uScore;
+    private Integer uScore;
 
     /**
      * 注册时间
@@ -98,6 +97,11 @@ public class SysUser {
      * 加密盐
      */
     private String uSalt;
+
+    /**
+     * 评分等级
+     */
+    private Integer uRate;
 
     /**
      * 昵称
@@ -151,7 +155,7 @@ public class SysUser {
      * 0 男  1 女  2 保密
      * @return U_SEX 0 男  1 女  2 保密
      */
-    public BigDecimal getuSex() {
+    public Integer getuSex() {
         return uSex;
     }
 
@@ -159,7 +163,7 @@ public class SysUser {
      * 0 男  1 女  2 保密
      * @param uSex 0 男  1 女  2 保密
      */
-    public void setuSex(BigDecimal uSex) {
+    public void setuSex(Integer uSex) {
         this.uSex = uSex;
     }
 
@@ -247,7 +251,7 @@ public class SysUser {
      * 年龄
      * @return U_AGE 年龄
      */
-    public BigDecimal getuAge() {
+    public Integer getuAge() {
         return uAge;
     }
 
@@ -255,7 +259,7 @@ public class SysUser {
      * 年龄
      * @param uAge 年龄
      */
-    public void setuAge(BigDecimal uAge) {
+    public void setuAge(Integer uAge) {
         this.uAge = uAge;
     }
 
@@ -279,7 +283,7 @@ public class SysUser {
      * 等级
      * @return U_RANK 等级
      */
-    public BigDecimal getuRank() {
+    public Integer getuRank() {
         return uRank;
     }
 
@@ -287,7 +291,7 @@ public class SysUser {
      * 等级
      * @param uRank 等级
      */
-    public void setuRank(BigDecimal uRank) {
+    public void setuRank(Integer uRank) {
         this.uRank = uRank;
     }
 
@@ -295,7 +299,7 @@ public class SysUser {
      * 积分
      * @return U_SCORE 积分
      */
-    public BigDecimal getuScore() {
+    public Integer getuScore() {
         return uScore;
     }
 
@@ -303,7 +307,7 @@ public class SysUser {
      * 积分
      * @param uScore 积分
      */
-    public void setuScore(BigDecimal uScore) {
+    public void setuScore(Integer uScore) {
         this.uScore = uScore;
     }
 
@@ -395,11 +399,20 @@ public class SysUser {
         this.uId = uId;
     }
 
-    public String getuLoginId() {
+    public String getuLoginid() {
         return uLoginid;
     }
 
-    public void setuLoginId(String uLoginid) {
+    public void setuLoginid(String uLoginid) {
         this.uLoginid = uLoginid;
     }
+
+    public Integer getuRate() {
+        return uRate;
+    }
+
+    public void setuRate(Integer uRate) {
+        this.uRate = uRate;
+    }
+
 }

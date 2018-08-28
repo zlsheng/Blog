@@ -7,26 +7,27 @@
     <result column="U_NICKNAME" property="uNickname" jdbcType="VARCHAR" />
     <result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
     <result column="U_SIGNATURE" property="uSignature" jdbcType="VARCHAR" />
-    <result column="U_SEX" property="uSex" jdbcType="DECIMAL" />
+    <result column="U_SEX" property="uSex" jdbcType="INTEGER" />
     <result column="U_BIRTHDAY" property="uBirthday" jdbcType="TIMESTAMP" />
     <result column="U_NAME" property="uName" jdbcType="VARCHAR" />
     <result column="U_EMAIL" property="uEmail" jdbcType="VARCHAR" />
     <result column="U_INTRO" property="uIntro" jdbcType="VARCHAR" />
     <result column="U_HEADPORTRAIT" property="uHeadportrait" jdbcType="VARCHAR" />
-    <result column="U_AGE" property="uAge" jdbcType="DECIMAL" />
+    <result column="U_AGE" property="uAge" jdbcType="INTEGER" />
     <result column="U_USERSTATEID" property="uUserstateid" jdbcType="VARCHAR" />
-    <result column="U_RANK" property="uRank" jdbcType="DECIMAL" />
-    <result column="U_SCORE" property="uScore" jdbcType="DECIMAL" />
+    <result column="U_RANK" property="uRank" jdbcType="INTEGER" />
+    <result column="U_SCORE" property="uScore" jdbcType="INTEGER" />
     <result column="U_REGISTERTIME" property="uRegistertime" jdbcType="TIMESTAMP" />
     <result column="U_LOGINTIME" property="uLogintime" jdbcType="TIMESTAMP" />
     <result column="U_LOGINIP" property="uLoginip" jdbcType="VARCHAR" />
     <result column="U_ACTIVATECODE" property="uActivatecode" jdbcType="VARCHAR" />
     <result column="U_SALT" property="uSalt" jdbcType="VARCHAR" />
+    <result column="U_RATE" property="uRate" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     U_ID, U_LOGINID, U_NICKNAME, U_PASSWORD, U_SIGNATURE, U_SEX, U_BIRTHDAY, U_NAME, 
     U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
-    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT
+    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultSysUserMap" parameterType="java.lang.String" >
     select

@@ -14,7 +14,7 @@
                                     <img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!defalut.jpg}" style="height: 300px; width:300px;">
                                 </div>
                                 <div class="layui-col-md9">
-                                    <input type="hidden" id="rate_curr" value="${sysUser.uScore!}">
+                                    <input type="hidden" id="rate_curr" value="${sysUser.uRate!}">
                                     <font style="font-weight: bold" size="4"> 昵 称：【<span style="color: blue">${sysUser.uNickname!}</span>】</font><br/>
                                     <font style="font-weight: bold" size="4"> 生 日：【<span style="color: blue">${(sysUser.uBirthday?string('yyyy-MM-dd'))!.now?string('yyyy-MM-dd')}</span>】</font><br/>
                                     <font style="font-weight: bold" size="4"> 邮 箱：【<span style="color: blue">${sysUser.uEmail!}</span>】<font><br/>
@@ -101,7 +101,7 @@
         var rate_value = $("#rate_curr").val();
         rate.render({
              elem: '#user_rate'  //绑定元素
-            ,length:6
+            ,length:5
             ,value:rate_value
             ,half:true
             ,readonly:true
