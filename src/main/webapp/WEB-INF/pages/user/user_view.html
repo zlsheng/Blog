@@ -1,36 +1,36 @@
-<!DOCTYPE html><#include "../common/_public.html"/>
+<#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 <fieldset class="layui-elem-field">
     <legend>新增用户</legend>
-    <form class="layui-form" action="" lay-filter="user_from_addOrEdit">
+    <form class="layui-form" action="" >
         <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red">*</span>登录名</label>
             <div class="layui-input-inline">
-                <input type="text" name="uLoginid" required  lay-verify="loginName" placeholder="请输入登录名" autocomplete="off" class="layui-input">
+                <input type="text" name="uLoginid"   lay-verify="loginName" placeholder="${sysUser.uLoginid!'请输入登录名'}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red">*</span>密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="uPassword" required lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="password" name="uPassword"  lay-verify="pass" placeholder="${sysUser.uPassword!'请输入密码'}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">手机号</label>
             <div class="layui-input-inline">
-                <input type="text" name="uPhone"  required lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                <input type="text" name="uPhone"   lay-verify="phone" placeholder="${sysUser.uPhone!'请输入手机号'}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-                <input type="text" name="uEmail" required lay-verify="email"  placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                <input type="text" name="uEmail"  lay-verify="email"  placeholder="${sysUser.uEmail!'请输入邮箱'}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
-                <button class="layui-btn "  lay-filter="closed">关闭</button>
+                <button class="layui-btn "  onclick="closedView()">关闭</button>
             </div>
         </div>
     </form>
@@ -66,8 +66,15 @@
             return false;
         });
 
-        from.on('click(closed)',function (data) {
-            
-        })
+      /*  form.on('click(closed)',function (data) {
+            alert("点击了关闭按钮");
+
+        })*/
     });
+
+    function closedView() {
+        //alert("点击了关闭按钮");
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
 </script>

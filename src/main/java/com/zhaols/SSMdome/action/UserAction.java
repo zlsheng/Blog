@@ -3,8 +3,10 @@ package com.zhaols.SSMdome.action;
 import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.service.IUserSysService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class UserAction {
     private SysUser sysUser;
 
     private List<SysUser> sysUserlist;
+
+    private String type;
 
     /**
      * 首页展示用户信息
@@ -54,9 +58,23 @@ public class UserAction {
     *@Author: zhaols
     *@CreateTime: 2018-08-28  16:49
     */
-    public String toAddOrEdit(){
-
+    public String toAddOrEdit()  {
+        type = ServletActionContext.getRequest().getParameter("type");
+        String id = ServletActionContext.getRequest().getParameter("id");
+        if(StringUtils.isEmpty(id)&& "add".equals(type)){
+            sysUser = new SysUser();
+            return "toAddOrEdit";
+        }else {
+            try{
+                sysUser = userSysService.getUserById(activeUser.getUserid());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
         return "toAddOrEdit";
+    }
+    public String saveAndUpdate(){
+        return "";
     }
 
     public SysUser getSysUser() {
@@ -81,5 +99,13 @@ public class UserAction {
 
     public void setSysUserlist(List<SysUser> sysUserlist) {
         this.sysUserlist = sysUserlist;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
