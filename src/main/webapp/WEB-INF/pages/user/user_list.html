@@ -36,9 +36,9 @@
         <div class="layui-card-body">
             <div class="layui-card-body">
                 <div id="user_home_btu">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="openUserView('${base}/system/user_toAddOrEdit.do?type=add')"><i class="layui-icon">&#xe654;</i>新增</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="openUserView('add')"><i class="layui-icon">&#xe654;</i>新增</button>
                     &nbsp;
-                    <button class="layui-btn layui-btn-sm" onclick="test()"><i class="layui-icon" >&#xe642;</i>编辑</button>
+                    <button class="layui-btn layui-btn-sm" onclick="openUserView('edit')"><i class="layui-icon" >&#xe642;</i>编辑</button>
                     &nbsp;
                     <button class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
                     &nbsp;
@@ -104,37 +104,41 @@
                 rate = layui.rate;
 
     });
-    function openUserView(url) {
+    function openUserView(type) {
+        var url;
+        var title;
+        if('add' == type){
+            url = '${base}/system/user_toAddOrEdit.do?type=add';
+            title= '新增用户'
+        }
+        if('edit' == type){
+            var id = layui.$("input:checkbox[name='checkbox']:checked").val();
+            url ='${base}/system/user_toAddOrEdit.do?type=etit&id=' + id;
+            title= '编辑用户'
+        }
         layer.open({
             type: 2,
             content: [url, 'no'], //no 去除滚动条
-            title: '新增用户',
-           // closeBtn: 0,
+            title: title,
             area: ['400px', '350px']
         });
     }
-    /*function test() {
-        var ids = layui.$("input:checkbox[name='checkbox']:checked");
-        alert(ids.size());
-        /!*if(ids.size() == 0){
+    function test() {
+        var id = layui.$("input:checkbox[name='checkbox']:checked");
+       // alert(ids.size());
+        if(id.size() == 0){
             layer.msg('请选择一条数据', {
-                icon: 1,
+                icon: 2,
                 time: 2000
             });
-        }else if(ids.size() > 1){
+        }else if(id.size() > 1){
             layer.msg('最多只能选择一条数据', {
-                icon: 1,
+                icon:2,
                 time: 2000
             });
         }
-        var id = ids[0].val();
-        layer.msg('最多只能选择一条数据', {
-            icon: 1,
-            time: 2000
-        },function(){
-            layer.msg('关闭了' + id)
-        });*!/
-    }*/
+        layer.msg(id.val());
+    }
 
 
 </script>
