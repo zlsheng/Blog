@@ -164,7 +164,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <!--======================================     freemarker 配置     ===============================-->
     <bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="classpath:/WEB-INF/pages/" />
+        <property name="templateLoaderPath" value="/WEB-INF/pages" />
         <property name="freemarkerSettings">
             <props>
                 <prop key="template_update_delay">0</prop>
@@ -179,9 +179,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <!-- 针对freemarker的视图配置 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="cache" value="true" />
-        <property name="prefix" value="" />
         <property name="suffix" value=".html" />
-        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
         <property name="requestContextAttribute" value="request" />
         <property name="exposeSpringMacroHelpers" value="true" />
         <property name="exposeRequestAttributes" value="true" />

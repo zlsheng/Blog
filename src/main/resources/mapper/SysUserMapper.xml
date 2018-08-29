@@ -6,7 +6,7 @@
     <result column="U_LOGINID" property="uLoginid" jdbcType="VARCHAR" />
     <result column="U_NICKNAME" property="uNickname" jdbcType="VARCHAR" />
     <result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
-    <result column="U_SIGNATURE" property="uSignature" jdbcType="VARCHAR" />
+    <result column="U_PHONE" property="uPhone" jdbcType="INTEGER" />
     <result column="U_SEX" property="uSex" jdbcType="INTEGER" />
     <result column="U_BIRTHDAY" property="uBirthday" jdbcType="TIMESTAMP" />
     <result column="U_NAME" property="uName" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     <result column="U_RATE" property="uRate" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    U_ID, U_LOGINID, U_NICKNAME, U_PASSWORD, U_SIGNATURE, U_SEX, U_BIRTHDAY, U_NAME, 
+    U_ID, U_LOGINID, U_NICKNAME, U_PASSWORD, U_PHONE, U_SEX, U_BIRTHDAY, U_NAME,
     U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
     U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE
   </sql>

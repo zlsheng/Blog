@@ -19,9 +19,9 @@ public class SysUser {
     private String uPassword;
 
     /**
-     * 个性签名
+     * 手机号
      */
-    private String uSignature;
+    private Integer uPhone;
 
     /**
      * 0 男  1 女  2 保密
@@ -135,20 +135,12 @@ public class SysUser {
         this.uPassword = uPassword == null ? null : uPassword.trim();
     }
 
-    /**
-     * 个性签名
-     * @return U_SIGNATURE 个性签名
-     */
-    public String getuSignature() {
-        return uSignature;
+    public Integer getuPhone() {
+        return uPhone;
     }
 
-    /**
-     * 个性签名
-     * @param uSignature 个性签名
-     */
-    public void setuSignature(String uSignature) {
-        this.uSignature = uSignature == null ? null : uSignature.trim();
+    public void setuPhone(Integer uPhone) {
+        this.uPhone = uPhone;
     }
 
     /**
