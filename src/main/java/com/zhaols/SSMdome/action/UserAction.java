@@ -1,17 +1,21 @@
 package com.zhaols.SSMdome.action;
 
+import com.zhaols.SSMdome.BasicClassDri.BasicAction;
 import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.service.IUserSysService;
+import com.zhaols.SSMdome.utils.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class UserAction {
+public class UserAction extends BasicAction<SysUser> {
     @Autowired
     private IUserSysService userSysService;
 
@@ -59,14 +63,14 @@ public class UserAction {
     *@CreateTime: 2018-08-28  16:49
     */
     public String toAddOrEdit()  {
-        type = ServletActionContext.getRequest().getParameter("type");
-        String id = ServletActionContext.getRequest().getParameter("id");
+        type = getHttpServletRequest().getParameter("type");
+        String id = getHttpServletRequest().getParameter("id");
         if(StringUtils.isEmpty(id)&& "add".equals(type)){
             sysUser = new SysUser();
             return "toAddOrEdit";
         }else {
             try{
-                sysUser = userSysService.getUserById(activeUser.getUserid());
+                sysUser = userSysService.getUserById(id);
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -74,7 +78,15 @@ public class UserAction {
         return "toAddOrEdit";
     }
     public String saveAndUpdate(){
-        return "";
+        if(StringUtils.isNotEmpty(entity.getuId())){
+            //编辑
+        }else {
+            //新增
+            userSysService.saveAndUpdate(entity);
+            result = new Result(true,"新增成功");
+        }
+
+        return RESULT;
     }
 
     public SysUser getSysUser() {

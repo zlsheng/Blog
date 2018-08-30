@@ -1,7 +1,9 @@
 package com.zhaols.SSMdome.action;
 
+import com.zhaols.SSMdome.BasicClassDri.BasicAction;
 import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysResources;
+import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.shiro.CaptchaException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -18,7 +20,7 @@ import java.util.List;
  * @Description: TODO: 添加功能描述
  * @date 2018-08-21 13:46
  */
-public class LoginAction {
+public class LoginAction extends BasicAction<SysUser> {
     //private String basePath = "";
     private String errorMsg = "";
     private ActiveUser activeUser;

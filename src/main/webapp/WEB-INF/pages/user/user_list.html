@@ -38,7 +38,8 @@
                 <div id="user_home_btu">
                     <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="openUserView('add')"><i class="layui-icon">&#xe654;</i>新增</button>
                     &nbsp;
-                    <button class="layui-btn layui-btn-sm" onclick="openUserView('edit')"><i class="layui-icon" >&#xe642;</i>编辑</button>
+                    <#-- onclick="openUserView('edit')"-->
+                    <button class="layui-btn layui-btn-sm" onclick="openUserView('edit')" ><i class="layui-icon" >&#xe642;</i>编辑</button>
                     &nbsp;
                     <button class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
                     &nbsp;
@@ -112,32 +113,39 @@
             title= '新增用户'
         }
         if('edit' == type){
-            var id = layui.$("input:checkbox[name='checkbox']:checked").val();
-            url ='${base}/system/user_toAddOrEdit.do?type=etit&id=' + id;
-            title= '编辑用户'
+            var id = layui.$("input:checkbox[name='checkbox']:checked");
+            if(id.size() == 1){
+                url ='${base}/system/user_toAddOrEdit.do?type=edit&id=' + id.val();
+                title= '编辑用户'
+
+            }else{
+                layer.msg('请选择一条数据', {
+                    icon:2,
+                    time: 2000,
+                    offset:'70px'
+                });
+                return;
+            }
         }
         layer.open({
             type: 2,
             content: [url, 'no'], //no 去除滚动条
             title: title,
-            area: ['400px', '350px']
+            area: ['400px', '350px'],
+            offset:'70px'
         });
     }
     function test() {
-        var id = layui.$("input:checkbox[name='checkbox']:checked");
-       // alert(ids.size());
-        if(id.size() == 0){
+        var ids = layui.$("input:checkbox[name='checkbox']:checked");
+        if(ids.size() == 1){
+            layer.msg(ids.val());
+        }else{
             layer.msg('请选择一条数据', {
-                icon: 2,
-                time: 2000
-            });
-        }else if(id.size() > 1){
-            layer.msg('最多只能选择一条数据', {
                 icon:2,
-                time: 2000
+                time: 2000,
+                offset:'50px'
             });
         }
-        layer.msg(id.val());
     }
 
 

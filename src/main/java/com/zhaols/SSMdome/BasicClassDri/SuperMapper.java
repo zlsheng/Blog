@@ -1,4 +1,4 @@
-package com.zhaols.SSMdome.Superclass;
+package com.zhaols.SSMdome.BasicClassDri;
 
 import com.zhaols.SSMdome.entity.SysUser;
 

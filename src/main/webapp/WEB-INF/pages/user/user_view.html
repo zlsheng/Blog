@@ -1,36 +1,41 @@
 <#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 <fieldset class="layui-elem-field">
-    <legend>新增用户</legend>
-    <form class="layui-form" action="" >
+<#if type == 'add'><legend>新增用户</legend></#if>
+<#if type == 'edit'><legend>编辑用户</legend></#if>
+    <form class="layui-form layui-form-pane" id="LAY_user_form" >
+        <input type="hidden" value="${sysUser.uId!}" name="uId">
         <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red">*</span>登录名</label>
             <div class="layui-input-inline">
-                <input type="text" name="uLoginid"   lay-verify="loginName" placeholder="${sysUser.uLoginid!'请输入登录名'}" autocomplete="off" class="layui-input">
+                <input type="text" name="uLoginid"   lay-verify="loginName" value="${sysUser.uLoginid!}" placeholder="请输入登录名" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label"><span style="color: red">*</span>密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="uPassword"  lay-verify="pass" placeholder="${sysUser.uPassword!'请输入密码'}" autocomplete="off" class="layui-input">
+        <#if type == 'add'>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="uPassword"  lay-verify="pass" value="${sysUser.uPassword!}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
             </div>
-        </div>
+        </#if>
         <div class="layui-form-item">
             <label class="layui-form-label">手机号</label>
             <div class="layui-input-inline">
-                <input type="text" name="uPhone"   lay-verify="phone" placeholder="${sysUser.uPhone!'请输入手机号'}" autocomplete="off" class="layui-input">
+                <input type="text" name="uPhone"   lay-verify="phone" value="${sysUser.uPhone!}" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-                <input type="text" name="uEmail"  lay-verify="email"  placeholder="${sysUser.uEmail!'请输入邮箱'}" autocomplete="off" class="layui-input">
+                <input type="text" name="uEmail"  lay-verify="email"  value="${sysUser.uEmail!}" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
-                <button class="layui-btn "  onclick="closedView()">关闭</button>
+                <#--<input class="layui-btn layui-btn-normal" type="submit" value="保存">-->
+                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="uesrForm" >保存</button>
+                <button class="layui-btn  layui-btn-danger"  onclick="closedView()">关闭</button>
             </div>
         </div>
     </form>
@@ -56,20 +61,45 @@
                 }
             }
             ,pass: [/(.+){6,18}$/, '密码必须6到12位']
-            ,phone:[/^1[3|7|5|8][0-9]\d{8}$/,'请输入正确的手机号']
-            ,email:[/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,'请输入正确的邮箱地址']
+            ,phone:function (value) {
+                if(value.length != 0) {
+                    if (!new RegExp("^1[3|7|5|8][0-9]\\d{8}$").test(value)) {
+                        return '请输入正确的手机号';
+                    }
+                }
+            }
+
+            ,email:function (value) {
+                if(value.length != 0) {
+                    if (!new RegExp("^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$").test(value)) {
+                        return '请输入正确的邮箱地址';
+                    }
+                }
+            }
         });
 
         //监听提交
-        form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
+        form.on('submit(uesrForm)', function(data){
+            //$("#LAY_user_form").submit;
+            //layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url:'${base}/system/user_saveAndUpdate.do',
+                type:'post',
+                data:$("#LAY_user_form").serialize(),
+                dataType:"json",
+                success:function(result) {
+                    if(result.statusCode == 200){
+                        layer.msg(result.message,{
+                            icon:1,
+                            time:2000,
+                            offset: '20px'
+                        })
+                    }
+                }
+            });
             return false;
         });
 
-      /*  form.on('click(closed)',function (data) {
-            alert("点击了关闭按钮");
-
-        })*/
     });
 
     function closedView() {

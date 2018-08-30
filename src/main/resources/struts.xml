@@ -26,9 +26,14 @@
         </global-exception-mappings>
     </package>-->
 
-    <package name="nec-default" extends="struts-default"   namespace="/">
+
+    <package name="nec-default" extends="json-default"   namespace="/">
+        <global-results>
+            <result name="result" type="freemarker">/WEB-INF/pages/common/_result.html</result>
+        </global-results>
         <!-- 关键地方  struts2.5 为了提升安全性新添加的属性 不添加无法实现动态调用-->
         <global-allowed-methods>regex:.*</global-allowed-methods>
+
     </package>
 
     <include file="action/loginAction.xml"/>

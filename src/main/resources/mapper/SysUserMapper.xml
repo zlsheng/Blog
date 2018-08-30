@@ -23,11 +23,17 @@
     <result column="U_ACTIVATECODE" property="uActivatecode" jdbcType="VARCHAR" />
     <result column="U_SALT" property="uSalt" jdbcType="VARCHAR" />
     <result column="U_RATE" property="uRate" jdbcType="INTEGER" />
+    <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
+    <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List" >
     U_ID, U_LOGINID, U_NICKNAME, U_PASSWORD, U_PHONE, U_SEX, U_BIRTHDAY, U_NAME,
     U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
-    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE
+    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE,UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultSysUserMap" parameterType="java.lang.String" >
     select
@@ -48,19 +54,21 @@
   </select>
   <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysUser" >
     insert into SYS_USER (U_ID, U_LOGINID, U_NICKNAME,
-      U_PASSWORD, U_SIGNATURE, U_SEX,
+      U_PASSWORD, U_PHONE, U_SEX,
       U_BIRTHDAY, U_NAME, U_EMAIL,
       U_INTRO, U_HEADPORTRAIT, U_AGE,
       U_USERSTATEID, U_RANK, U_SCORE,
       U_REGISTERTIME, U_LOGINTIME, U_LOGINIP,
-      U_ACTIVATECODE, U_SALT)
+      U_ACTIVATECODE, U_SALT,U_RATE,UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME)
     values (#{uId,jdbcType=VARCHAR}, #{uLoginid,jdbcType=VARCHAR}, #{uNickname,jdbcType=VARCHAR},
-      #{uPassword,jdbcType=VARCHAR}, #{uSignature,jdbcType=VARCHAR}, #{uSex,jdbcType=DECIMAL},
+      #{uPassword,jdbcType=VARCHAR}, #{uPhone,jdbcType=INTEGER}, #{uSex,jdbcType=DECIMAL},
       #{uBirthday,jdbcType=TIMESTAMP}, #{uName,jdbcType=VARCHAR}, #{uEmail,jdbcType=VARCHAR},
       #{uIntro,jdbcType=VARCHAR}, #{uHeadportrait,jdbcType=VARCHAR}, #{uAge,jdbcType=DECIMAL},
       #{uUserstateid,jdbcType=VARCHAR}, #{uRank,jdbcType=DECIMAL}, #{uScore,jdbcType=DECIMAL},
       #{uRegistertime,jdbcType=TIMESTAMP}, #{uLogintime,jdbcType=TIMESTAMP}, #{uLoginip,jdbcType=VARCHAR},
-      #{uActivatecode,jdbcType=VARCHAR}, #{uSalt,jdbcType=VARCHAR})
+      #{uActivatecode,jdbcType=VARCHAR}, #{uSalt,jdbcType=VARCHAR},#{uRate,jdbcType="INTEGER"},
+      #{updator,jdbcType="VARCHAR"},#{updatorName,jdbcType="VARCHAR"},#{updateTime,jdbcType="TIMESTAMP"},
+      #{creator,jdbcType="VARCHAR"},#{creatorName,jdbcType="VARCHAR"},#{createTime,jdbcType="TIMESTAMP"})
   </insert>
   <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysUser" >
     insert into SYS_USER

@@ -1,8 +1,10 @@
 package com.zhaols.SSMdome.entity;
 
+import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
+
 import java.util.Date;
 
-public class SysUser {
+public class SysUser extends BasicEntity<String> {
 
     private String uId;
 

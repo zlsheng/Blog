@@ -13,4 +13,6 @@ public interface IUserSysService {
     public SysUser getUserById(String id) throws Exception;
 
     List<SysUser> getUserList();
+
+    void saveAndUpdate(SysUser entity);
 }
