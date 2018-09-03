@@ -4,7 +4,9 @@ import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
 import com.zhaols.SSMdome.mapper.SysUserMapper;
 import com.zhaols.SSMdome.service.IUserSysService;
+import com.zhaols.SSMdome.utils.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,11 @@ public class UserSysService implements IUserSysService {
             sysUserMapper.updateByPrimaryKey(entity);
         }else {
             //新增
+            entity.setuId(CommonUtils.getUUID());
+            entity.setuSalt(entity.getuId());
             entity.createEntity();
-            sysUserMapper.insert(entity);
+            entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getuSalt()));
+            sysUserMapper.insertSelective(entity);
         }
 
     }

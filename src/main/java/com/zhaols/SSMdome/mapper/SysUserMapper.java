@@ -13,11 +13,6 @@ public interface SysUserMapper {
      */
     int deleteByPrimaryKey(String id);
 
-    /**
-     *
-     * @mbggenerated 2018-08-20
-     */
-    int insert(SysUser record);
 
     /**
      *

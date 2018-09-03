@@ -104,8 +104,6 @@ public class MyRemalm extends AuthorizingRealm {
         }
         // 将用户菜单 设置到activeUser
         activeUser.setMenus(menus);
-        /*Object obj = new SimpleHash("MD5", "admin123", activeUser.getUserid(), 1024);
-        System.out.println(obj);*/
         // 将activeUser设置simpleAuthenticationInfo
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser, password,
                 ByteSource.Util.bytes(salt), "MyRemalm");

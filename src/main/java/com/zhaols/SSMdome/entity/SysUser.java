@@ -23,7 +23,7 @@ public class SysUser extends BasicEntity<String> {
     /**
      * 手机号
      */
-    private Integer uPhone;
+    private String uPhone;
 
     /**
      * 0 男  1 女  2 保密
@@ -137,11 +137,11 @@ public class SysUser extends BasicEntity<String> {
         this.uPassword = uPassword == null ? null : uPassword.trim();
     }
 
-    public Integer getuPhone() {
+    public String getuPhone() {
         return uPhone;
     }
 
-    public void setuPhone(Integer uPhone) {
+    public void setuPhone(String uPhone) {
         this.uPhone = uPhone;
     }
 

@@ -82,6 +82,10 @@ public class UserAction extends BasicAction<SysUser> {
             //编辑
         }else {
             //新增
+            System.out.println(entity.getuLoginid());
+            System.out.println(entity.getuPassword());
+            System.out.println(entity.getuPhone());
+            System.out.println(entity.getuEmail());
             userSysService.saveAndUpdate(entity);
             result = new Result(true,"新增成功");
         }
