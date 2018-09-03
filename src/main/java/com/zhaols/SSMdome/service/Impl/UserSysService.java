@@ -40,7 +40,7 @@ public class UserSysService implements IUserSysService {
         if(StringUtils.isNotEmpty(entity.getuId())){
             //编辑
             entity.updateEntity();
-            sysUserMapper.updateByPrimaryKey(entity);
+            sysUserMapper.updateByPrimaryKeySelective(entity);
         }else {
             //新增
             entity.setuId(CommonUtils.getUUID());
@@ -50,5 +50,10 @@ public class UserSysService implements IUserSysService {
             sysUserMapper.insertSelective(entity);
         }
 
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        sysUserMapper.deleteByPrimaryKey(id);
     }
 }

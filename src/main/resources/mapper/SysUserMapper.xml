@@ -42,8 +42,8 @@
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from SYS_USER
-    where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+    update SYS_USER set U_USERSTATEID = '33'
+    where U_ID = #{Id,jdbcType=VARCHAR}
   </delete>
     <!--根据 登录名查询用户信息-->
   <select id="getUserByUloginid" resultMap="ResultSysUserMap" parameterType="java.lang.String">
@@ -230,8 +230,8 @@
       <if test="uPassword != null" >
         U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
       </if>
-      <if test="uSignature != null" >
-        U_SIGNATURE = #{uSignature,jdbcType=VARCHAR},
+      <if test="uPhone != null" >
+        U_PHONE = #{uPhone,jdbcType=VARCHAR},
       </if>
       <if test="uSex != null" >
         U_SEX = #{uSex,jdbcType=DECIMAL},
@@ -252,16 +252,16 @@
         U_HEADPORTRAIT = #{uHeadportrait,jdbcType=VARCHAR},
       </if>
       <if test="uAge != null" >
-        U_AGE = #{uAge,jdbcType=DECIMAL},
+        U_AGE = #{uAge,jdbcType=INTEGER},
       </if>
       <if test="uUserstateid != null" >
         U_USERSTATEID = #{uUserstateid,jdbcType=VARCHAR},
       </if>
       <if test="uRank != null" >
-        U_RANK = #{uRank,jdbcType=DECIMAL},
+        U_RANK = #{uRank,jdbcType=INTEGER},
       </if>
       <if test="uScore != null" >
-        U_SCORE = #{uScore,jdbcType=DECIMAL},
+        U_SCORE = #{uScore,jdbcType=INTEGER},
       </if>
       <if test="uRegistertime != null" >
         U_REGISTERTIME = #{uRegistertime,jdbcType=TIMESTAMP},
@@ -276,33 +276,30 @@
         U_ACTIVATECODE = #{uActivatecode,jdbcType=VARCHAR},
       </if>
       <if test="uSalt != null" >
-        U_SALT = #{uSalt,jdbcType=VARCHAR},
+        U_SALT = #{uSalt,jdbcType=INTEGER},
+      </if>
+      <if test="uRate != null" >
+        U_RATE = #{uRate,jdbcType=INTEGER},
+      </if>
+      <if test="updator != null" >
+        UPDATOR = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        UPDATOR_NAME = #{updatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where U_ID = #{uId,jdbcType=VARCHAR}
-      and U_LOGINID = #{uLoginid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysUser" >
-    update SYS_USER
-    set U_NICKNAME = #{uNickname,jdbcType=VARCHAR},
-      U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
-      U_SIGNATURE = #{uSignature,jdbcType=VARCHAR},
-      U_SEX = #{uSex,jdbcType=DECIMAL},
-      U_BIRTHDAY = #{uBirthday,jdbcType=TIMESTAMP},
-      U_NAME = #{uName,jdbcType=VARCHAR},
-      U_EMAIL = #{uEmail,jdbcType=VARCHAR},
-      U_INTRO = #{uIntro,jdbcType=VARCHAR},
-      U_HEADPORTRAIT = #{uHeadportrait,jdbcType=VARCHAR},
-      U_AGE = #{uAge,jdbcType=DECIMAL},
-      U_USERSTATEID = #{uUserstateid,jdbcType=VARCHAR},
-      U_RANK = #{uRank,jdbcType=DECIMAL},
-      U_SCORE = #{uScore,jdbcType=DECIMAL},
-      U_REGISTERTIME = #{uRegistertime,jdbcType=TIMESTAMP},
-      U_LOGINTIME = #{uLogintime,jdbcType=TIMESTAMP},
-      U_LOGINIP = #{uLoginip,jdbcType=VARCHAR},
-      U_ACTIVATECODE = #{uActivatecode,jdbcType=VARCHAR},
-      U_SALT = #{uSalt,jdbcType=VARCHAR}
-    where U_ID = #{uId,jdbcType=VARCHAR}
-      and U_LOGINID = #{uLoginid,jdbcType=VARCHAR}
   </update>
 </mapper>

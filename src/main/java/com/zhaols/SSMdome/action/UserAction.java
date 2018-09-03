@@ -80,16 +80,33 @@ public class UserAction extends BasicAction<SysUser> {
     public String saveAndUpdate(){
         if(StringUtils.isNotEmpty(entity.getuId())){
             //编辑
+            try{
+                userSysService.saveAndUpdate(entity);
+                result = new Result(true,"编辑成功");
+            }catch(Exception e ){
+                e.printStackTrace();
+                result = new Result(false,"编辑失败");
+            }
         }else {
             //新增
-            System.out.println(entity.getuLoginid());
-            System.out.println(entity.getuPassword());
-            System.out.println(entity.getuPhone());
-            System.out.println(entity.getuEmail());
-            userSysService.saveAndUpdate(entity);
-            result = new Result(true,"新增成功");
+            try{
+                userSysService.saveAndUpdate(entity);
+                result = new Result(true,"新增成功");
+            }catch(Exception e ){
+                result = new Result(false,"新增失败");
+            }
         }
-
+        return RESULT;
+    }
+    public String delete(){
+        String id = getHttpServletRequest().getParameter("id");
+        try{
+            userSysService.deleteUser(id);
+            result = new Result(true,"删除成功");
+        }catch(Exception e ){
+            e.printStackTrace();
+            result = new Result(false,"删除失败");
+        }
         return RESULT;
     }
 

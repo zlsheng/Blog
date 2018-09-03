@@ -15,4 +15,6 @@ public interface IUserSysService {
     List<SysUser> getUserList();
 
     void saveAndUpdate(SysUser entity);
+
+    void deleteUser(String id);
 }

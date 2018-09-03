@@ -41,11 +41,11 @@
                     <#-- onclick="openUserView('edit')"-->
                     <button class="layui-btn layui-btn-sm" onclick="openUserView('edit')" ><i class="layui-icon" >&#xe642;</i>编辑</button>
                     &nbsp;
-                    <button class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
+                    <button class="layui-btn layui-btn-warm layui-btn-sm" onclick="deleteUser()"><i class="layui-icon">&#xe640;</i>删除</button>
                     &nbsp;
                     <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh"><i class="layui-icon">&#xe669;</i>刷新</button>
                     &nbsp;
-                    <button id="refresh" class="layui-btn  layui-btn-danger layui-btn-sm closed"><i class="layui-icon">&#x1006;</i>关闭</button>
+                    <button  class="layui-btn  layui-btn-danger layui-btn-sm closed"><i class="layui-icon">&#x1006;</i>关闭</button>
                 </div>
                 <div class="layui-form">
                     <table class="layui-table" lay-filter="user_table" >
@@ -70,7 +70,7 @@
                          <tr>
                              <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${sysUser.uId}"></td>
                              <td style="text-align:center;vertical-align:middle;">${sysUser.uLoginid!}</td>
-                             <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!defalut.jpg}" style="display: inline-block; width: 50px ; height: 50px;"></td>
+                             <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!'defalut.jpg'}" style="display: inline-block; width: 50px ; height: 50px;"></td>
                              <td style="text-align:center;vertical-align:middle;">${sysUser.uNickname!}</td>
                              <td style="text-align:center;vertical-align:middle;">
                                 <#if sysUser.uSex?? >
@@ -99,10 +99,15 @@
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script src="${base}/layui/lay/js/myJs.js" charset="UTF-8"></script>
 <script>
-    layui.use(['form','table','rate'], function(){
+    layui.use(['form','table','rate','element','jquery'], function(){
         var form = layui.form,
                 table = layui.table,
-                rate = layui.rate;
+                rate = layui.rate,
+                $=layui.$;
+
+        form.on('click(delete_user)',function () {
+            alert("sdadsad");
+        })
 
     });
     function openUserView(type) {
@@ -135,18 +140,42 @@
             offset:'70px'
         });
     }
-    function test() {
-        var ids = layui.$("input:checkbox[name='checkbox']:checked");
-        if(ids.size() == 1){
-            layer.msg(ids.val());
-        }else{
+    function deleteUser() {
+
+        var id = layui.$("input:checkbox[name='checkbox']:checked");
+        if(id.size() != 1){
             layer.msg('请选择一条数据', {
                 icon:2,
                 time: 2000,
-                offset:'50px'
+                offset:'70px'
             });
+            return;
         }
-    }
 
+        layer.confirm('确定要删除吗', {icon: 3, title:'警告', offset:'70px'}, function(index){
+                url = '${base}/system/user_delete.do?id=' + id.val();
+                layui.$.ajax({
+                    url: url,
+                    type: 'post',
+                    success: function (result) {
+                        if (result.statusCode == 200) {
+                            layer.msg(result.message, {
+                                icon: 1,
+                                time: 2000,
+                                offset: '20px'
+                            }, function () {
+                                layui.$("#refresh").click();
+                            })
+                        } else if (result.statusCode == 300) {
+                            layer.msg(result.message, {
+                                icon: 2,
+                                time: 2000,
+                                offset: '20px'
+                            });
+                        }
+                    }
+                });
+        });
+    }
 
 </script>
