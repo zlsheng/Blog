@@ -16,7 +16,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                         <i class="layui-icon layui-icon-friends" style="font-size: 20px; "></i>
-                        欢迎您【 ${activeUser.username}】
+                        欢迎您【 ${activeUser.username!}】
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -64,7 +64,7 @@
 
     <div class="layui-body" style="background:#ffffff">
     <#--lay-allowClose="true"  显示关闭按钮-->
-        <div class="layui-tab layui-tab-brief" lay-unauto  lay-filter="Home_tab" lay-allowClose="true" >
+        <div class="layui-tab layui-tab-brief"   lay-filter="Home_tab" lay-allowClose="true" >
             <ul class="layui-tab-title" >
                 <li class="layui-this" id="home_page" >首页</li>
             </ul>

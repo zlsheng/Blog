@@ -1,7 +1,9 @@
 package com.zhaols.SSMdome.service.Impl;
 
+import com.zhaols.SSMdome.entity.SysRoleUserKey;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
+import com.zhaols.SSMdome.mapper.SysRoleUserMapper;
 import com.zhaols.SSMdome.mapper.SysUserMapper;
 import com.zhaols.SSMdome.service.IUserSysService;
 import com.zhaols.SSMdome.utils.CommonUtils;
@@ -22,6 +24,9 @@ public class UserSysService implements IUserSysService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private SysRoleUserMapper sysRoleUserMapper;
 
     @Autowired
     private SysResourcesMapper sysResourcesMapper;
@@ -48,6 +53,11 @@ public class UserSysService implements IUserSysService {
             entity.createEntity();
             entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getuSalt()));
             sysUserMapper.insertSelective(entity);
+            //新增用户默认赋予 普通用户 的角色
+            SysRoleUserKey sysRoleUserKey = new SysRoleUserKey();
+            sysRoleUserKey.setUserId(entity.getuId());
+            sysRoleUserKey.setRoleId("PTYH");
+            sysRoleUserMapper.insert(sysRoleUserKey);
         }
 
     }

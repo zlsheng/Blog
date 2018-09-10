@@ -157,19 +157,20 @@
                 layui.$.ajax({
                     url: url,
                     type: 'post',
-                    success: function (result) {
-                        if (result.statusCode == 200) {
-                            layer.msg(result.message, {
-                                icon: 1,
-                                time: 2000,
+                    dataType:"json",
+                    success:function(result) {
+                        if(result.statusCode == 200){
+                            layer.msg(result.message,{
+                                icon:1,
+                                time:1500,
                                 offset: '20px'
-                            }, function () {
+                            },function () {
                                 layui.$("#refresh").click();
                             })
-                        } else if (result.statusCode == 300) {
-                            layer.msg(result.message, {
-                                icon: 2,
-                                time: 2000,
+                        }else if(result.statusCode == 300){
+                            layer.msg(result.message,{
+                                icon:2,
+                                time:2000,
                                 offset: '20px'
                             });
                         }
