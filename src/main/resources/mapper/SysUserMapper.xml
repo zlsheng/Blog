@@ -302,4 +302,7 @@
     </set>
     where U_ID = #{uId,jdbcType=VARCHAR}
   </update>
+  <update id="amendLoginInfo" parameterType="java.util.HashMap">
+    UPDATE SYS_USER SET U_LOGINIP = #{loginIp,jdbcType=VARCHAR} , U_LOGINTIME = SYSDATE WHERE U_LOGINID = #{username,jdbcType=VARCHAR}
+  </update>
 </mapper>

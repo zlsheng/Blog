@@ -8,15 +8,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.zhaols.SSMdome.service.IUserSysService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Date;
 
 public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
     //private static final Logger LOG = LoggerFactory.getLogger(CaptchaFormAuthenticationFilter.class);
     public static final String DEFAULT_CAPTCHA_PARAM = "captcha";
+
+    @Autowired
+    private IUserSysService userSysService;
 
     private String captchaParam = DEFAULT_CAPTCHA_PARAM;
 
@@ -58,6 +65,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
 		HttpServletRequest httpRequest=(HttpServletRequest)request;
+        userSysService.amendLoginInfo(getUsername(request),getIpAddress(httpRequest),new Date());
 		httpResponse.sendRedirect(httpRequest.getContextPath() + "/admin/login_index.do");
 		return true;
 		//return super.onLoginSuccess(token, subject, request, response);
@@ -71,7 +79,20 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         this.captchaParam = captchaParam;
     }
 
-    protected String getCaptcha(ServletRequest request) {
+    private String getCaptcha(ServletRequest request) {
         return WebUtils.getCleanParam(request, getCaptchaParam());
+    }
+    private String getIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+            ip = request.getRemoteAddr();
+        }
+        return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
     }
 }

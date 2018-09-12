@@ -93,7 +93,6 @@ public class MyRemalm extends AuthorizingRealm {
         activeUser.setUserid(sysUser.getuId());
         activeUser.setUserCode(sysUser.getuLoginid());
         activeUser.setUsername(sysUser.getuName());
-
         // 根据用户id取出菜单
         List<SysResources> menus = null;
         try {

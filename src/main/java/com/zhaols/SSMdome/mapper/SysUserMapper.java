@@ -4,6 +4,7 @@ import com.zhaols.SSMdome.entity.SysUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface SysUserMapper {
@@ -47,4 +48,12 @@ public interface SysUserMapper {
     SysUser getUserByUloginid(String username);
 
     List<SysUser> getAll();
+
+    /**
+    *   功能描述: 修改用户登录信息
+    *
+    *@Author: zhaols
+    *@CreateTime: 2018-09-12  15:58
+    */
+    void amendLoginInfo(Map map);
 }

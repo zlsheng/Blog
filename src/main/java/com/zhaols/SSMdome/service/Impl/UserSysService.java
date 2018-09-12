@@ -12,7 +12,10 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhaols
@@ -31,6 +34,7 @@ public class UserSysService implements IUserSysService {
     @Autowired
     private SysResourcesMapper sysResourcesMapper;
 
+    @Override
     public SysUser getUserById(String id) throws Exception{
         return sysUserMapper.selectByPrimaryKey(id);
     }
@@ -65,5 +69,14 @@ public class UserSysService implements IUserSysService {
     @Override
     public void deleteUser(String id) {
         sysUserMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void amendLoginInfo(String username,String loginIp, Date loginTime) {
+        Map map = new HashMap();
+        map.put("loginIp",loginIp);
+        map.put("loginTime",loginTime);
+        map.put("username",username);
+        sysUserMapper.amendLoginInfo(map);
     }
 }
