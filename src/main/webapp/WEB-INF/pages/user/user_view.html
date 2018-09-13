@@ -8,7 +8,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red">*</span>登录名</label>
             <div class="layui-input-inline">
-                <input type="text" name="uLoginid"   lay-verify="loginName" value="${sysUser.uLoginid!}" placeholder="请输入登录名" autocomplete="off" class="layui-input">
+                <input type="text" name="userName" <#if type == 'edit'>disabled</#if>   lay-verify="loginName" value="${sysUser.userName!}" placeholder="请输入登录名" autocomplete="off" class="layui-input <#if type == 'edit'>layui-disabled</#if>">
             </div>
         </div>
         <#if type == 'add'>

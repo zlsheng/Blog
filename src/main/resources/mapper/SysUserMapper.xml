@@ -3,7 +3,7 @@
 <mapper namespace="com.zhaols.SSMdome.mapper.SysUserMapper" >
   <resultMap id="ResultSysUserMap" type="com.zhaols.SSMdome.entity.SysUser" >
     <id column="U_ID" property="uId" jdbcType="VARCHAR" />
-    <result column="U_LOGINID" property="uLoginid" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="U_NICKNAME" property="uNickname" jdbcType="VARCHAR" />
     <result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
     <result column="U_PHONE" property="uPhone" jdbcType="VARCHAR" />
@@ -29,11 +29,12 @@
     <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
     <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="BASE64_PASSWORD" jdbcType="VARCHAR" property="base64Password" />
   </resultMap>
   <sql id="Base_Column_List" >
-    U_ID, U_LOGINID, U_NICKNAME, U_PASSWORD, U_PHONE, U_SEX, U_BIRTHDAY, U_NAME,
+    U_ID, USER_NAME, U_NICKNAME, U_PASSWORD, U_PHONE, U_SEX, U_BIRTHDAY, U_NAME,
     U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
-    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE,UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME
+    U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE,UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME,BASE64_PASSWORD
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultSysUserMap" parameterType="java.lang.String" >
     select
@@ -47,7 +48,7 @@
   </delete>
     <!--根据 登录名查询用户信息-->
   <select id="getUserByUloginid" resultMap="ResultSysUserMap" parameterType="java.lang.String">
-    select * from SYS_USER where U_LOGINID = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
+    select * from SYS_USER where USER_NAME = #{username,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
   <select id="getAll" resultMap="ResultSysUserMap" >
     SELECT * FROM SYS_USER WHERE U_USERSTATEID = '11' order by U_SCORE desc
@@ -58,8 +59,8 @@
       <if test="uId != null" >
         U_ID,
       </if>
-      <if test="uLoginid != null" >
-        U_LOGINID,
+      <if test="userName != null" >
+          USER_NAME,
       </if>
       <if test="uNickname != null" >
         U_NICKNAME,
@@ -136,13 +137,16 @@
       <if test="createTime != null" >
         CREATE_TIME,
       </if>
+      <if test="base64Password != null" >
+        BASE64_PASSWORD,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uId != null" >
         #{uId,jdbcType=VARCHAR},
       </if>
-      <if test="uLoginid != null" >
-        #{uLoginid,jdbcType=VARCHAR},
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
       </if>
       <if test="uNickname != null" >
         #{uNickname,jdbcType=VARCHAR},
@@ -218,6 +222,9 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="base64Password != null" >
+        #{base64Password,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -299,10 +306,13 @@
       <if test="createTime != null" >
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="base64Password != null" >
+        BASE64_PASSWORD = #{base64Password,jdbcType=VARCHAR},
+      </if>
     </set>
     where U_ID = #{uId,jdbcType=VARCHAR}
   </update>
   <update id="amendLoginInfo" parameterType="java.util.HashMap">
-    UPDATE SYS_USER SET U_LOGINIP = #{loginIp,jdbcType=VARCHAR} , U_LOGINTIME = SYSDATE WHERE U_LOGINID = #{username,jdbcType=VARCHAR}
+    UPDATE SYS_USER SET U_LOGINIP = #{loginIp,jdbcType=VARCHAR} , U_LOGINTIME = SYSDATE WHERE USER_NAME = #{username,jdbcType=VARCHAR}
   </update>
 </mapper>

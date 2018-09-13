@@ -6,6 +6,8 @@
     <mapper resource="mapper/SysUserMapper.xml"/>
     <mapper resource="mapper/SysResourcesMapper.xml"/>
     <mapper resource="mapper/SysRoleMapper.xml"/>
+    <mapper resource="mapper/SysRoleUserMapper.xml"/>
+    <mapper resource="mapper/SysRoleResourcesMapper.xml"/>
 </mappers>
 
 </configuration>

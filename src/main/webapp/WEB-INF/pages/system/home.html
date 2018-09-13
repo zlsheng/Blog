@@ -19,8 +19,8 @@
                         欢迎您【 ${activeUser.username!}】
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a onclick="viewUserInfo()">个人资料</a></dd>
+                    <dd><a onclick="changeUserPassword()">修改密码</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="${base}/logout.do">注销登录</a></li>
@@ -123,5 +123,26 @@
             }
         }
         window.tools = _tools;
+
+
     });
+
+    function viewUserInfo() {
+        var userId = ${activeUser.userid};
+        url = '${base}/system/user_viewUserInfo.do';
+        var exist=layui.$("li[lay-id='tab_" + 'UserInfo' + "']").length;
+        if(exist < 1 ) {
+            layui.element.tabAdd('Home_tab', {
+                title: '个人资料'
+                , content: '<iframe src=' + url + ' width="100%" height="89%" scrolling="no" frameborder="0"></iframe>'
+                , id: 'tab_' + 'UserInfo'
+            });
+        }
+        layui.element.tabChange('Home_tab', 'tab_' + 'UserInfo');
+    }
+
+    function changeUserPassword() {
+        var userId = ${activeUser.userid};
+        layer.msg(userId);
+    }
 </script>

@@ -110,6 +110,9 @@ public class UserAction extends BasicAction<SysUser> {
         return RESULT;
     }
 
+    public String viewUserInfo(){
+        return "viewUserInfo";
+    }
     public SysUser getSysUser() {
         return sysUser;
     }

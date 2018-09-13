@@ -8,7 +8,7 @@ public class SysUser extends BasicEntity<String> {
 
     private String uId;
 
-    private String uLoginid;
+    private String userName;
 
     /**
      * 昵称
@@ -104,6 +104,8 @@ public class SysUser extends BasicEntity<String> {
      * 评分等级
      */
     private Integer uRate;
+
+    private String base64Password;
 
     /**
      * 昵称
@@ -393,14 +395,6 @@ public class SysUser extends BasicEntity<String> {
         this.uId = uId;
     }
 
-    public String getuLoginid() {
-        return uLoginid;
-    }
-
-    public void setuLoginid(String uLoginid) {
-        this.uLoginid = uLoginid;
-    }
-
     public Integer getuRate() {
         return uRate;
     }
@@ -409,4 +403,19 @@ public class SysUser extends BasicEntity<String> {
         this.uRate = uRate;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBase64Password() {
+        return base64Password;
+    }
+
+    public void setBase64Password(String base64Password) {
+        this.base64Password = base64Password;
+    }
 }

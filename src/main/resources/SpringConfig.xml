@@ -99,7 +99,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                 /validatecode.jsp = anon-->
                 /admin/login_error.do = anon
                 /admin/login_toRegistration.do = anon
-                /admin/login_Registration.do = anon
+                /admin/login_registration.do = anon
                 /images/kaptcha.jpg = anon
                 /logout.do = logout
                 /admin/login_logout.do = anon

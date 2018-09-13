@@ -1,6 +1,10 @@
 package com.zhaols.SSMdome.utils;
 
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.shiro.crypto.hash.SimpleHash;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author zhaols
@@ -8,6 +12,11 @@ import org.apache.shiro.crypto.hash.SimpleHash;
  * @date 2018-09-03 13:51
  */
 public class CommonUtils {
+    private final static String DES_KEY = "ssmDome";
+    private final static String DES = "DES";
+    private final static String ENCODE = "UTF-8";
+
+
     public static String getUUID(){
         String UUID = "";
         String pass = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -28,4 +37,37 @@ public class CommonUtils {
         Object obj = new SimpleHash("MD5", oldPW, uSalt, 1024);
         return obj.toString();
     }
+
+    /**
+     * 对给定的字符串进行base64解码操作
+     */
+    public static String decodeData(String inputData) {
+        try {
+            if (null == inputData) {
+                return null;
+            }
+            return new String(Base64.decodeBase64(inputData.getBytes(ENCODE)), ENCODE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 对给定的字符串进行base64加密操作
+     */
+    public static String encodeData(String inputData) {
+        try {
+            if (null == inputData) {
+                return null;
+            }
+            return new String(Base64.encodeBase64(inputData.getBytes(ENCODE)), ENCODE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

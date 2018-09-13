@@ -9,6 +9,7 @@
             <result name="success" type="freemarker">/WEB-INF/pages/system/userHome.html</result>
             <result name="userList" type="freemarker">/WEB-INF/pages/user/user_list.html</result>
             <result name="toAddOrEdit" type="freemarker">/WEB-INF/pages/user/user_view.html</result>
+            <result name="viewUserInfo" type="freemarker">/WEB-INF/pages/user/user_info.html</result>
             <result name="json" type="json">
                 <param name="root">map</param>
             </result>
