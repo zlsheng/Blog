@@ -1,1 +1,131 @@
-<h1>测试</h1>
+<#include "../common/_public.html"/>
+    <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+
+<title>设置我的资料</title>
+<form class="layui-form">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">设置我的资料</div>
+                <div class="layui-card-body" pad15>
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">用户名</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="username" value="${entity.userName!}" disabled readonly class="layui-input layui-disabled">
+                                    </div>
+                                    <label class="layui-form-label">我的角色</label>
+                                    <div class="layui-input-inline">
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="role" value="${role!}" disabled readonly autocomplete="off" class="layui-input layui-disabled">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">昵称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="uNickname" value="${entity.uNickname!}" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">真实姓名</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="uName" value="${entity.uName!}"  autocomplete="off" placeholder="请输入姓名" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">出生年月</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="uBirthday"  id="user_birthday_info" class="layui-input">
+                                    </div>
+                                    <label class="layui-form-label">性别</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="uSex" value="0" title="男"<#if entity.uSex?? && entity.uSex == '0'>checked</#if>>
+                                        <input type="radio" name="uSex" value="1" title="女" <#if entity.uSex?? && entity.uSex == '1'>checked</#if>>
+                                        <input type="radio" name="uSex" value="2" title="保密" <#if entity.uSex?? && entity.uSex == '2'>checked</#if>>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">手机</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="uPhone" value="${entity.uPhone!}" lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">邮箱</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="uEmail" value="${entity.uEmail!}" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6">
+                                <input type="hidden" id="uHeadportrait" name="uHeadportrait" >
+                                <label class="layui-form-label">头像</label>
+                                <img src="${base}/layui/images/avatar/${entity.uHeadportrait!'admin.jpg'}" style="height: 300px; width:300px;">
+                                    <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+                                        <i class="layui-icon">&#xe67c;</i>上传图片
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">简介</label>
+                            <div class="layui-input-block">
+                                <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <center>
+                            <input type="hidden" id="rate_curr" value="${entity.uRate!}">
+                            <font style="font-weight: bold" size="4"> 等 级：【<span style="color: blue">${entity.uRank!}</span>】<font>
+                                &emsp;&emsp;
+                            <font style="font-weight: bold" size="4"> 积 分：【<span style="color: blue">${entity.uScore!}</span>】<font>
+                                &emsp;&emsp;
+                            <font style="font-weight: bold" size="4"> 评 分：<font><div id="user_rate_info"></div>
+                            </center>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    layui.use(['laydate','layer','form','rate'], function(){
+        var rate = layui.rate,
+                layer = layui.layer,
+                form = layui.form,
+                $ = layui.$,
+                laydate = layui.laydate;
+        var rate_value = $("#rate_curr").val();
+        laydate.render({
+            elem: '#user_birthday_info' //指定元素
+            ,range: '-'
+            ,format: 'yyyy-MM-dd'
+        });
+        rate.render({
+            elem: '#user_rate_info'  //绑定元素
+            ,length:5
+            ,value:rate_value
+            ,half:true
+            ,readonly:true
+        });
+
+    });
+</script>
