@@ -5,6 +5,7 @@ import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.shiro.CaptchaException;
+import com.zhaols.SSMdome.utils.Result;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -54,6 +55,20 @@ public class LoginAction extends BasicAction<SysUser> {
         activeUser = (ActiveUser) subject.getPrincipal();
 
         return "success";
+    }
+    public String toRegistration(){
+        return "toRegistration";
+    }
+    /**
+    *   功能描述: 注册方法
+    *
+    *@Author: zhaols
+    *@CreateTime: 2018-09-12  17:32
+    */
+    public String Registration(){
+        result = new Result(true,"注册成功");
+        return RESULT;
+        
     }
     public String getTestPage(){
         return "test";
