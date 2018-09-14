@@ -22,7 +22,7 @@
     <result column="U_LOGINIP" property="uLoginip" jdbcType="VARCHAR" />
     <result column="U_ACTIVATECODE" property="uActivatecode" jdbcType="VARCHAR" />
     <result column="U_SALT" property="uSalt" jdbcType="VARCHAR" />
-    <result column="U_RATE" property="uRate" jdbcType="INTEGER" />
+    <result column="U_RATE" property="uRate" jdbcType="DOUBLE" />
     <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
     <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
@@ -37,9 +37,7 @@
     U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE,UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME,BASE64_PASSWORD
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultSysUserMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from SYS_USER
+    select * from SYS_USER
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

@@ -18,8 +18,8 @@
                         欢迎您【 ${activeUser.username!}】
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a onclick="viewUserInfo()">个人资料</a></dd>
-                    <dd><a onclick="changeUserPassword()">修改密码</a></dd>
+                    <dd><a onclick="viewUserInfo()" class="layui-from-a">个人资料</a></dd>
+                    <dd><a onclick="changeUserPassword()" class="layui-from-a">修改密码</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="${base}/logout.do">注销登录</a></li>
@@ -128,7 +128,7 @@
 
     function viewUserInfo() {
         var userId = ${activeUser.userid};
-        url = '${base}/system/user_viewUserInfo.do';
+        url = '${base}/system/user_viewUserInfo.do?id=' + userId;
         var exist=layui.$("li[lay-id='tab_" + 'UserInfo' + "']").length;
         if(exist < 1 ) {
             layui.element.tabAdd('Home_tab', {

@@ -4,9 +4,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.zhaols.SSMdome.utils.GenericsUtils;
+import com.zhaols.SSMdome.utils.ResponseBean;
 import com.zhaols.SSMdome.utils.Result;
 import org.apache.struts2.ServletActionContext;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 public class BasicAction<T extends Entity> extends ActionSupport implements Preparable, ModelDriven {
     public static final String RESULT="result";
+    public static final String RESPONSEBEAN="responseBean";
 
     /**
      * 业务对象
@@ -36,6 +39,8 @@ public class BasicAction<T extends Entity> extends ActionSupport implements Prep
     protected long totalCount;
 
     public Result result;
+
+    public ResponseBean responseBean;
 
     protected List entitys = new ArrayList();
     @Override
@@ -120,5 +125,8 @@ public class BasicAction<T extends Entity> extends ActionSupport implements Prep
     }
     public HttpServletRequest getHttpServletRequest(){
         return ServletActionContext.getRequest();
+    }
+    public ServletContext getServletContext(){
+        return ServletActionContext.getServletContext();
     }
 }

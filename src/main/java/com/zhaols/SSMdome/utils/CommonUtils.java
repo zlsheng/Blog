@@ -3,7 +3,6 @@ package com.zhaols.SSMdome.utils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.shiro.crypto.hash.SimpleHash;
-
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -15,13 +14,15 @@ public class CommonUtils {
     private final static String DES_KEY = "ssmDome";
     private final static String DES = "DES";
     private final static String ENCODE = "UTF-8";
+    private final static int UID_LENGTH = 30;
+    private final static int FILE_NAME_LENGTH = 10;
 
 
     public static String getUUID(){
         String UUID = "";
         String pass = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        char[] text = new char[30];
-        for(int i = 0;i < 30; i++){
+        char[] text = new char[UID_LENGTH];
+        for(int i = 0;i < UID_LENGTH; i++){
             text [i] = pass.charAt((int) (Math.random() * pass.length()));
         }
         return new String(text);
@@ -68,6 +69,16 @@ public class CommonUtils {
         }
 
         return null;
+    }
+
+    public static String getFileName(){
+        String fileName = "";
+        String name = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        char[] text = new char[FILE_NAME_LENGTH];
+        for(int i = 0;i < FILE_NAME_LENGTH; i++){
+            text [i] = name.charAt((int) (Math.random() * name.length()));
+        }
+        return "avatar_" + new String(text);
     }
 
 }

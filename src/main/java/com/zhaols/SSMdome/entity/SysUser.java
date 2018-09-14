@@ -103,7 +103,7 @@ public class SysUser extends BasicEntity<String> {
     /**
      * 评分等级
      */
-    private Integer uRate;
+    private double uRate;
 
     private String base64Password;
 
@@ -395,11 +395,11 @@ public class SysUser extends BasicEntity<String> {
         this.uId = uId;
     }
 
-    public Integer getuRate() {
+    public double getuRate() {
         return uRate;
     }
 
-    public void setuRate(Integer uRate) {
+    public void setuRate(double uRate) {
         this.uRate = uRate;
     }
 

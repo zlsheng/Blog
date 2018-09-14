@@ -11,10 +11,11 @@
                 <div class="layui-card-body" pad15>
                     <div class="layui-fluid">
                         <div class="layui-row">
-                            <div class="layui-col-md6">
+                            <div class="layui-col-sm6">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">用户名</label>
                                     <div class="layui-input-inline">
+                                        <input type="hidden" id="user_info_id" value="${entity.uId!}" name="uId">
                                         <input type="text" name="username" value="${entity.userName!}" disabled readonly class="layui-input layui-disabled">
                                     </div>
                                     <label class="layui-form-label">我的角色</label>
@@ -42,13 +43,17 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">出生年月</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="uBirthday"  id="user_birthday_info" class="layui-input">
+                                        <#--<input type="text" class="layui-input" required name="" id="user_birthday_info">-->
+                                        <input type="text" name="uBirthday" value="${entity.uBirthday?string('yyyy-MM-dd HH:mm:ss')!}" readonly id="user_birthday_info" class="layui-input">
                                     </div>
+
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">性别</label>
                                     <div class="layui-input-block">
-                                        <input type="radio" name="uSex" value="0" title="男"<#if entity.uSex?? && entity.uSex == '0'>checked</#if>>
-                                        <input type="radio" name="uSex" value="1" title="女" <#if entity.uSex?? && entity.uSex == '1'>checked</#if>>
-                                        <input type="radio" name="uSex" value="2" title="保密" <#if entity.uSex?? && entity.uSex == '2'>checked</#if>>
+                                        <input type="radio" name="uSex" value="0" title="男"<#if entity.uSex?? && entity.uSex == 0>checked</#if>>
+                                        <input type="radio" name="uSex" value="1" title="女" <#if entity.uSex?? && entity.uSex == 1>checked</#if>>
+                                        <input type="radio" name="uSex" value="2" title="保密" <#if entity.uSex?? && entity.uSex == 2>checked</#if>>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -56,20 +61,19 @@
                                     <div class="layui-input-inline">
                                         <input type="text" name="uPhone" value="${entity.uPhone!}" lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
+
                                     <label class="layui-form-label">邮箱</label>
                                     <div class="layui-input-inline">
                                         <input type="text" name="uEmail" value="${entity.uEmail!}" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-md6">
+                            <div class="layui-col-sm6">
                                 <input type="hidden" id="uHeadportrait" name="uHeadportrait" >
                                 <label class="layui-form-label">头像</label>
-                                <img src="${base}/layui/images/avatar/${entity.uHeadportrait!'admin.jpg'}" style="height: 300px; width:300px;">
+                                <img id="user_headportrait_info" src="${base}/layui/images/avatar/${entity.uHeadportrait!'admin.jpg'}" style="height: 300px; width:300px;">
                                     <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
-                                        <i class="layui-icon">&#xe67c;</i>上传图片
+                                        <i class="layui-icon">&#xe67c;</i>选择图片
                                     </button>
                                 </div>
                             </div>
@@ -81,16 +85,14 @@
                                 <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
                             </div>
                         </div>
-                        <div class="layui-form-item">
                             <center>
-                            <input type="hidden" id="rate_curr" value="${entity.uRate!}">
-                            <font style="font-weight: bold" size="4"> 等 级：【<span style="color: blue">${entity.uRank!}</span>】<font>
+                            <input type="hidden" id="rate_curr_info" value="${entity.uRate!'0'}">
+                            <font style="font-weight: bold" size="3"> 等 级：【<span style="color: blue">${entity.uRank!'1'}</span>】<font>
                                 &emsp;&emsp;
-                            <font style="font-weight: bold" size="4"> 积 分：【<span style="color: blue">${entity.uScore!}</span>】<font>
+                            <font style="font-weight: bold" size="3"> 积 分：【<span style="color: blue">${entity.uScore!'0'}</span>】<font>
                                 &emsp;&emsp;
-                            <font style="font-weight: bold" size="4"> 评 分：<font><div id="user_rate_info"></div>
+                            <font style="font-weight: bold" size="3"> 评 分：<font><div id="user_rate_info"/>
                             </center>
-                        </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
                                 <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
@@ -98,7 +100,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -107,17 +108,18 @@
 </form>
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script>
-    layui.use(['laydate','layer','form','rate'], function(){
+    layui.use(['laydate','layer','form','rate','upload'], function(){
         var rate = layui.rate,
                 layer = layui.layer,
                 form = layui.form,
                 $ = layui.$,
-                laydate = layui.laydate;
-        var rate_value = $("#rate_curr").val();
+                laydate = layui.laydate,
+                upload = layui.upload;
+        var rate_value = $("#rate_curr_info").val();
+        var user_info_id = $("#user_info_id").val();
         laydate.render({
             elem: '#user_birthday_info' //指定元素
-            ,range: '-'
-            ,format: 'yyyy-MM-dd'
+            ,type: 'datetime'
         });
         rate.render({
             elem: '#user_rate_info'  //绑定元素
@@ -126,6 +128,37 @@
             ,half:true
             ,readonly:true
         });
+        //执行实例
 
+        var uploadInst = upload.render({
+            elem: '#LAY_avatarUpload' //绑定元素
+            ,url: '${base}/upload/upload_uploadImage.do' //上传接口
+            ,accept:'images'
+            ,exts:'jpg|png|gif'
+            ,data:{id:user_info_id}
+            // ,acceptMime:'image/jpeg ,image/jpg, image/png'
+            ,before: function(obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    console.log(index); //得到文件索引
+                    console.log(file); //得到文件对象
+                    console.log(result); //得到文件base64编码，比如图片
+                    $('#user_headportrait_info').attr('src', result); //图片链接（base64）
+                })
+            }
+            ,done: function(result){
+                    if(result.statusCode == 200){
+                        layer.msg(result.message,{
+                            icon:1,
+                            time:1500,
+                        })
+                    }else if(result.statusCode == 300){
+                        layer.msg(result.message,{
+                            icon:2,
+                            time:2000,
+                        });
+                    }
+            }
+        });
     });
 </script>

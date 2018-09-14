@@ -111,6 +111,10 @@ public class UserAction extends BasicAction<SysUser> {
     }
 
     public String viewUserInfo(){
+        String id = getHttpServletRequest().getParameter("id");
+        if(StringUtils.isNotEmpty(id)){
+        entity = userSysService.getUserById(id);
+        }
         return "viewUserInfo";
     }
     public SysUser getSysUser() {
