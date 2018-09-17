@@ -20,9 +20,6 @@ public class UserAction extends BasicAction<SysUser> {
     private IUserSysService userSysService;
 
     private ActiveUser activeUser;
-
-    private SysUser sysUser;
-
     private List<SysUser> sysUserlist;
 
     private String type;
@@ -36,7 +33,7 @@ public class UserAction extends BasicAction<SysUser> {
         activeUser = (ActiveUser) subject.getPrincipal();
 
         try{
-            sysUser = userSysService.getUserById(activeUser.getUserid());
+            entity = userSysService.getUserById(activeUser.getUserid());
         }catch(Exception e){
         e.printStackTrace();
         }
@@ -66,11 +63,11 @@ public class UserAction extends BasicAction<SysUser> {
         type = getHttpServletRequest().getParameter("type");
         String id = getHttpServletRequest().getParameter("id");
         if(StringUtils.isEmpty(id)&& "add".equals(type)){
-            sysUser = new SysUser();
+            entity = new SysUser();
             return "toAddOrEdit";
         }else {
             try{
-                sysUser = userSysService.getUserById(id);
+                entity = userSysService.getUserById(id);
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -114,15 +111,9 @@ public class UserAction extends BasicAction<SysUser> {
         String id = getHttpServletRequest().getParameter("id");
         if(StringUtils.isNotEmpty(id)){
         entity = userSysService.getUserById(id);
+            //System.out.println(entity.getuHeadportrait());
         }
         return "viewUserInfo";
-    }
-    public SysUser getSysUser() {
-        return sysUser;
-    }
-
-    public void setSysUser(SysUser sysUser) {
-        this.sysUser = sysUser;
     }
 
     public ActiveUser getActiveUser() {

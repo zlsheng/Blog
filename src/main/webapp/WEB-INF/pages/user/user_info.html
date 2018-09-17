@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 
 <title>设置我的资料</title>
-<form class="layui-form">
+<form class="layui-form" id="LAY_user_info_form">
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
@@ -44,7 +44,7 @@
                                     <label class="layui-form-label">出生年月</label>
                                     <div class="layui-input-inline">
                                         <#--<input type="text" class="layui-input" required name="" id="user_birthday_info">-->
-                                        <input type="text" name="uBirthday" value="${entity.uBirthday?string('yyyy-MM-dd HH:mm:ss')!}" readonly id="user_birthday_info" class="layui-input">
+                                        <input type="text" name="uBirthday" value="${(entity.uBirthday?string('yyyy-MM-dd HH:mm:ss'))!}" readonly id="user_birthday_info" class="layui-input">
                                     </div>
 
                                 </div>
@@ -69,9 +69,9 @@
                                 </div>
                             </div>
                             <div class="layui-col-sm6">
-                                <input type="hidden" id="uHeadportrait" name="uHeadportrait" >
+                                <input type="hidden"  id="uHeadportrait" name="uHeadportrait" value="${entity.uHeadportrait!'defalut.jpg'}">
                                 <label class="layui-form-label">头像</label>
-                                <img id="user_headportrait_info" src="${base}/layui/images/avatar/${entity.uHeadportrait!'admin.jpg'}" style="height: 300px; width:300px;">
+                                <img id="user_headportrait_info" src="${base}/layui/images/avatar/${entity.uHeadportrait!'defalut.jpg'}" style="height: 300px; width:300px;">
                                     <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
                                         <i class="layui-icon">&#xe67c;</i>选择图片
                                     </button>
@@ -82,7 +82,7 @@
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">简介</label>
                             <div class="layui-input-block">
-                                <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                <textarea name="uIntro" placeholder="请输入内容"  class="layui-textarea">${entity.uIntro!}</textarea>
                             </div>
                         </div>
                             <center>
@@ -95,7 +95,7 @@
                             </center>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
+                                <button class="layui-btn" id="user_info_submit" lay-submit lay-filter="setmyinfo">确认修改</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
                             </div>
                         </div>
@@ -128,26 +128,29 @@
             ,half:true
             ,readonly:true
         });
-        //执行实例
-
+        //上传组件
         var uploadInst = upload.render({
             elem: '#LAY_avatarUpload' //绑定元素
             ,url: '${base}/upload/upload_uploadImage.do' //上传接口
             ,accept:'images'
             ,exts:'jpg|png|gif'
-            ,data:{id:user_info_id}
             // ,acceptMime:'image/jpeg ,image/jpg, image/png'
-            ,before: function(obj) {
+            ,choose: function(obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    console.log(index); //得到文件索引
-                    console.log(file); //得到文件对象
-                    console.log(result); //得到文件base64编码，比如图片
                     $('#user_headportrait_info').attr('src', result); //图片链接（base64）
                 })
             }
+            ,data:{
+                id:user_info_id,
+                oldFileName :function(){
+                    var oldFileName = $('#uHeadportrait').val();
+                    return oldFileName;
+                }
+            }
             ,done: function(result){
                     if(result.statusCode == 200){
+                        $('#uHeadportrait').attr('value', result.forward);
                         layer.msg(result.message,{
                             icon:1,
                             time:1500,
@@ -159,6 +162,30 @@
                         });
                     }
             }
+        });
+
+        //监听提交
+        form.on('submit(setmyinfo)', function(data){
+            $.ajax({
+                url:'${base}/system/user_saveAndUpdate.do',
+                type:'post',
+                data:$("#LAY_user_info_form").serialize(),
+                dataType:"json",
+                success:function(result) {
+                    if(result.statusCode == 200){
+                        layer.msg(result.message,{
+                            icon:1,
+                            time:1500,
+                        })
+                    }else if(result.statusCode == 300){
+                        layer.msg(result.message,{
+                            icon:2,
+                            time:2000,
+                        });
+                    }
+                }
+            });
+            return false;
         });
     });
 </script>

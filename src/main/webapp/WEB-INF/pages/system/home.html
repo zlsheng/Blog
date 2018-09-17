@@ -15,6 +15,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                         <i class="layui-icon layui-icon-friends" style="font-size: 20px; "></i>
+                    <input type="hidden" name="uId" id="user_info_id" value="${activeUser.userid}">
                         欢迎您【 ${activeUser.username!}】
                 </a>
                 <dl class="layui-nav-child">
@@ -127,7 +128,7 @@
     });
 
     function viewUserInfo() {
-        var userId = ${activeUser.userid};
+        var userId = layui.$("#user_info_id").val();
         url = '${base}/system/user_viewUserInfo.do?id=' + userId;
         var exist=layui.$("li[lay-id='tab_" + 'UserInfo' + "']").length;
         if(exist < 1 ) {

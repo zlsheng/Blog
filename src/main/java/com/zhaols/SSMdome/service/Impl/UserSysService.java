@@ -55,6 +55,7 @@ public class UserSysService implements IUserSysService {
             //新增
             entity.setuId(CommonUtils.getUUID());
             entity.setuSalt(entity.getuId());
+            entity.setuHeadportrait("defalut.jpg");
             entity.createEntity();
             entity.setBase64Password(CommonUtils.encodeData(entity.getuPassword()));
             entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getuSalt()));
@@ -83,6 +84,7 @@ public class UserSysService implements IUserSysService {
     public void registration(SysUser entity) throws ManagerException {
         entity.setuId(CommonUtils.getUUID());
         entity.setuSalt(entity.getuId());
+        entity.setuHeadportrait("defalut.jpg");
         entity.setBase64Password(CommonUtils.encodeData(entity.getuPassword()));
         entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getuSalt()));
         entity.setuRegistertime(new Date());

@@ -22,41 +22,51 @@ public class UploadFileAction extends BasicAction<UploadFile> {
     private IUserSysService userSysService;
 
     public final static String IMG_PATH = "E:\\javaFiles\\IDEA\\SSMdome\\src\\main\\webapp\\layui\\images\\avatar"; //头像文件存放处
+    public final static String DEFALUT_IMG_NAME = "defalut.jpg";
+    public final static String ADMIN_IMG_NAME = "admin.jpg";
     File file;
     String fileFileName;
     String fileContentType;
 
     public String uploadImage(){
-        String suffixName = "";
-        String fileName = "";
-        String deleteName = "";
+        //上传旧文件的名字 删除用，以保证多次上传只保存最后提交的头像
+        String oldFileName = getHttpServletRequest().getParameter("oldFileName");
+        System.out.println(oldFileName);
         String id = getHttpServletRequest().getParameter("id");
         SysUser sysUser = userSysService.getUserById(id);
-        if(StringUtils.isNotEmpty(fileFileName)){
-            suffixName = fileFileName.substring(fileFileName.lastIndexOf("."));
-            fileName = CommonUtils.getFileName() + "." + suffixName;
+        String suffixName = "";
+        String fileName = "";
+        String deleteName =sysUser.getuHeadportrait();
+        if(StringUtils.isNotEmpty(fileFileName)) {
+            try {
+                if(!deleteName.equals(oldFileName)){
+                    File file = new File(IMG_PATH + "\\" + oldFileName);
+                    if(!file.isDirectory()){
+                        file.delete();
+                    }
+                }
+                suffixName = fileFileName.substring(fileFileName.lastIndexOf("."));
+                fileName = CommonUtils.getFileName() + suffixName;
+                FileUtils.copyFile(file, new File(IMG_PATH, fileName));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                result = new Result(false, "图片上传失败");
+            } catch (IOException e) {
+                e.printStackTrace();
+                result = new Result(false, "图片上传失败");
+            }
         }
-        try {
-            FileUtils.copyFile(file,new File(IMG_PATH,fileName));
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-            result = new Result(false ,"上传失败");
-        } catch (IOException e){
-            e.printStackTrace();
-            result = new Result(false ,"上传失败");
-        }
-        deleteName = sysUser.getuHeadportrait();
         if(StringUtils.isNotEmpty(deleteName)){
             File file = new File(IMG_PATH);
             File[] fs = file.listFiles();
             for(File f:fs){
-                //文件名和用户头像名相同且不为文件夹  则删除该头像文件
-                if(deleteName.equals(f.getName()) && !f.isDirectory()){
+                //文件名和用户头像名相同且不为文件夹不为默认头像 defalut.jpg  则删除该头像文件
+                if(!f.isDirectory() && !DEFALUT_IMG_NAME.equals(deleteName) && !ADMIN_IMG_NAME.equals(deleteName) && deleteName.equals(f.getName())){
                     f.delete();
                 }
             }
         }
-        result = new Result(true ,"上传成功",fileName,false);
+        result = new Result(true ,"图片上传成功",fileName,false);
         return RESULT;
     }
 

@@ -4,31 +4,31 @@
 <#if type == 'add'><legend>新增用户</legend></#if>
 <#if type == 'edit'><legend>编辑用户</legend></#if>
     <form class="layui-form layui-form-pane" id="LAY_user_form" >
-        <input type="hidden" value="${sysUser.uId!}" name="uId">
+        <input type="hidden" value="${entity.uId!}" name="uId">
         <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red">*</span>登录名</label>
             <div class="layui-input-inline">
-                <input type="text" name="userName" <#if type == 'edit'>disabled</#if>   lay-verify="loginName" value="${sysUser.userName!}" placeholder="请输入登录名" autocomplete="off" class="layui-input <#if type == 'edit'>layui-disabled</#if>">
+                <input type="text" name="userName" <#if type == 'edit'>disabled</#if>   lay-verify="loginName" value="${entity.userName!}" placeholder="请输入登录名" autocomplete="off" class="layui-input <#if type == 'edit'>layui-disabled</#if>">
             </div>
         </div>
         <#if type == 'add'>
             <div class="layui-form-item">
                 <label class="layui-form-label"><span style="color: red">*</span>密码</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="uPassword"  lay-verify="pass" value="${sysUser.uPassword!}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="uPassword"  lay-verify="pass" value="${entity.uPassword!}" placeholder="请输入密码" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </#if>
         <div class="layui-form-item">
             <label class="layui-form-label">手机号</label>
             <div class="layui-input-inline">
-                <input type="text" name="uPhone"   lay-verify="phone" value="${sysUser.uPhone!}" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                <input type="text" name="uPhone"   lay-verify="phone" value="${entity.uPhone!}" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-                <input type="text" name="uEmail"  lay-verify="email"  value="${sysUser.uEmail!}" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                <input type="text" name="uEmail"  lay-verify="email"  value="${entity.uEmail!}" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">

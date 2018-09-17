@@ -8,4 +8,13 @@ import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
  * @date 2018-09-14 16:00
  */
 public class UploadFile extends BasicEntity<String> {
+    private String oldFileName;
+
+    public String getOldFileName() {
+        return oldFileName;
+    }
+
+    public void setOldFileName(String oldFileName) {
+        this.oldFileName = oldFileName;
+    }
 }
