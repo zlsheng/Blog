@@ -95,6 +95,12 @@ public class UserAction extends BasicAction<SysUser> {
         }
         return RESULT;
     }
+    /**
+    *   功能描述: 删除用户
+    *
+    *@Author: zhaols
+    *@CreateTime: 2018-09-17  16:10
+    */
     public String delete(){
         String id = getHttpServletRequest().getParameter("id");
         try{
@@ -111,7 +117,6 @@ public class UserAction extends BasicAction<SysUser> {
         String id = getHttpServletRequest().getParameter("id");
         if(StringUtils.isNotEmpty(id)){
         entity = userSysService.getUserById(id);
-            //System.out.println(entity.getuHeadportrait());
         }
         return "viewUserInfo";
     }

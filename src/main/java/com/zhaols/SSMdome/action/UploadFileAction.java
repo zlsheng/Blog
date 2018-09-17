@@ -56,7 +56,7 @@ public class UploadFileAction extends BasicAction<UploadFile> {
                 result = new Result(false, "图片上传失败");
             }
         }
-        if(StringUtils.isNotEmpty(deleteName)){
+        /*if(StringUtils.isNotEmpty(deleteName)){
             File file = new File(IMG_PATH);
             File[] fs = file.listFiles();
             for(File f:fs){
@@ -65,7 +65,7 @@ public class UploadFileAction extends BasicAction<UploadFile> {
                     f.delete();
                 }
             }
-        }
+        }*/
         result = new Result(true ,"图片上传成功",fileName,false);
         return RESULT;
     }

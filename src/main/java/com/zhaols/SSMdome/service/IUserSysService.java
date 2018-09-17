@@ -53,14 +53,11 @@ public interface IUserSysService {
     *@CreateTime: 2018-09-13  10:44
     */
     void amendLoginInfo(String username,String ip, Date loginTime);
-
     /**
-    *   功能描述: 注册
-    *
-    *@Author: zhaols
-    *@param: 
-    *@Return: 
-    *@CreateTime: 2018-09-13  10:43
-    */
+     * 功能描述: 注册
+     *
+     * @param entity  用户实体类
+     * @return void
+     */
     void registration(SysUser entity) throws ManagerException;
 }
