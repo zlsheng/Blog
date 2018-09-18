@@ -25,6 +25,10 @@ public class UserAction extends BasicAction<SysUser> {
     private String type;
     //用户ID
     private String userId;
+    //用户新密码
+    private String now_password;
+    //用户新密码
+    private String old_password;
 
     /**
      * 首页展示用户信息
@@ -145,22 +149,20 @@ public class UserAction extends BasicAction<SysUser> {
     */
     public String toChangePassword(){
         userId = getHttpServletRequest().getParameter("id");
-        return "changePassword";
+        return "toChangePassword";
     }
 
     public String changePassword(){
-        String oldPassword = getHttpServletRequest().getParameter("oldPassword");
-        String nowPassword = getHttpServletRequest().getParameter("password");
         if(StringUtils.isNotEmpty(userId)){
             entity = userSysService.getUserById(userId);
-            if(entity.getuPassword().equals(CommonUtils.MD5(oldPassword,entity.getRealSalt()))){
-                entity.setuPassword(CommonUtils.MD5(nowPassword,entity.getRealSalt()));
+            if(entity.getuPassword().equals(CommonUtils.MD5(old_password,entity.getRealSalt()))){
+                entity.setuPassword(CommonUtils.MD5(now_password,entity.getRealSalt()));
             }else {
                 result = new Result(false,"原密码输入有误，请重新输入");
                 return RESULT;
             }
             try{
-                userSysService.changePassword(entity,nowPassword);
+                userSysService.changePassword(entity,now_password);
                 result = new Result(true,"密码修改成功,1秒后跳转登录页面");
             }catch (Exception e){
                 e.printStackTrace();
@@ -200,5 +202,21 @@ public class UserAction extends BasicAction<SysUser> {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getNow_password() {
+        return now_password;
+    }
+
+    public void setNow_password(String now_password) {
+        this.now_password = now_password;
+    }
+
+    public String getOld_password() {
+        return old_password;
+    }
+
+    public void setOld_password(String old_password) {
+        this.old_password = old_password;
     }
 }
