@@ -58,7 +58,7 @@ public class UserSysService implements IUserSysService {
             entity.setuHeadportrait("defalut.jpg");
             entity.createEntity();
             entity.setBase64Password(CommonUtils.encodeData(entity.getuPassword()));
-            entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getuSalt()));
+            entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getRealSalt()));
             sysUserMapper.insertSelective(entity);
             //新增用户默认赋予 普通用户 的角色
             updateRole(entity.getuId(),"PTYH");
@@ -86,7 +86,7 @@ public class UserSysService implements IUserSysService {
         entity.setuSalt(entity.getuId());
         entity.setuHeadportrait("defalut.jpg");
         entity.setBase64Password(CommonUtils.encodeData(entity.getuPassword()));
-        entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getuSalt()));
+        entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getRealSalt()));
         entity.setuRegistertime(new Date());
         try{
             sysUserMapper.insertSelective(entity);
@@ -110,5 +110,11 @@ public class UserSysService implements IUserSysService {
         sysRoleUserKey.setUserId(u_id);
         sysRoleUserKey.setRoleId(r_id);
         sysRoleUserMapper.insert(sysRoleUserKey);
+    }
+
+    @Override
+    public void changePassword(SysUser entity, String nowPassword) {
+        entity.setuPassword(CommonUtils.MD5(nowPassword,entity.getRealSalt()));
+        sysUserMapper.updateByPrimaryKeySelective(entity);
     }
 }

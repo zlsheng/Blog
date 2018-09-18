@@ -142,7 +142,16 @@
     }
 
     function changeUserPassword() {
-        var userId = ${activeUser.userid};
-        layer.msg(userId);
+        var userId = layui.$("#user_info_id").val();
+        url = '${base}/system/user_toChangePassword.do?id=' + userId;
+        var exist=layui.$("li[lay-id='tab_" + 'changePassword' + "']").length;
+        if(exist < 1 ) {
+            layui.element.tabAdd('Home_tab', {
+                title: '个人资料'
+                , content: '<iframe src=' + url + ' width="100%" height="89%" scrolling="no" frameborder="0"></iframe>'
+                , id: 'tab_' + 'changePassword'
+            });
+        }
+        layui.element.tabChange('Home_tab', 'tab_' + 'changePassword');
     }
 </script>

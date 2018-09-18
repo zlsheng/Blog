@@ -1,6 +1,7 @@
 package com.zhaols.SSMdome.entity;
 
 import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
+import com.zhaols.SSMdome.utils.CommonUtils;
 
 import java.util.Date;
 
@@ -417,5 +418,13 @@ public class SysUser extends BasicEntity<String> {
 
     public void setBase64Password(String base64Password) {
         this.base64Password = base64Password;
+    }
+
+    //获取密码加密salt
+    public String getRealSalt(){
+        String salt = "";
+        salt = this.getuId() + this.getUserName();
+        salt = CommonUtils.encodeData(salt);
+        return salt;
     }
 }

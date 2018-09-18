@@ -1,6 +1,7 @@
 package com.zhaols.SSMdome.utils;
 public class MyException extends Exception{
 	private String message;
+	@Override
 	public String getMessage() {
 		return message;
 	}

@@ -60,4 +60,15 @@ public interface IUserSysService {
      * @return void
      */
     void registration(SysUser entity) throws ManagerException;
+
+
+    /**
+     *@Description  修改用户密码
+     *@Author: zhaols
+     *@param entity 用户实体
+     *@param nowPassword 新密码
+     *@Return: void
+     *@CreateTime: 2018-09-18  16:23
+     */
+    void changePassword(SysUser entity, String nowPassword);
 }
