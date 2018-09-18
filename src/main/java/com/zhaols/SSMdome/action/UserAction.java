@@ -4,6 +4,7 @@ import com.zhaols.SSMdome.BasicClassDri.BasicAction;
 import com.zhaols.SSMdome.entity.ActiveUser;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.service.IUserSysService;
+import com.zhaols.SSMdome.utils.CommonUtils;
 import com.zhaols.SSMdome.utils.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -18,11 +19,12 @@ import java.util.Map;
 public class UserAction extends BasicAction<SysUser> {
     @Autowired
     private IUserSysService userSysService;
-
     private ActiveUser activeUser;
     private List<SysUser> sysUserlist;
-
+    //编辑类型
     private String type;
+    //用户ID
+    private String userId;
 
     /**
      * 首页展示用户信息
@@ -74,6 +76,13 @@ public class UserAction extends BasicAction<SysUser> {
         }
         return "toAddOrEdit";
     }
+    /**
+    *@Description 保存和修改用户
+    *@Author: zhaols
+    *@params: []
+    *@Return: java.lang.String
+    *@CreateTime: 2018-09-18  15:26
+    */
     public String saveAndUpdate(){
         if(StringUtils.isNotEmpty(entity.getuId())){
             //编辑
@@ -113,6 +122,13 @@ public class UserAction extends BasicAction<SysUser> {
         return RESULT;
     }
 
+    /**
+    *@Description 跳转个人资料页面
+    *@Author: zhaols
+    *@params:
+    *@Return: java.lang.String
+    *@CreateTime: 2018-09-18  15:26
+    */
     public String viewUserInfo(){
         String id = getHttpServletRequest().getParameter("id");
         if(StringUtils.isNotEmpty(id)){
@@ -120,7 +136,40 @@ public class UserAction extends BasicAction<SysUser> {
         }
         return "viewUserInfo";
     }
+    /**
+    *@Description 跳转修改用户密码页面
+    *@Author: zhaols
+    *@params: []
+    *@Return: java.lang.String
+    *@CreateTime: 2018-09-18  15:41
+    */
+    public String toChangePassword(){
+        userId = getHttpServletRequest().getParameter("id");
+        return "changePassword";
+    }
 
+    public String changePassword(){
+        String oldPassword = getHttpServletRequest().getParameter("oldPassword");
+        String nowPassword = getHttpServletRequest().getParameter("password");
+        if(StringUtils.isNotEmpty(userId)){
+            entity = userSysService.getUserById(userId);
+            if(entity.getuPassword().equals(CommonUtils.MD5(oldPassword,entity.getRealSalt()))){
+                entity.setuPassword(CommonUtils.MD5(nowPassword,entity.getRealSalt()));
+            }else {
+                result = new Result(false,"原密码输入有误，请重新输入");
+                return RESULT;
+            }
+            try{
+                userSysService.changePassword(entity,nowPassword);
+                result = new Result(true,"密码修改成功,1秒后跳转登录页面");
+            }catch (Exception e){
+                e.printStackTrace();
+                result = new Result(false,"密码修改失败");
+            }
+        }
+        return RESULT;
+    }
+    /*===============================Getter/Setter======================*/
     public ActiveUser getActiveUser() {
         return activeUser;
     }
@@ -143,5 +192,13 @@ public class UserAction extends BasicAction<SysUser> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

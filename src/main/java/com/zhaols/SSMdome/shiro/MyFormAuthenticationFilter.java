@@ -36,7 +36,8 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         try{
             doCaptchaValidate((HttpServletRequest) request, token);
             Subject subject = getSubject(request, response);
-            subject.login(token);//正常验证
+            //正常验证
+            subject.login(token);
             return onLoginSuccess(token, subject, request, response);
         }catch (AuthenticationException e){
             return onLoginFailure(token, e, request, response);

@@ -56,16 +56,6 @@ public class UploadFileAction extends BasicAction<UploadFile> {
                 result = new Result(false, "图片上传失败");
             }
         }
-        /*if(StringUtils.isNotEmpty(deleteName)){
-            File file = new File(IMG_PATH);
-            File[] fs = file.listFiles();
-            for(File f:fs){
-                //文件名和用户头像名相同且不为文件夹不为默认头像 defalut.jpg  则删除该头像文件
-                if(!f.isDirectory() && !DEFALUT_IMG_NAME.equals(deleteName) && !ADMIN_IMG_NAME.equals(deleteName) && deleteName.equals(f.getName())){
-                    f.delete();
-                }
-            }
-        }*/
         result = new Result(true ,"图片上传成功",fileName,false);
         return RESULT;
     }

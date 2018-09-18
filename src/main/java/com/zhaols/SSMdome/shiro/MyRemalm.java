@@ -5,6 +5,7 @@ import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
 import com.zhaols.SSMdome.mapper.SysUserMapper;
+import com.zhaols.SSMdome.utils.CommonUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -87,7 +88,7 @@ public class MyRemalm extends AuthorizingRealm {
             return null;
         }
         String password = sysUser.getuPassword();
-        String salt = sysUser.getuSalt();
+        String salt = sysUser.getRealSalt();
 
         ActiveUser activeUser = new ActiveUser();
         activeUser.setUserid(sysUser.getuId());
