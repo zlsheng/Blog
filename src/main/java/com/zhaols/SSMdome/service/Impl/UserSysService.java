@@ -1,7 +1,6 @@
 package com.zhaols.SSMdome.service.Impl;
 
 import com.zhaols.SSMdome.MyExcption.ManagerException;
-import com.zhaols.SSMdome.entity.SysRoleUserKey;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
 import com.zhaols.SSMdome.mapper.SysRoleUserMapper;
@@ -9,7 +8,6 @@ import com.zhaols.SSMdome.mapper.SysUserMapper;
 import com.zhaols.SSMdome.service.IUserSysService;
 import com.zhaols.SSMdome.utils.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,10 +104,10 @@ public class UserSysService implements IUserSysService {
     *@CreateTime: 2018-09-13  14:20
     */
     public void updateRole(String u_id,String r_id) {
-        SysRoleUserKey sysRoleUserKey = new SysRoleUserKey();
-        sysRoleUserKey.setUserId(u_id);
-        sysRoleUserKey.setRoleId(r_id);
-        sysRoleUserMapper.insert(sysRoleUserKey);
+        Map<String,String> map = new HashMap<>();
+        map.put("userId",u_id);
+        map.put("roleId",r_id);
+        sysRoleUserMapper.insert(map);
     }
 
     @Override

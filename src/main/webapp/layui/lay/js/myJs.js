@@ -7,5 +7,5 @@ layui.use(['element','layer'], function(){
 
     $(".closed").on("click",function () {
         parent.tools.closed();
-    })
+    });
 });

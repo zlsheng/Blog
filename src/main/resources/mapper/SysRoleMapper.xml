@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhaols.SSMdome.mapper.SysRoleMapper">
-  <resultMap id="ResultSysRoleMap" type="com.zhaols.SSMdome.entity.SysRole">
+  <resultMap id="ResultSysRoleMap" type="com.zhaols.SSMdome.entity.SysRole1">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="CODE" jdbcType="VARCHAR" property="code" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
@@ -26,11 +26,14 @@
     from SYS_ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="getAll" resultMap="ResultSysRoleMap">
+    SELECT * FROM SYS_ROLE
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SYS_ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysRole">
+  <insert id="insert" parameterType="com.zhaols.SSMdome.entity.SysRole1">
     insert into SYS_ROLE (ID, CODE, NAME,
       PROLE_ID, REMARK, AREA_ID,
       UPDATOR_NAME, CREATOR, CREATOR_NAME,
@@ -42,7 +45,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
       #{sensitivity,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysRole">
+  <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysRole1">
     insert into SYS_ROLE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -127,7 +130,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.SSMdome.entity.SysRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.SSMdome.entity.SysRole1">
     update SYS_ROLE
     <set>
       <if test="code != null">
@@ -169,7 +172,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysRole">
+  <update id="updateByPrimaryKey" parameterType="com.zhaols.SSMdome.entity.SysRole1">
     update SYS_ROLE
     set CODE = #{code,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
