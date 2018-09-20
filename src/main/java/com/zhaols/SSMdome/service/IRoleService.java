@@ -1,6 +1,6 @@
 package com.zhaols.SSMdome.service;
 
-import com.zhaols.SSMdome.entity.SysRole1;
+import com.zhaols.SSMdome.entity.SysRole;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface IRoleService  {
 
-    List<SysRole1> getAll();
+    List<SysRole> getAll();
 }

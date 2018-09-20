@@ -1,6 +1,6 @@
 package com.zhaols.SSMdome.mapper;
 
-import com.zhaols.SSMdome.entity.SysRole1;
+import com.zhaols.SSMdome.entity.SysRole;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,31 +17,31 @@ public interface SysRoleMapper {
      *
      * @mbggenerated 2018-08-20
      */
-    int insert(SysRole1 record);
+    int insert(SysRole record);
 
     /**
      *
      * @mbggenerated 2018-08-20
      */
-    int insertSelective(SysRole1 record);
+    int insertSelective(SysRole record);
 
     /**
      *
      * @mbggenerated 2018-08-20
      */
-    SysRole1 selectByPrimaryKey(String id);
+    SysRole selectByPrimaryKey(String id);
 
     /**
      *
      * @mbggenerated 2018-08-20
      */
-    int updateByPrimaryKeySelective(SysRole1 record);
+    int updateByPrimaryKeySelective(SysRole record);
 
     /**
      *
      * @mbggenerated 2018-08-20
      */
-    int updateByPrimaryKey(SysRole1 record);
+    int updateByPrimaryKey(SysRole record);
 
     /**
      *@Description  获取所有角色列表
@@ -50,5 +50,5 @@ public interface SysRoleMapper {
      *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
      *@CreateTime: 2018-09-20  16:25
      */
-    List<SysRole1> getAll();
+    List<SysRole> getAll();
 }

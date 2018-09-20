@@ -1,6 +1,6 @@
 package com.zhaols.SSMdome.service.Impl;
 
-import com.zhaols.SSMdome.entity.SysRole1;
+import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.mapper.SysRoleMapper;
 import com.zhaols.SSMdome.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class RoleService implements IRoleService {
     private SysRoleMapper sysRoleMapper;
 
     @Override
-    public List<SysRole1> getAll() {
+    public List<SysRole> getAll() {
         return sysRoleMapper.getAll();
     }
 }
