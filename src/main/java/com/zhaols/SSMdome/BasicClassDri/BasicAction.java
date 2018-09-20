@@ -7,6 +7,7 @@ import com.zhaols.SSMdome.utils.GenericsUtils;
 import com.zhaols.SSMdome.utils.ResponseBean;
 import com.zhaols.SSMdome.utils.Result;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +22,13 @@ import java.util.List;
 public class BasicAction<T extends Entity> extends ActionSupport implements Preparable, ModelDriven {
     public static final String RESULT="result";
     public static final String RESPONSEBEAN="responseBean";
+    public static final String SUCCESS="success";
 
     /**
      * 业务对象
      */
     protected T entity;
+
 
 
     protected Class<T> entityClass; // Action所管理的Entity类型.
@@ -116,11 +119,12 @@ public class BasicAction<T extends Entity> extends ActionSupport implements Prep
         this.totalCount = totalCount;
     }
 
-    public List getEntitys() {
+    @JSON(serialize = true)
+    public List<T> getEntitys() {
         return entitys;
     }
 
-    public void setEntitys(List entitys) {
+    public void setEntitys(List<T> entitys) {
         this.entitys = entitys;
     }
     public HttpServletRequest getHttpServletRequest(){

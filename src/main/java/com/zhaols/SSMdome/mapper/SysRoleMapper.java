@@ -3,6 +3,8 @@ package com.zhaols.SSMdome.mapper;
 import com.zhaols.SSMdome.entity.SysRole;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SysRoleMapper {
     /**
@@ -40,4 +42,13 @@ public interface SysRoleMapper {
      * @mbggenerated 2018-08-20
      */
     int updateByPrimaryKey(SysRole record);
+
+    /**
+     *@Description  获取所有角色列表
+     *@Author: zhaols
+     *@param
+     *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
+     *@CreateTime: 2018-09-20  16:25
+     */
+    List<SysRole> getAll();
 }

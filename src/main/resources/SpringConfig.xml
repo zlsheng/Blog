@@ -134,7 +134,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <bean id="sessionManager"
           class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- session的失效时长，单位毫秒 -->
-        <property name="globalSessionTimeout" value="120000" />
+        <property name="globalSessionTimeout" value="1800000" />
         <!-- 删除失效的session -->
         <property name="deleteInvalidSessions" value="true" />
     </bean>

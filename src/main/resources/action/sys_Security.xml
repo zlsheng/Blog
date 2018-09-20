@@ -15,5 +15,9 @@
                 <param name="root">map</param>
             </result>
         </action>
+
+        <action name="role_*" class="com.zhaols.SSMdome.action.RoleAction" method="{1}">
+            <result name="success" type="freemarker">/WEB-INF/pages/role/role_list.html</result>
+        </action>
     </package>
 </struts>

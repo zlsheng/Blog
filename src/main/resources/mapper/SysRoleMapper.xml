@@ -26,6 +26,9 @@
     from SYS_ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="getAll" resultMap="ResultSysRoleMap">
+    SELECT * FROM SYS_ROLE
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SYS_ROLE
     where ID = #{id,jdbcType=VARCHAR}
