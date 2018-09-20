@@ -51,12 +51,9 @@ public class LoginAction extends BasicAction<SysUser> {
 
     //跳转主页
     public String index(){
-        HttpSession session  =ServletActionContext.getRequest().getSession();
-
         Subject subject = SecurityUtils.getSubject();
-
         activeUser = (ActiveUser) subject.getPrincipal();
-
+        entity = userSysService.getUserById(activeUser.getUserid());
         return "success";
     }
     public String toRegistration(){

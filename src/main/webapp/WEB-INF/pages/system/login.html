@@ -43,7 +43,7 @@
                             <a  class="layadmin-user-jump-change layadmin-link layui-from-a"  style="margin-top: 7px;">忘记密码？</a>
                         </div>
                         <div class="layui-form-item">
-                            <input class="layui-btn layui-btn-fluid" lay-submit lay-filter="user_login" type="submit" value="登 入"/>
+                            <input class="layui-btn layui-btn-fluid" id="user_login" lay-submit lay-filter="user_login" type="submit" value="登 入"/>
                             <#if errorMsg != ''>
                                 <span style="color: red"><i class="layui-icon layui-icon-tips" style="font-size: 16px; color: red;"></i>&nbsp;${errorMsg}</span>
                             </#if>
@@ -63,6 +63,11 @@
 </html>
 <script>
     //Demo
+    $(document).ready(function () {
+        if (window != top) {
+            top.location.href = location.href;
+        }
+    });
     layui.use('form', function(){
         var form = layui.form,
             $ = layui.$;
@@ -72,4 +77,8 @@
             $('#kaptchaImage').attr('src', str);
         });
     });
+    function keyLogin(event){
+        if (event.keyCode==13)  //回车键的键值为13
+            document.getElementByIdx_x("user_login").click(); //调用登录按钮的登录事件
+    }
 </script>
