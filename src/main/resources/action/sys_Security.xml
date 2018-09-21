@@ -6,8 +6,8 @@
 <struts>
     <package name="system" namespace="/system" extends="nec-default">
         <action name="user_*" class="com.zhaols.SSMdome.action.UserAction" method="{1}">
-            <result name="success" type="freemarker">/WEB-INF/pages/system/userHome.html</result>
-            <result name="userList" type="freemarker">/WEB-INF/pages/user/user_list.html</result>
+            <result name="userHome" type="freemarker">/WEB-INF/pages/system/userHome.html</result>
+            <result name="success" type="freemarker">/WEB-INF/pages/user/user_list.html</result>
             <result name="toAddOrEdit" type="freemarker">/WEB-INF/pages/user/user_view.html</result>
             <result name="viewUserInfo" type="freemarker">/WEB-INF/pages/user/user_info.html</result>
             <result name="toChangePassword" type="freemarker">/WEB-INF/pages/user/password.html</result>

@@ -84,7 +84,6 @@ abstract public class BasicAction<T extends Entity,M extends ISuperService> exte
 
     public String list() {
         HttpParameters params = getActionContext().getParameters();
-
         for (Map.Entry entry : params.entrySet()) {
             if (entry.getValue() instanceof String[]) {
                 String[] vals = (String[]) entry.getValue();
@@ -98,8 +97,8 @@ abstract public class BasicAction<T extends Entity,M extends ISuperService> exte
 
     protected ModelSetup setupModel() {
         MyBatisModelSetup model = (MyBatisModelSetup) getModelSetupFromRequest(ORMType.MYBATIS);
-        model.setCountName(entityClass.getSimpleName() + "Mapper.count");
-        model.setSqlName(entityClass.getSimpleName() + "Mapper.select");
+        model.setCountName("com.zhaols.SSMdome.mapper." + entityClass.getSimpleName() + "Mapper.count");
+        model.setSqlName("com.zhaols.SSMdome.mapper." + entityClass.getSimpleName() + "Mapper.select");
         return model;
 
     }
@@ -198,13 +197,13 @@ abstract public class BasicAction<T extends Entity,M extends ISuperService> exte
     }
 
     public ModelSetup getModelSetupFromRequest(ORMType orm) {
-        final Map params=getActionContext().getParameters();
+        final HttpParameters params=getActionContext().getParameters();
         Map<String,Object> parameters=new HashMap<String,Object>();
         Set<String> keys = params.keySet();
         for(String key:keys){
-            Object[] value = (Object[])params.get(key);
-            if(value!=null&&value.length==1){
-                parameters.put(key,value[0]);
+            String value = params.get(key).getValue();
+            if(value!=null && !("".equals(value))){
+                parameters.put(key,value);
             }
         }
         ModelSetup model;

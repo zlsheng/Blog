@@ -3,6 +3,7 @@ package com.zhaols.SSMdome.BasicClassDri;
 import com.zhaols.SSMdome.utils.GenericsUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionException;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -63,33 +64,41 @@ abstract public class SuperService<T extends Entity> implements ISuperService<T>
             pageNo = 1;
         }
         // 计算总数
-        Integer totalCount = session.selectOne(count,parameter) ;
+        try{
+             Integer totalCount = session.selectOne(count,parameter) ;
 
-        // 如果没有数据则返回Empty Page
-        Assert.notNull(totalCount, "totalCount Error");
+             // 如果没有数据则返回Empty Page
+             Assert.notNull(totalCount, "totalCount Error");
 
-        if (totalCount == null || totalCount.intValue() == 0) {
+             if (totalCount == null || totalCount.intValue() == 0) {
+                 return new Page();
+             }
+             List list = new ArrayList();
+             int totalPageCount = 0;
+             int startIndex = 0;
+
+             // 如果pageSize小于等于0,pageSize=Page.DEFAULT_PAGE_SIZE
+             if (pageSize <= 0){
+                 pageSize = Page.DEFAULT_PAGE_SIZE;
+             }
+             // 计算页数
+             totalPageCount = (totalCount / pageSize);
+             totalPageCount += (((totalCount % pageSize) > 0) ? 1 : 0);
+
+             // 计算skip数量
+             if (totalPageCount > pageNo) {
+                 startIndex = (pageNo - 1) * pageSize;
+             } else {
+                 startIndex = (totalPageCount - 1) * pageSize;
+             }
+             list = session.selectList(statement,parameter,new RowBounds(startIndex,pageSize));
+
+             return new Page(startIndex, totalCount, pageSize, list);
+        }catch (SqlSessionException e){
+            e.printStackTrace();
             return new Page();
+        }finally {
+            session.close();
         }
-        List list = new ArrayList();
-        int totalPageCount = 0;
-        int startIndex = 0;
-
-        // 如果pageSize小于等于0,pageSize=Page.DEFAULT_PAGE_SIZE
-        if (pageSize <= 0){
-            pageSize = Page.DEFAULT_PAGE_SIZE;
-        }
-        // 计算页数
-        totalPageCount = (totalCount / pageSize);
-        totalPageCount += (((totalCount % pageSize) > 0) ? 1 : 0);
-
-        // 计算skip数量
-        if (totalPageCount > pageNo) {
-            startIndex = (pageNo - 1) * pageSize;
-        } else {
-            startIndex = (totalPageCount - 1) * pageSize;
-        }
-        list = session.selectList(statement,parameter,new RowBounds(startIndex,pageSize));
-        return new Page(startIndex, totalCount, pageSize, list);
     }
 }
