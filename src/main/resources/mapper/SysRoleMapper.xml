@@ -22,6 +22,7 @@
   </sql>
   <sql id="_common_where">
     <if test="status != null"> AND STATUS = #{status}</if>
+    <if test="role != null"> AND ID = #{role}</if>
   </sql>
     <select id="select" resultMap="ResultSysRoleMap" parameterType="java.util.HashMap">
         SELECT * FROM SYS_ROLE WHERE 1 = 1
@@ -43,6 +44,12 @@
     SELECT * FROM SYS_ROLE WHERE 1 = 1
     <include refid="_common_where"/>
   </select>
+
+    <select id="getRoleByUid" resultMap="ResultSysRoleMap" parameterType="java.lang.String">
+        SELECT * FROM SYS_ROLE WHERE ID IN (
+          SELECT ROLE_ID FROM SYS_ROLE_USER WHERE USER_ID = #{uId}
+        )
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SYS_ROLE
     where ID = #{id,jdbcType=VARCHAR}

@@ -3,8 +3,10 @@ package com.zhaols.SSMdome.service.Impl;
 import com.zhaols.SSMdome.BasicClassDri.IEntityMapper;
 import com.zhaols.SSMdome.BasicClassDri.SuperService;
 import com.zhaols.SSMdome.MyExcption.ManagerException;
+import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
+import com.zhaols.SSMdome.mapper.SysRoleMapper;
 import com.zhaols.SSMdome.mapper.SysRoleUserMapper;
 import com.zhaols.SSMdome.mapper.SysUserMapper;
 import com.zhaols.SSMdome.service.IUserSysService;
@@ -32,8 +34,6 @@ public class UserSysService extends SuperService<SysUser> implements IUserSysSer
     @Autowired
     private SysRoleUserMapper sysRoleUserMapper;
 
-    @Autowired
-    private SysResourcesMapper sysResourcesMapper;
 
     @Override
     public SysUser getUserById(String id) {
@@ -122,4 +122,13 @@ public class UserSysService extends SuperService<SysUser> implements IUserSysSer
     protected IEntityMapper<SysUser> getDao() {
         return sysUserMapper;
     }
+
+    @Override
+    public void updateUserRole(String u_id, String r_id) {
+        Map<String,String> map = new HashMap<>();
+        map.put("userId",u_id);
+        map.put("roleId",r_id);
+        sysRoleUserMapper.insert(map);
+    }
+
 }

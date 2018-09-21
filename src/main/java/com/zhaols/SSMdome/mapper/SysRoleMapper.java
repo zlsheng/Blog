@@ -53,4 +53,13 @@ public interface SysRoleMapper extends IEntityMapper<SysRole> {
      *@CreateTime: 2018-09-20  16:25
      */
     List<SysRole> getAll(Map<String,String> map);
+
+    /**
+     *@Description 根据用户id获取用户所拥有的角色列表
+     *@Author: zhaols
+     *@param u_id 用户id
+     *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
+     *@CreateTime: 2018-09-21  16:47
+     */
+    List<SysRole> getRoleByUid(String uId);
 }

@@ -2,6 +2,7 @@ package com.zhaols.SSMdome.service;
 
 import com.zhaols.SSMdome.BasicClassDri.ISuperService;
 import com.zhaols.SSMdome.MyExcption.ManagerException;
+import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.entity.SysUser;
 
 import java.util.Date;
@@ -72,4 +73,15 @@ public interface IUserSysService extends ISuperService<SysUser> {
      *@CreateTime: 2018-09-18  16:23
      */
     void changePassword(SysUser entity, String nowPassword);
+
+    /**
+     *@Description 给指定用户添加角色
+     *@Author: zhaols
+     *@param u_id 用户id
+     *@param r_id 角色id
+     *@Return: void
+     *@CreateTime: 2018-09-21  16:46
+     */
+    void updateUserRole(String u_id, String r_id);
+
 }

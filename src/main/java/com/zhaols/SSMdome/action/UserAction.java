@@ -34,6 +34,8 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
     //用户新密码
     private String old_password;
     private List<SysRole> roles;
+    private List<SysRole> hasRoles;
+
 
     /**
      * 首页展示用户信息
@@ -61,7 +63,7 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
     @Override
     public String list(){
         activeUser = (ActiveUser)SecurityUtils.getSubject().getPrincipal();
-        roles = roleService.queryRole("11");
+        roles = roleService.queryRole();
         return super.list();
     }
     
@@ -95,24 +97,47 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
     *@CreateTime: 2018-09-18  15:26
     */
     public String saveAndUpdate(){
-        if(StringUtils.isNotEmpty(entity.getuId())){
-            //编辑
-            try{
-                userSysService.saveAndUpdate(entity);
-                result = new Result(true,"编辑成功");
-            }catch(Exception e ){
-                e.printStackTrace();
-                result = new Result(false,"编辑失败");
+        String role = getHttpServletRequest().getParameter("role");
+        if(StringUtils.isEmpty(role)){
+            if(StringUtils.isNotEmpty(entity.getuId())){
+                //编辑
+                try{
+                    userSysService.saveAndUpdate(entity);
+                    result = new Result(true,"编辑成功");
+                }catch(Exception e ){
+                    e.printStackTrace();
+                    result = new Result(false,"编辑失败");
+                }
+            }else {
+                //新增
+                try{
+                    userSysService.saveAndUpdate(entity);
+                    result = new Result(true,"新增成功");
+                }catch(Exception e ){
+                    result = new Result(false,"新增失败");
+                }
             }
         }else {
-            //新增
-            try{
-                userSysService.saveAndUpdate(entity);
-                result = new Result(true,"新增成功");
-            }catch(Exception e ){
-                result = new Result(false,"新增失败");
+            //添加角色
+            List<SysRole> roleList =  roleService.getRoleByUid(entity.getuId());
+            if(roleList != null && roleList.size() > 0){
+                for (SysRole r: roleList) {
+                    if(r.getId().equals(role)){
+                        result = new Result(false,"该角色已经拥有该角色");
+                        return RESULT;
+                    }
+                }
             }
+            try{
+                userSysService.updateUserRole(entity.getuId(),role);
+                result = new Result(true,"角色添加成功");
+            }catch (Exception e){
+                e.printStackTrace();
+                result = new Result(false,"角色添加失败");
+            }
+
         }
+
         return RESULT;
     }
     /**
@@ -159,6 +184,13 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
         return "toChangePassword";
     }
 
+    /**
+     *@Description 修改密码
+     *@Author: zhaols
+     *@param
+     *@Return: java.lang.String
+     *@CreateTime: 2018-09-21  16:21
+     */
     public String changePassword(){
         if(StringUtils.isNotEmpty(userId)){
             entity = userSysService.getUserById(userId);
@@ -177,6 +209,26 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
             }
         }
         return RESULT;
+    }
+    /**
+     *@Description  跳转添加角色
+     *@Author: zhaols
+     *@param
+     *@Return: java.lang.String
+     *@CreateTime: 2018-09-21  16:21
+     */
+    public String toAddRole(){
+        userId = getHttpServletRequest().getParameter("id");
+        hasRoles = roleService.getRoleByUid(userId);
+        if(StringUtils.isNotEmpty(userId)){
+            try {
+                entity = userSysService.getUserById(userId);
+                roles = roleService.queryRole();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return "toAddRole";
     }
     /*===============================Getter/Setter======================*/
     public ActiveUser getActiveUser() {
@@ -235,8 +287,17 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
         this.roles = roles;
     }
 
+    public List<SysRole> getHasRoles() {
+        return hasRoles;
+    }
+
+    public void setHasRoles(List<SysRole> hasRoles) {
+        this.hasRoles = hasRoles;
+    }
+
     @Override
     protected IUserSysService getEntityManager() {
         return userSysService;
     }
+
 }

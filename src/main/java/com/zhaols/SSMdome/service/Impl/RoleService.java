@@ -35,9 +35,14 @@ public class RoleService extends SuperService<SysRole> implements IRoleService {
     }
 
     @Override
-    public List<SysRole> queryRole(String status) {
+    public List<SysRole> queryRole() {
         Map<String,String> map = new HashMap();
-        map.put("status",status);
+        map.put("status","11");
         return sysRoleMapper.getAll(map);
+    }
+
+    @Override
+    public List<SysRole> getRoleByUid(String u_id) {
+        return sysRoleMapper.getRoleByUid(u_id);
     }
 }

@@ -26,8 +26,8 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    <button class="layui-btn" lay-submit lay-filter="LAY-user-back-search">
+                        <i class="layui-icon layui-icon-search "></i>
                     </button>
                 </div>
             </div>
@@ -36,12 +36,12 @@
         <div class="layui-card-body">
             <div class="layui-card-body">
                 <div id="user_home_btu">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="openUserView('add')"><i class="layui-icon">&#xe654;</i>新增</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="openUserView('add','')"><i class="layui-icon">&#xe654;</i>新增</button>
                     &nbsp;
                     <#-- onclick="openUserView('edit')"-->
-                    <button class="layui-btn layui-btn-sm" onclick="openUserView('edit')" ><i class="layui-icon" >&#xe642;</i>编辑</button>
+                    <button class="layui-btn layui-btn-sm" type="button" onclick="openUserView('edit','')" ><i class="layui-icon" >&#xe642;</i>编辑</button>
                     &nbsp;
-                    <button class="layui-btn layui-btn-warm layui-btn-sm" onclick="deleteUser()"><i class="layui-icon">&#xe640;</i>删除</button>
+                    <button class="layui-btn layui-btn-warm layui-btn-sm" type="button" onclick="deleteUser()"><i class="layui-icon">&#xe640;</i>删除</button>
                     &nbsp;
                     <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh"><i class="layui-icon">&#xe669;</i>刷新</button>
                     &nbsp;
@@ -63,6 +63,7 @@
                             <th style="text-align:center;vertical-align:middle;">年龄</th>
                             <th style="text-align:center;vertical-align:middle;">等级</th>
                             <th style="text-align:center;vertical-align:middle;">积分</th>
+                            <th style="text-align:center;vertical-align:middle;">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -84,8 +85,9 @@
                              <td style="text-align:center;vertical-align:middle;">${entity.uName!}</td>
                              <td style="text-align:center;vertical-align:middle;">${entity.uAge!}</td>
                              <td style="text-align:center;vertical-align:middle;">${entity.uRank!}</td>
-                             <td style="text-align:center;vertical-align:middle;">${entity.uScore!}
-                                 <#--<div id="rate_${sysUser.uScore!}_${sysUser_index}"></div>-->
+                             <td style="text-align:center;vertical-align:middle;">${entity.uScore!}</td>
+                             <td style="text-align:center;vertical-align:middle;">
+                                 <button class="layui-btn layui-btn-normal  layui-btn-xs" type="button" onclick="openUserView('addRole','${entity.uId}')" ><i class="layui-icon" >&#xe654;</i>添加角色</button>
                              </td>
                          </tr>
                          </#list>
@@ -120,7 +122,7 @@
             ,next: '<i class="layui-icon">&#xe65b;</i>'
         });
     });
-    function openUserView(type) {
+    function openUserView(type,id) {
         var url;
         var title;
         if('add' == type){
@@ -128,9 +130,9 @@
             title= '新增用户'
         }
         if('edit' == type){
-            var id = layui.$("input:checkbox[name='checkbox']:checked");
-            if(id.size() == 1){
-                url ='${base}/system/user_toAddOrEdit.do?type=edit&id=' + id.val();
+            var ids = layui.$("input:checkbox[name='checkbox']:checked");
+            if(ids.size() == 1){
+                url ='${base}/system/user_toAddOrEdit.do?type=edit&id=' + ids.val();
                 title= '编辑用户'
 
             }else{
@@ -139,12 +141,16 @@
                     time: 2000,
                     offset:'70px'
                 });
-                return;
+                return false;
             }
+        }
+        if('addRole' == type){
+            url ='${base}/system/user_toAddRole.do?type=addRole&id=' + id;
+            title= '添加角色'
         }
         layer.open({
             type: 2,
-            content: [url, 'no'], //no 去除滚动条
+            content: url, //no 去除滚动条
             title: title,
             area: ['400px', '350px'],
             offset:'70px'
@@ -152,13 +158,20 @@
     }
     function deleteUser() {
         var id = layui.$("input:checkbox[name='checkbox']:checked");
-        if(id.size() != 1){
+        if(id.size() < 1){
             layer.msg('请选择一条数据', {
                 icon:2,
                 time: 2000,
                 offset:'70px'
             });
-            return;
+            return false;
+        }else if(id.size() > 1){
+            layer.msg('只能选择一条数据', {
+                icon:2,
+                time: 2000,
+                offset:'70px'
+            });
+            return false;
         }
 
         layer.confirm('确定要删除吗', {icon: 3, title:'警告', offset:'70px'}, function(index){

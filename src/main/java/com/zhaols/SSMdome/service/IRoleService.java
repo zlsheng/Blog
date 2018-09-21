@@ -13,6 +13,21 @@ import java.util.List;
  */
 public interface IRoleService extends ISuperService<SysRole> {
 
-    List<SysRole> queryRole(String status);
+    /**
+     *@Description  获取角色列表
+     *@Author: zhaols
+     *@param
+     *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
+     *@CreateTime: 2018-09-21  16:53
+     */
+    List<SysRole> queryRole();
 
+    /**
+     *@Description 根据用户id获取用户所拥有的角色列表
+     *@Author: zhaols
+     *@param u_id 用户id
+     *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
+     *@CreateTime: 2018-09-21  16:47
+     */
+    List<SysRole> getRoleByUid(String u_id);
 }
