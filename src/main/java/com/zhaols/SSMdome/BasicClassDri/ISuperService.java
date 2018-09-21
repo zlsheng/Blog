@@ -9,6 +9,8 @@ import java.util.List;
  * @Description: TODO: 添加功能描述
  * @date 2018-08-27 15:46
  */
-public interface SuperMapper {
-    List<?> getAll();
+public interface ISuperService<T extends Entity> {
+    List<T> getAll();
+    T  get();
+    public Page pagedQuery(ModelSetup modelSetup, int pageNo, int pageSize);
 }

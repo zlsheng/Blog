@@ -17,7 +17,7 @@ import java.io.*;
  * @Description: TODO: 添加功能描述
  * @date 2018-09-14 15:14
  */
-public class UploadFileAction extends BasicAction<UploadFile> {
+public class UploadFileAction extends BasicAction<UploadFile,IUserSysService> {
     @Autowired
     private IUserSysService userSysService;
 
@@ -82,5 +82,10 @@ public class UploadFileAction extends BasicAction<UploadFile> {
 
     public void setFileContentType(String fileContentType) {
         this.fileContentType = fileContentType;
+    }
+
+    @Override
+    protected IUserSysService getEntityManager() {
+        return userSysService;
     }
 }

@@ -1,12 +1,14 @@
 package com.zhaols.SSMdome.mapper;
 
+import com.zhaols.SSMdome.BasicClassDri.IEntityMapper;
 import com.zhaols.SSMdome.entity.SysRole;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
-public interface SysRoleMapper {
+public interface SysRoleMapper extends IEntityMapper<SysRole> {
     /**
      *
      * @mbggenerated 2018-08-20
@@ -50,5 +52,5 @@ public interface SysRoleMapper {
      *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
      *@CreateTime: 2018-09-20  16:25
      */
-    List<SysRole> getAll();
+    List<SysRole> getAll(Map<String,String> map);
 }

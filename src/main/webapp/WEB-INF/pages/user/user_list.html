@@ -1,27 +1,26 @@
 <#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 
-
+<form>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">登录名</label>
+                    <label class="layui-form-label">账户</label>
                     <div class="layui-input-block">
-                        <input type="text" name="loginname" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="userName" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-block">
                         <select name="role">
-                            <#-- 做成动态 待完成-->
-                            <option value="0">系统管理员</option>
-                            <option value="1">VIP用户</option>
-                            <option value="2">SIP用户</option>
-                            <option value="3">普通用户</option>
+                            <option value="">--请选择--</option>
+                            <#list roles as role>
+                                <option value="${role.id!}">${role.name!}</option>
+                            </#list>
                         </select>
                     </div>
                 </div>
@@ -32,7 +31,7 @@
                 </div>
             </div>
         </div>
-
+</form>
         <div class="layui-card-body">
             <div class="layui-card-body">
                 <div id="user_home_btu">

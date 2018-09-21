@@ -1,5 +1,7 @@
 package com.zhaols.SSMdome.service.Impl;
 
+import com.zhaols.SSMdome.BasicClassDri.IEntityMapper;
+import com.zhaols.SSMdome.BasicClassDri.SuperService;
 import com.zhaols.SSMdome.MyExcption.ManagerException;
 import com.zhaols.SSMdome.entity.SysUser;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
@@ -22,7 +24,7 @@ import java.util.Map;
  * @date 2018-08-20 14:16
  */
 @Service
-public class UserSysService implements IUserSysService {
+public class UserSysService extends SuperService<SysUser> implements IUserSysService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
@@ -114,5 +116,10 @@ public class UserSysService implements IUserSysService {
     public void changePassword(SysUser entity, String nowPassword) {
         entity.setuPassword(CommonUtils.MD5(nowPassword,entity.getRealSalt()));
         sysUserMapper.updateByPrimaryKeySelective(entity);
+    }
+
+    @Override
+    protected IEntityMapper<SysUser> getDao() {
+        return sysUserMapper;
     }
 }

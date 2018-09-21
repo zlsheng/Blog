@@ -1,12 +1,13 @@
 package com.zhaols.SSMdome.mapper;
 
+import com.zhaols.SSMdome.BasicClassDri.IEntityMapper;
 import com.zhaols.SSMdome.entity.SysResources;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SysResourcesMapper {
+public interface SysResourcesMapper extends IEntityMapper<SysResources> {
     /**
      *
      * @mbggenerated 2018-08-20

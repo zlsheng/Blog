@@ -11,12 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description: TODO: 添加功能描述
  * @date 2018-09-20 16:16
  */
-public class RoleAction extends BasicAction<SysRole> {
+public class RoleAction extends BasicAction<SysRole,IRoleService> {
     @Autowired
     private IRoleService roleService;
 
     public String list(){
         entitys = roleService.getAll();
         return SUCCESS;
+    }
+
+    @Override
+    protected IRoleService getEntityManager() {
+        return roleService;
     }
 }
