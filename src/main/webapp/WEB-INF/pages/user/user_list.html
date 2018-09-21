@@ -5,8 +5,9 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <input type="hidden" id="limit" name="limit" value="${limit!}">
+            <input type="hidden" id="totalCount" name="totalCount" value="${totalCount!}">
             <div class="layui-form-item">
-
                 <div class="layui-inline">
                     <label class="layui-form-label">账户</label>
                     <div class="layui-input-block">
@@ -65,49 +66,59 @@
                         </tr>
                         </thead>
                         <tbody>
-                         <#list sysUserlist as sysUser>
+                         <#list entitys as entity>
                          <tr>
-                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${sysUser.uId}"></td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.userName!}</td>
-                             <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${sysUser.uHeadportrait!'defalut.jpg'}" style="display: inline-block; width: 50px ; height: 50px;"></td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uNickname!}</td>
+                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${entity.uId}"></td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.userName!}</td>
+                             <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${entity.uHeadportrait!'defalut.jpg'}" style="display: inline-block; width: 50px ; height: 50px;"></td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uNickname!}</td>
                              <td style="text-align:center;vertical-align:middle;">
-                                <#if sysUser.uSex?? >
-                                    <#if sysUser.uSex == 0>男</#if>
-                                    <#if sysUser.uSex == 1>女</#if>
-                                    <#if sysUser.uSex == 2>保密</#if>
+                                <#if entity.uSex?? >
+                                    <#if entity.uSex == 0>男</#if>
+                                    <#if entity.uSex == 1>女</#if>
+                                    <#if entity.uSex == 2>保密</#if>
                                 </#if>
                              </td>
-                             <td style="text-align:center;vertical-align:middle;">${(sysUser.uBirthday?string('yyyy-MM-dd'))!}</td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uEmail!}</td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uName!}</td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uAge!}</td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uRank!}</td>
-                             <td style="text-align:center;vertical-align:middle;">${sysUser.uScore!}
+                             <td style="text-align:center;vertical-align:middle;">${(entity.uBirthday?string('yyyy-MM-dd'))!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uEmail!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uName!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uAge!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uRank!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uScore!}
                                  <#--<div id="rate_${sysUser.uScore!}_${sysUser_index}"></div>-->
                              </td>
                          </tr>
                          </#list>
                         </tbody>
                     </table>
+                    <center>
+                    <div id="_page"></div>
+                    </center>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script src="${base}/layui/lay/js/myJs.js" charset="UTF-8"></script>
 <script>
-    layui.use(['form','table','rate','element','jquery'], function(){
+    layui.use(['laypage','form','table','rate','element','jquery'], function(){
         var form = layui.form,
                 table = layui.table,
                 rate = layui.rate,
-                $=layui.$;
-
-        form.on('click(delete_user)',function () {
-            alert("sdadsad");
-        })
-
+                $=layui.$,
+                laypage = layui.laypage;
+        laypage.render({
+            elem: '_page'
+            ,count: $("#totalCount").val()
+            ,limit:$("#limit").val()
+            ,limits:[10, 20, 30, 40, 50]
+            ,first: '首页'
+            ,last: '尾页'
+            ,prev: '<i class="layui-icon">&#xe65a;</i>'
+            ,next: '<i class="layui-icon">&#xe65b;</i>'
+        });
     });
     function openUserView(type) {
         var url;
@@ -140,7 +151,6 @@
         });
     }
     function deleteUser() {
-
         var id = layui.$("input:checkbox[name='checkbox']:checked");
         if(id.size() != 1){
             layer.msg('请选择一条数据', {

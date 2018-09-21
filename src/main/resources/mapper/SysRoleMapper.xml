@@ -23,6 +23,16 @@
   <sql id="_common_where">
     <if test="status != null"> AND STATUS = #{status}</if>
   </sql>
+    <select id="select" resultMap="ResultSysRoleMap" parameterType="java.util.HashMap">
+        SELECT * FROM SYS_ROLE WHERE 1 = 1
+        <include refid="_common_where"/>
+        order by CREATE_TIME desc
+    </select>
+    <select id="count" resultType="int" parameterType="java.util.HashMap">
+        SELECT count(*) FROM SYS_ROLE WHERE 1 = 1
+        <include refid="_common_where"/>
+        order by CREATE_TIME desc
+    </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultSysRoleMap">
     select
     <include refid="Base_Column_List" />

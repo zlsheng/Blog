@@ -49,7 +49,7 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
         e.printStackTrace();
         }
 
-        return "success";
+        return "userHome";
     }
 
     /**
@@ -57,12 +57,12 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
     *
     *@Author: zhaols
     *@CreateTime: 2018-08-28  16:48
-    */
-    public String getUserList(){
-        sysUserlist = userSysService.getUserList();
+     */
+    @Override
+    public String list(){
         activeUser = (ActiveUser)SecurityUtils.getSubject().getPrincipal();
         roles = roleService.queryRole("11");
-        return "userList";
+        return super.list();
     }
     
     

@@ -1,0 +1,19 @@
+<#include "../common/_public.html"/>
+    <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+<div id="_page"></div>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: '_page'
+            ,count: ${totalCount}
+            ,limit:${limit}
+            ,limits:[10, 20, 30, 40, 50]
+            ,first: '首页'
+            ,last: '尾页'
+            ,prev: '<i class="layui-icon">&#xe65a;</i>'
+            ,next: '<i class="layui-icon">&#xe65b;</i>'
+        });
+    });
+</script>

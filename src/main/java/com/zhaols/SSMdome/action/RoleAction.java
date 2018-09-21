@@ -15,9 +15,10 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
     @Autowired
     private IRoleService roleService;
 
+    @Override
     public String list(){
-        entitys = roleService.getAll();
-        return SUCCESS;
+
+        return super.list();
     }
 
     @Override
