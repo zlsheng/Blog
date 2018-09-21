@@ -78,15 +78,24 @@
             element = layui.element,
             $ = layui.$;
         $('.layui-btn.layui-btn-role').on('click', function(){
+            var ids = layui.$("input:checkbox[name='checkbox']:checked");
+            if(ids.size() != 1){
+                layer.msg('只能选择一条数据', {
+                    icon:2,
+                    time: 2000,
+                    offset:'70px'
+                });
+                return false;
+            }
             var type = $(this).data('type');
             if(type == "add"){
-                layer.msg("点击了新增按钮");
+                layer.msg(ids.val());
                 return false;
             }else if(type == "edit"){
-                layer.msg("点击了新增按钮");
+                layer.msg(ids.val());
                 return false;
             }else if(type == "delete"){
-                layer.msg("点击了新增按钮");
+                layer.msg(ids.val());
                 return false;
             }
         });
