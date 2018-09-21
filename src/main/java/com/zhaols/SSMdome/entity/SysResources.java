@@ -1,9 +1,11 @@
 package com.zhaols.SSMdome.entity;
 
+import com.zhaols.SSMdome.BasicClassDri.Entity;
+
 import java.util.Date;
 
 
-public class SysResources {
+public class SysResources extends Entity<String> {
     /**
      * 主键
      */

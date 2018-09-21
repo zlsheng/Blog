@@ -1,5 +1,6 @@
 package com.zhaols.SSMdome.BasicClassDri;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -7,23 +8,29 @@ import com.zhaols.SSMdome.utils.GenericsUtils;
 import com.zhaols.SSMdome.utils.ResponseBean;
 import com.zhaols.SSMdome.utils.Result;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.HttpParameters;
 import org.apache.struts2.json.annotations.JSON;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zhaols
  * @Description: TODO: 添加功能描述
  * @date 2018-08-30 15:05
  */
-public class BasicAction<T extends Entity> extends ActionSupport implements Preparable, ModelDriven {
+abstract public class BasicAction<T extends Entity,M extends ISuperService> extends ActionSupport implements Preparable, ModelDriven {
     public static final String RESULT="result";
     public static final String RESPONSEBEAN="responseBean";
     public static final String SUCCESS="success";
+    private ActionContext context; // struts的ActionContext
 
+    /**
+     * 获得EntityManager类进行CRUD操作,可以在子类重载.
+     */
+    @JSON(serialize = false)
+    protected abstract M getEntityManager();
     /**
      * 业务对象
      */
@@ -36,6 +43,8 @@ public class BasicAction<T extends Entity> extends ActionSupport implements Prep
     protected Class idClass; // Action所管理的Entity的主键类型.
 
     protected String idName; // Action所管理的Entity的主键名.
+
+    private ModelSetup filter;
 
     protected int start = 1;
     protected int limit;
@@ -61,6 +70,48 @@ public class BasicAction<T extends Entity> extends ActionSupport implements Prep
             ReflectionUtils.handleReflectionException(e);
         }*/
         entity = entityClass.newInstance();
+    }
+
+
+    /**
+     * 默认首页，列表页面
+     *
+     * @return
+     */
+    public String execute() {
+        return list();
+    }
+
+    public String list() {
+        HttpParameters params = getActionContext().getParameters();
+
+        for (Map.Entry entry : params.entrySet()) {
+            if (entry.getValue() instanceof String[]) {
+                String[] vals = (String[]) entry.getValue();
+                entry.setValue(new String[]{vals[0].toString().trim()});
+            }
+        }
+        filter = setupModel();
+        doPageEntity(filter);
+        return SUCCESS;
+    }
+
+    protected ModelSetup setupModel() {
+        MyBatisModelSetup model = (MyBatisModelSetup) getModelSetupFromRequest(ORMType.MYBATIS);
+        model.setCountName(entityClass.getSimpleName() + "Mapper.count");
+        model.setSqlName(entityClass.getSimpleName() + "Mapper.select");
+        return model;
+
+    }
+    protected void doPageEntity(ModelSetup modelSetup) {
+        if (limit == 0)
+            limit = Page.DEFAULT_PAGE_SIZE;
+        if (start < 1)
+            start = 1;
+        //int pageNo=start/limit+1;
+        Page page = getEntityManager().pagedQuery(modelSetup, start, limit);
+        this.setEntitys(page.getResult());
+        this.setTotalCount(page.getTotalCount());
     }
 
     public T getEntity() {
@@ -132,5 +183,42 @@ public class BasicAction<T extends Entity> extends ActionSupport implements Prep
     }
     public ServletContext getServletContext(){
         return ServletActionContext.getServletContext();
+    }
+
+
+
+
+    /**
+     * 获得ActionContext
+     * @return ActionContext
+     *
+     */
+    public ActionContext getActionContext() {
+        return context == null ? context = ActionContext.getContext() : context;
+    }
+
+    public ModelSetup getModelSetupFromRequest(ORMType orm) {
+        final Map params=getActionContext().getParameters();
+        Map<String,Object> parameters=new HashMap<String,Object>();
+        Set<String> keys = params.keySet();
+        for(String key:keys){
+            Object[] value = (Object[])params.get(key);
+            if(value!=null&&value.length==1){
+                parameters.put(key,value[0]);
+            }
+        }
+        ModelSetup model;
+        switch (orm) {
+            case IBATIS:
+                model=new MyBatisModelSetup();
+                break;
+            case MYBATIS:
+                model=new MyBatisModelSetup();
+                break;
+            default:
+                model=new MyBatisModelSetup();
+        }
+        model.setup(parameters);
+        return model;
     }
 }

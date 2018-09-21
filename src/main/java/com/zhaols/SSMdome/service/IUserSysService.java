@@ -1,5 +1,6 @@
 package com.zhaols.SSMdome.service;
 
+import com.zhaols.SSMdome.BasicClassDri.ISuperService;
 import com.zhaols.SSMdome.MyExcption.ManagerException;
 import com.zhaols.SSMdome.entity.SysUser;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @Description: TODO: 添加功能描述
  * @date 2018-08-20 14:15
  */
-public interface IUserSysService {
+public interface IUserSysService extends ISuperService<SysUser> {
     public SysUser getUserById(String id)  ;
 
     /**

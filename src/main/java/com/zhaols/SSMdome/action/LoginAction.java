@@ -24,7 +24,7 @@ import java.util.List;
  * @Description: TODO: 添加功能描述
  * @date 2018-08-21 13:46
  */
-public class LoginAction extends BasicAction<SysUser> {
+public class LoginAction extends BasicAction<SysUser,IUserSysService> {
     //private String basePath = "";
     private String errorMsg = "";
     private ActiveUser activeUser;
@@ -103,5 +103,10 @@ public class LoginAction extends BasicAction<SysUser> {
 
     public void setActiveUser(ActiveUser activeUser) {
         this.activeUser = activeUser;
+    }
+
+    @Override
+    protected IUserSysService getEntityManager() {
+        return userSysService;
     }
 }

@@ -20,14 +20,18 @@
     ID, CODE, NAME, PROLE_ID, REMARK, AREA_ID, UPDATOR_NAME, CREATOR, CREATOR_NAME, CREATE_TIME, 
     UPDATOR, UPDATE_TIME, SENSITIVITY
   </sql>
+  <sql id="_common_where">
+    <if test="status != null"> AND STATUS = #{status}</if>
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultSysRoleMap">
     select
     <include refid="Base_Column_List" />
     from SYS_ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="getAll" resultMap="ResultSysRoleMap">
-    SELECT * FROM SYS_ROLE
+  <select id="getAll" resultMap="ResultSysRoleMap" parameterType="java.util.HashMap">
+    SELECT * FROM SYS_ROLE WHERE 1 = 1
+    <include refid="_common_where"/>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SYS_ROLE

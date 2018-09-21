@@ -1,5 +1,6 @@
 package com.zhaols.SSMdome.service;
 
+import com.zhaols.SSMdome.BasicClassDri.ISuperService;
 import com.zhaols.SSMdome.entity.SysRole;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
  * @Description: TODO: 添加功能描述
  * @date 2018-09-20 16:18
  */
-public interface IRoleService  {
+public interface IRoleService extends ISuperService<SysRole> {
 
-    List<SysRole> getAll();
+    List<SysRole> queryRole(String status);
+
 }

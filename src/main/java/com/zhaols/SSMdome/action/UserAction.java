@@ -2,7 +2,9 @@ package com.zhaols.SSMdome.action;
 
 import com.zhaols.SSMdome.BasicClassDri.BasicAction;
 import com.zhaols.SSMdome.entity.ActiveUser;
+import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.entity.SysUser;
+import com.zhaols.SSMdome.service.IRoleService;
 import com.zhaols.SSMdome.service.IUserSysService;
 import com.zhaols.SSMdome.utils.CommonUtils;
 import com.zhaols.SSMdome.utils.Result;
@@ -16,9 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserAction extends BasicAction<SysUser> {
+public class UserAction extends BasicAction<SysUser,IUserSysService> {
     @Autowired
     private IUserSysService userSysService;
+    @Autowired
+    private IRoleService roleService;
     private ActiveUser activeUser;
     private List<SysUser> sysUserlist;
     //编辑类型
@@ -29,6 +33,7 @@ public class UserAction extends BasicAction<SysUser> {
     private String now_password;
     //用户新密码
     private String old_password;
+    private List<SysRole> roles;
 
     /**
      * 首页展示用户信息
@@ -55,6 +60,8 @@ public class UserAction extends BasicAction<SysUser> {
     */
     public String getUserList(){
         sysUserlist = userSysService.getUserList();
+        activeUser = (ActiveUser)SecurityUtils.getSubject().getPrincipal();
+        roles = roleService.queryRole("11");
         return "userList";
     }
     
@@ -218,5 +225,18 @@ public class UserAction extends BasicAction<SysUser> {
 
     public void setOld_password(String old_password) {
         this.old_password = old_password;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    protected IUserSysService getEntityManager() {
+        return userSysService;
     }
 }

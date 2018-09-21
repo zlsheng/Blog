@@ -36,6 +36,20 @@
     U_EMAIL, U_INTRO, U_HEADPORTRAIT, U_AGE, U_USERSTATEID, U_RANK, U_SCORE, U_REGISTERTIME, 
     U_LOGINTIME, U_LOGINIP, U_ACTIVATECODE, U_SALT,U_RATE,UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME,BASE64_PASSWORD
   </sql>
+
+  <sql id="_common_ser">
+    <if test="userName != null"> AND USERNAME = #{userName}</if>
+  </sql>
+    <select id="select" parameterType="java.util.HashMap" resultMap="ResultSysUserMap">
+        SELECT * FROM SYS_USER WHERE U_USERSTATEID = '11'
+        <include refid="_common_ser"/>
+        order by U_SCORE desc
+    </select>
+    <select id="count" parameterType="java.util.HashMap" resultType="int">
+        SELECT count(*) FROM SYS_USER WHERE U_USERSTATEID = '11'
+        <include refid="_common_ser"/>
+    </select>
+
   <select id="selectByPrimaryKey" resultMap="ResultSysUserMap" parameterType="java.lang.String" >
     select * from SYS_USER
     where U_ID = #{Id,jdbcType=VARCHAR} and U_USERSTATEID = '11'
