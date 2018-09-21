@@ -123,7 +123,7 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
             if(roleList != null && roleList.size() > 0){
                 for (SysRole r: roleList) {
                     if(r.getId().equals(role)){
-                        result = new Result(false,"该角色已经拥有该角色");
+                        result = new Result(false,"该用户已经拥有该角色");
                         return RESULT;
                     }
                 }
