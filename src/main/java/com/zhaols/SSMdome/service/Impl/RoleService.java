@@ -5,6 +5,8 @@ import com.zhaols.SSMdome.BasicClassDri.SuperService;
 import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.mapper.SysRoleMapper;
 import com.zhaols.SSMdome.service.IRoleService;
+import com.zhaols.SSMdome.utils.CommonUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +46,29 @@ public class RoleService extends SuperService<SysRole> implements IRoleService {
     @Override
     public List<SysRole> getRoleByUid(String u_id) {
         return sysRoleMapper.getRoleByUid(u_id);
+    }
+
+    @Override
+    public SysRole queryRoleByCode(String code) {
+        return sysRoleMapper.queryRoleByCode(code);
+    }
+
+    @Override
+    public void saveAndUpdate(SysRole entity) {
+        if(StringUtils.isNotEmpty(entity.getId())){
+            //编辑
+            entity.updateEntity();
+            sysRoleMapper.updateByPrimaryKeySelective(entity);
+        }else{
+            entity.setId(CommonUtils.getUUID());
+            entity.createEntity();
+            entity.setStatus("11");
+            sysRoleMapper.insertSelective(entity);
+        }
+    }
+
+    @Override
+    public void deleteRole(String id) {
+        sysRoleMapper.deleteByPrimaryKey(id);
     }
 }

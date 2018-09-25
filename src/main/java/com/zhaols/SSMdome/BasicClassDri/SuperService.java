@@ -42,8 +42,8 @@ abstract public class SuperService<T extends Entity> implements ISuperService<T>
     }
 
     @Override
-    public T get() {
-        return null;
+    public T get(String id) {
+        return getDao().get(id);
     }
 
     @Override

@@ -30,4 +30,32 @@ public interface IRoleService extends ISuperService<SysRole> {
      *@CreateTime: 2018-09-21  16:47
      */
     List<SysRole> getRoleByUid(String u_id);
+
+    /**
+     *@Description 根据角色编码获取角色信息
+     *@Author: zhaols
+     *@param code 角色编码
+     *@Return: com.zhaols.SSMdome.entity.SysRole
+     *@CreateTime: 2018-09-25  10:09
+     */
+    SysRole queryRoleByCode(String code);
+
+    /**
+     *@Description 保存更新用户
+     *@Author: zhaols
+     *@param entity 实体类
+     *@Return: void
+     *@CreateTime: 2018-09-25  10:41
+     */
+    void saveAndUpdate(SysRole entity);
+
+
+    /**
+     *@Description  删除角色信息
+     *@Author: zhaols
+     *@param id 角色id
+     *@Return: void
+     *@CreateTime: 2018-09-25  11:50
+     */
+    void deleteRole(String id);
 }

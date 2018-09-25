@@ -54,7 +54,6 @@ public class UserSysService extends SuperService<SysUser> implements IUserSysSer
         }else {
             //新增
             entity.setuId(CommonUtils.getUUID());
-            entity.setuSalt(entity.getuId());
             entity.setuHeadportrait("defalut.jpg");
             entity.createEntity();
             entity.setBase64Password(CommonUtils.encodeData(entity.getuPassword()));
@@ -83,7 +82,6 @@ public class UserSysService extends SuperService<SysUser> implements IUserSysSer
     @Override
     public void registration(SysUser entity) throws ManagerException {
         entity.setuId(CommonUtils.getUUID());
-        entity.setuSalt(entity.getuId());
         entity.setuHeadportrait("defalut.jpg");
         entity.setBase64Password(CommonUtils.encodeData(entity.getuPassword()));
         entity.setuPassword(CommonUtils.MD5(entity.getuPassword(),entity.getRealSalt()));

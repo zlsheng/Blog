@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface IEntityMapper<T extends Entity> {
     List<T> getAll();
-    T get();
+    T get(String id);
 }

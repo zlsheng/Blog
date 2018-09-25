@@ -15,11 +15,6 @@ public interface SysRoleMapper extends IEntityMapper<SysRole> {
      */
     int deleteByPrimaryKey(String id);
 
-    /**
-     *
-     * @mbggenerated 2018-08-20
-     */
-    int insert(SysRole record);
 
     /**
      *
@@ -31,19 +26,7 @@ public interface SysRoleMapper extends IEntityMapper<SysRole> {
      *
      * @mbggenerated 2018-08-20
      */
-    SysRole selectByPrimaryKey(String id);
-
-    /**
-     *
-     * @mbggenerated 2018-08-20
-     */
     int updateByPrimaryKeySelective(SysRole record);
-
-    /**
-     *
-     * @mbggenerated 2018-08-20
-     */
-    int updateByPrimaryKey(SysRole record);
 
     /**
      *@Description  获取所有角色列表
@@ -62,4 +45,15 @@ public interface SysRoleMapper extends IEntityMapper<SysRole> {
      *@CreateTime: 2018-09-21  16:47
      */
     List<SysRole> getRoleByUid(String uId);
+
+    /**
+     *@Description 根据角色编码获取角色信息
+     *@Author: zhaols
+     *@param code
+     *@Return: com.zhaols.SSMdome.entity.SysRole
+     *@CreateTime: 2018-09-25  10:10
+     */
+    SysRole queryRoleByCode(String code);
+
+    SysRole get(String id);
 }

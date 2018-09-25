@@ -80,5 +80,9 @@ body {
     cursor:pointer;
     color: #5FB878;
 }
+.page_layout{
+	margin: 0 auto;
+}
+
 
 

@@ -3,6 +3,8 @@ package com.zhaols.SSMdome.action;
 import com.zhaols.SSMdome.BasicClassDri.BasicAction;
 import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.service.IRoleService;
+import com.zhaols.SSMdome.utils.Result;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -18,10 +20,56 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
     private IRoleService roleService;
     private List<SysRole> roles;
 
+    private String type;
+
     @Override
     public String list(){
         roles = roleService.queryRole();
         return super.list();
+    }
+
+    public String toViewRole(){
+        String id =  getHttpServletRequest().getParameter("id");
+        if(StringUtils.isNotEmpty(id)){
+            entity = roleService.get(id);
+        }
+        return "toViewRole";
+    }
+    public String saveAndUpdate(){
+        if(StringUtils.isNotEmpty(entity.getId())){
+            SysRole role = roleService.queryRoleByCode(entity.getCode());
+            if(role != null){
+                result = new Result(false,"角色编码已存在，请重新填写");
+            }
+            try{
+                roleService.saveAndUpdate(entity);
+                result = new Result(true,"编辑成功");
+
+            }catch(Exception e ){
+                e.printStackTrace();
+                result = new Result(false,"编辑失败，请联系管理员");
+            }
+        }else {
+            try{
+                roleService.saveAndUpdate(entity);
+                result = new Result(true,"新增成功");
+
+            }catch(Exception e ){
+                e.printStackTrace();
+                result = new Result(false,"新增失败，请联系管理员");
+            }
+        }
+        return RESULT;
+    }
+    public String deleteRole(){
+        String id = getHttpServletRequest().getParameter("id");
+        if (StringUtils.isNotEmpty(id)){
+            roleService.deleteRole(id);
+            result = new Result(true,"角色删除成功");
+        }else {
+            result = new Result(false,"操作异常，请联系管理员");
+        }
+        return RESULT;
     }
 
     @Override
@@ -35,5 +83,13 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
 
     public void setRoles(List<SysRole> roles) {
         this.roles = roles;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

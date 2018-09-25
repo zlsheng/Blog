@@ -1,12 +1,12 @@
 <#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 
-<form>
-<div class="layui-fluid">
+<form >
+<div class="layui-fluid" >
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <input type="hidden" id="limit" name="limit" value="${limit!}">
-            <input type="hidden" id="totalCount" name="totalCount" value="${totalCount!}">
+            <input type="hidden" id="start" name="start" value="${start!}">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">账户</label>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn" lay-submit lay-filter="LAY-user-back-search">
+                    <button class="layui-btn" id="search_user" lay-submit lay-filter="LAY-user-back-search">
                         <i class="layui-icon layui-icon-search "></i>
                     </button>
                 </div>
@@ -113,13 +113,27 @@
                 laypage = layui.laypage;
         laypage.render({
             elem: '_page'
-            ,count: $("#totalCount").val()
-            ,limit:$("#limit").val()
-            ,limits:[10, 20, 30, 40, 50]
+            ,count:${totalCount}
+            ,limit:${limit}
+            ,curr:${start}
+            ,limits:[10, 20, 30]
+            ,groups:5
+            ,layout:['limit', 'count', 'prev', 'page', 'next', 'skip']
             ,first: '首页'
             ,last: '尾页'
             ,prev: '<i class="layui-icon">&#xe65a;</i>'
             ,next: '<i class="layui-icon">&#xe65b;</i>'
+            ,jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+                $("#start").attr('value',obj.curr);
+                $("#limit").attr('value',obj.limit);
+                //首次不执行
+                if(!first){
+                   $("#search_user").click();
+                }
+            }
         });
     });
     function openUserView(type,id) {

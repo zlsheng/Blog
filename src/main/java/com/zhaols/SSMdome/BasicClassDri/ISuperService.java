@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ISuperService<T extends Entity> {
     List<T> getAll();
-    T  get();
+    T  get(String id);
     public Page pagedQuery(ModelSetup modelSetup, int pageNo, int pageSize);
 }

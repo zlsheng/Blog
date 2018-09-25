@@ -19,7 +19,7 @@ public class Page implements Serializable {
     /**
      * 默认分页数.
      */
-    public static final int DEFAULT_PAGE_SIZE = 20;
+    public static final int DEFAULT_PAGE_SIZE = 10;
 
     /**
      * 每页的记录数.
