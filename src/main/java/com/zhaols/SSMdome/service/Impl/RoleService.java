@@ -71,4 +71,12 @@ public class RoleService extends SuperService<SysRole> implements IRoleService {
     public void deleteRole(String id) {
         sysRoleMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public void updateRoleEnable(String id, String isEnable) {
+        Map<String,String> map = new HashMap<>();
+        map.put("id",id);
+        map.put("isEnable",isEnable);
+        sysRoleMapper.updateRoleEnable(map);
+    }
 }

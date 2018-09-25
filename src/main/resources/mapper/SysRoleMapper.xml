@@ -56,11 +56,14 @@
   <select id="queryRoleByCode" parameterType="String" resultMap="ResultSysRoleMap">
     SELECT * FROM SYS_ROLE WHERE CODE = #{code}
   </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     UPDATE SYS_ROLE SET IS_DEL = '00'
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
+    <update id="updateRoleEnable" parameterType="java.util.HashMap">
+        UPDATE SYS_ROLE SET STATUS = #{isEnable}
+    where ID = #{id,jdbcType=VARCHAR}
+    </update>
     <insert id="insertSelective" parameterType="com.zhaols.SSMdome.entity.SysRole">
         insert into SYS_ROLE
         <trim prefix="(" suffix=")" suffixOverrides=",">

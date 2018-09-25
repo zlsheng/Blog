@@ -99,6 +99,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
             <value>
                 <!-- 静态资源放行-->
                 /layui/** = anon
+                /eleTree/** = anon
                 <!-- 验证码，可匿名访问
                 /validatecode.jsp = anon-->
                 /admin/login_error.do = anon

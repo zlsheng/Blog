@@ -3,7 +3,7 @@
 <form class="layui-form">
 <div class="layui-fluid">
     <div class="layui-card">
-            <div class="layui-form layui-card-header layuiadmin-card-header-auto" >
+            <div class="layui-form layui-card-header " >
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <input type="hidden" id="limit" name="limit" value="${limit!}">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <button class="layui-btn" id="search_form" lay-submit lay-filter="LAY-user-back-search">
+                        <button class="layui-btn" id="search_form" lay-submit lay-filter="LAY-role-back-search">
                             <i class="layui-icon layui-icon-search "></i>
                         </button>
                     </div>
@@ -31,6 +31,8 @@
                 <button class="layui-btn layui-btn-role layui-btn-primary layui-btn-sm" data-type="add"><i class="layui-icon" >&#xe654;</i>添加</button>
                 &nbsp;
                 <button class="layui-btn layui-btn-role layui-btn-normal  layui-btn-sm" data-type="edit"><i class="layui-icon" >&#xe642;</i>编辑</button>
+                &nbsp;
+                <button class="layui-btn layui-btn-role layui-btn-primary  layui-btn-sm" data-type="author"><i class="layui-icon" >&#xe672;</i>授权</button>
                 &nbsp;
                 <button class="layui-btn layui-btn-role layui-btn-warm layui-btn-sm" data-type="delete"><i class="layui-icon" >&#xe640;</i>删除</button>
                 &nbsp;
@@ -55,7 +57,7 @@
                 <tbody>
                          <#list entitys as entity>
                          <tr>
-                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${entity.id}"></td>
+                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${entity.id!}"></td>
                              <td style="text-align:center;vertical-align:middle;">${entity.name!}</td>
                              <td style="text-align:center;vertical-align:middle;">${entity.code!}</td>
                              <td style="text-align:center;vertical-align:middle;">${entity.description!}</td>
@@ -70,10 +72,9 @@
                                  </#if>
                              </td>
                              <td style="text-align:center;vertical-align:middle;">
-                                 <button class="layui-btn layui-btn-role layui-btn-normal  layui-btn-xs" data-type="author"><i class="layui-icon" >&#xe672;</i>授权</button>
-                                 &nbsp;
+
+
                                  <input type="checkbox"  lay-skin="switch" lay-filter="change_enable" lay-text="启用|禁用" value="${entity.id}" <#if entity.status == '00'>checked</#if>>
-                                 <#--onclick="changeEnable('${entity.id!}','<#if entity.status == "00">11</#if><#if entity.status == "11">00</#if>')"   -->
                              </td>
                          </tr>
                          </#list>
@@ -87,10 +88,10 @@
 <script src="${base}/layui/layui.js" charset="UTF-8"></script>
 <script src="${base}/layui/lay/js/myJs.js" charset="UTF-8"></script>
 <script>
-    layui.use(['laypage','form','element','table'], function(){
+    layui.use(['jquery','laypage','form','element','table'], function(){
         var form = layui.form,
             element = layui.element,
-            $ = layui.$,
+            $ = layui.jquery,
             laypage = layui.laypage;
         //分页组件初始化
         laypage.render({
@@ -114,7 +115,6 @@
                 }
             }
         });
-
         $('.layui-btn.layui-btn-role').on('click', function(){
             var type = $(this).data('type');
             if(type != "add"){
@@ -146,6 +146,7 @@
                             dataType:"json",
                             success:function(result) {
                                 if(result.statusCode == 200){
+
                                     layer.msg(result.message,{
                                         icon:1,
                                         time:1500,
@@ -162,6 +163,15 @@
                                 }
                             }
                         });
+                    });
+                    return false;
+                }else if(type == "author"){
+                    layer.open({
+                        type: 2,
+                        content: "${base}/system/role_toAuthor.do?id=" + ids.val(),
+                        title: "授权",
+                        area: ['400px', '300px'],
+                        offset: '70px'
                     });
                     return false;
                 }
@@ -205,14 +215,6 @@
                     }
                 }
             });
-
-            // $("#search_form").click();
         });
     });
-    function author(id) {
-
-    };
-    function changeEnable(id,isEnable) {
-
-    }
 </script>

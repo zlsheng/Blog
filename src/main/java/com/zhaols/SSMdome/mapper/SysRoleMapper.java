@@ -40,7 +40,7 @@ public interface SysRoleMapper extends IEntityMapper<SysRole> {
     /**
      *@Description 根据用户id获取用户所拥有的角色列表
      *@Author: zhaols
-     *@param u_id 用户id
+     *@param uId 用户id
      *@Return: java.util.List<com.zhaols.SSMdome.entity.SysRole>
      *@CreateTime: 2018-09-21  16:47
      */
@@ -55,5 +55,12 @@ public interface SysRoleMapper extends IEntityMapper<SysRole> {
      */
     SysRole queryRoleByCode(String code);
 
-    SysRole get(String id);
+    /**
+     *@Description 根据id修改角色状态
+     *@Author: zhaols
+     *@param map
+     *@Return: void
+     *@CreateTime: 2018-09-25  15:28
+     */
+    void updateRoleEnable(Map<String,String> map);
 }

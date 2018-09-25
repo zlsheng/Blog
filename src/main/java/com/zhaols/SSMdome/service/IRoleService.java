@@ -58,4 +58,14 @@ public interface IRoleService extends ISuperService<SysRole> {
      *@CreateTime: 2018-09-25  11:50
      */
     void deleteRole(String id);
+
+    /**
+     *@Description  根据id修改角色状态
+     *@Author: zhaols
+     *@param id 角色id
+     *@param isEnable 角色状态
+     *@Return: void
+     *@CreateTime: 2018-09-25  15:24
+     */
+    void updateRoleEnable(String id, String isEnable);
 }

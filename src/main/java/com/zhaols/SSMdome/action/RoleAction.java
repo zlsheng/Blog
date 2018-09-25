@@ -72,6 +72,26 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
         return RESULT;
     }
 
+    public String changeEnable(){
+        String isEnable = getHttpServletRequest().getParameter("isEnable");
+        String id = getHttpServletRequest().getParameter("id");
+        String message = "禁用成功";
+        if("11".equals(isEnable)){
+            message = "启用成功";
+        }
+        try{
+            roleService.updateRoleEnable(id,isEnable);
+            result = new Result(true,message);
+        }catch(Exception e ) {
+            e.printStackTrace();
+            result = new Result(true,"操作失败，请联系管理员");
+        }
+        return RESULT;
+    }
+    public String toAuthor(){
+        System.out.println("123132");
+        return "toAuthor";
+    }
     @Override
     protected IRoleService getEntityManager() {
         return roleService;
