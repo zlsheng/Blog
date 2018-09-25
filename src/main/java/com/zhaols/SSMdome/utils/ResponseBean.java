@@ -11,6 +11,42 @@ import java.util.Map;
  */
 public class ResponseBean extends HashMap<String, Object> {
     /**
+     *@Description 用户返回固定格式json数据
+     * 格式 {
+     *      label: 节点名称
+     *      spread: 是否展开子项
+     *      children: {
+     *             label: 节点名称
+     *             spread: 是否展开子项
+     *             children: {
+     *                 ....
+     *             }子元素数组
+     *             disabled: 是否禁用
+     *             checked: 是否选中
+     *      }子元素数组
+     *      disabled: 是否禁用
+     *      checked: 是否选中
+     * }
+     *@Author: zhaols
+     *@param label 节点名称
+     *@param spread 是否展开子项
+     *@param children 子元素数组
+     *@param disabled 是否禁用
+     *@param checked 是否选中
+     *@Return: com.zhaols.SSMdome.utils.ResponseBean
+     *@CreateTime: 2018-09-25  16:43
+     */
+    public static ResponseBean getResponseBeanJson(String label,boolean  spread, ResponseBean children,boolean disabled,boolean checked) {
+        ResponseBean responseBean = new ResponseBean();
+        responseBean.put("label",label);
+        responseBean.put("spread",spread);
+        responseBean.put("children",children);
+        responseBean.put("disabled",disabled);
+        responseBean.put("checked",checked);
+        return responseBean;
+    }
+
+    /**
     *   功能描述: 用于返回固定格式json数据
     *
      * 格式 ： {code:
@@ -24,9 +60,7 @@ public class ResponseBean extends HashMap<String, Object> {
     */
     public static ResponseBean getResponseBeanJson(Integer code,String msg, List<?> list) {
         ResponseBean responseBean = new ResponseBean();
-        responseBean.put("code", code);
-        responseBean.put("msg", msg);
-        responseBean.put("data",list);
+
         return responseBean;
     }
     /**

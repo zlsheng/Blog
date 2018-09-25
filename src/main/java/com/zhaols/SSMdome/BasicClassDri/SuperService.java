@@ -38,7 +38,7 @@ abstract public class SuperService<T extends Entity> implements ISuperService<T>
 
     @Override
     public List<T> getAll() {
-        return null;
+        return getDao().getAll();
     }
 
     @Override

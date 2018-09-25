@@ -1,8 +1,11 @@
 package com.zhaols.SSMdome.action;
 
 import com.zhaols.SSMdome.BasicClassDri.BasicAction;
+import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.entity.SysRole;
 import com.zhaols.SSMdome.service.IRoleService;
+import com.zhaols.SSMdome.service.ISysResourcesService;
+import com.zhaols.SSMdome.utils.ResponseBean;
 import com.zhaols.SSMdome.utils.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,13 @@ import java.util.List;
 public class RoleAction extends BasicAction<SysRole,IRoleService> {
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private ISysResourcesService sysResourcesService;
     private List<SysRole> roles;
 
     private String type;
+    //所有的资源信息列表
+    private List<SysResources> resources;
 
     @Override
     public String list(){
@@ -89,8 +96,29 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
         return RESULT;
     }
     public String toAuthor(){
-        System.out.println("123132");
+        resources =  sysResourcesService.getAll();
         return "toAuthor";
+    }
+    /**
+     *@Description 递归查询所有资源列表
+     *@Author: zhaols
+     *@param pId    父资源id
+     *@param resources 所有资源列表
+     *@Return: com.zhaols.SSMdome.utils.ResponseBean
+     *@CreateTime: 2018-09-25  17:26
+     */
+    private ResponseBean getResourcesTree(String pId,List<SysResources> resources) {
+        if(resources != null && resources.size() > 0){
+            if (StringUtils.isEmpty(pId)) {
+                for (SysResources s1 : resources) {
+                    if (StringUtils.isEmpty(s1.getParentCode())) {
+                        ResponseBean responseBean1 = ResponseBean.getResponseBeanJson(s1.getDisplay(), true, getResourcesTree(s1.getId(), resources), false, false);
+                    }
+                }
+            }
+        }
+        ResponseBean responseBean = new ResponseBean();
+        return responseBean;
     }
     @Override
     protected IRoleService getEntityManager() {
@@ -111,5 +139,13 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<SysResources> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<SysResources> resources) {
+        this.resources = resources;
     }
 }

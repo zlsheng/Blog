@@ -10,24 +10,18 @@
     <result column="TYPE" jdbcType="CHAR" property="type" />
     <result column="URL" jdbcType="VARCHAR" property="url" />
     <result column="STATUS" jdbcType="CHAR" property="status" />
-    <result column="SORTBY" jdbcType="DECIMAL" property="sortby" />
-    <result column="ICON" jdbcType="VARCHAR" property="icon" />
-    <result column="PLATFORM" jdbcType="DECIMAL" property="platform" />
-    <result column="SUBSYSTEM_ID" jdbcType="VARCHAR" property="subsystemId" />
     <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
     <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
     <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="SENSITIVITY" jdbcType="DECIMAL" property="sensitivity" />
-    <result column="SORT" jdbcType="INTEGER" property="sort" />
+    <result column="SORT" jdbcType="DECIMAL" property="sort" />
     <result column="ICON" jdbcType="VARCHAR" property="icon" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, CODE, DISPLAY, DESCRIPTION, PARENT_CODE, TYPE, URL, STATUS, SORTBY, ICON, PLATFORM, 
-    SUBSYSTEM_ID, UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME,
-    SENSITIVITY,SORT,ICON
+    ID, CODE, DISPLAY, DESCRIPTION, PARENT_CODE, TYPE, URL, STATUS, UPDATOR, UPDATOR_NAME,
+    UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME, SORT, ICON
   </sql>
     <!--根据用户id获取权限信息-->
     <select id="getSysResourceListByUid" resultMap="ResultSysResourcesMap" parameterType="java.lang.String">
@@ -44,5 +38,9 @@
        SELECT role_id FROM sys_role_user WHERE user_id = #{userid,jdbcType=VARCHAR}
        )
 ) and type = '1' ORDER BY SORT
+  </select>
+
+  <select id="getAll" resultMap="ResultSysResourcesMap">
+      SELECT * FROM Sys_Resources where STATUS = '0'
   </select>
 </mapper>

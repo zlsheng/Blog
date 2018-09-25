@@ -1,1 +1,42 @@
-123456
+<#include "../common/_public.html"/>
+<link rel="stylesheet" href="${base}/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="${base}/layui/css/admin.css" media="all">
+    <link rel="stylesheet" href="${base}/eleTree/eleTree.css" media="all">
+
+<from class="layui-form">
+    <center>
+        <div class="eleTree"/>
+    </center>
+</from>
+
+
+<script src="../layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: "${base}/layui/lay/mymodules/"
+        }).use(['jquery','eleTree','form'], function(){
+            var $ = layui.jquery;
+            var eleTree = layui.eleTree;
+            eleTree.render({
+                elem: '.eleTree',
+                url: "../../data/home/tree.json",
+                type: "post",
+                data: data,
+                showCheckbox: true,
+                accordion: true
+            });
+            eleTree.on("toggleSlide",function(data) {
+                //展开合并触发事件
+                console.log(data);
+            })
+            eleTree.on("checkbox",function(data) {
+                //选中事件
+                console.log(data);
+            })
+
+            $("#add").on("click",function() {
+                console.log(eleTree.checkedData);
+            })
+
+        });
+    </script>
