@@ -2,6 +2,7 @@ package com.zhaols.SSMdome.mapper;
 
 import com.zhaols.SSMdome.BasicClassDri.IEntityMapper;
 import com.zhaols.SSMdome.entity.SysResources;
+import com.zhaols.SSMdome.utils.ResponseBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -62,4 +63,21 @@ public interface SysResourcesMapper extends IEntityMapper<SysResources> {
     List<SysResources> findMenuListByUserId(String userid);
 
 
+    /**
+     *@Description: 根据用户id获取用户权限列表
+     *@Author: zhaols
+     *@param userId 角色id
+     *@Return: java.util.List<com.zhaols.SSMdome.entity.SysResources>
+     *@CreateTime: 2018-09-26  11:49
+     */
+    List<SysResources> queryResByUid(String userId);
+
+    /**
+     *@Description: 根据角色id获取用户权限列表
+     *@Author: zhaols
+     *@param roleId
+     *@Return: java.util.List<com.zhaols.SSMdome.entity.SysResources>
+     *@CreateTime: 2018-09-26  12:54
+     */
+    List<SysResources> queryResByRid(String roleId);
 }

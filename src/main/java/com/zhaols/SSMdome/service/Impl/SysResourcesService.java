@@ -5,8 +5,11 @@ import com.zhaols.SSMdome.BasicClassDri.SuperService;
 import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
 import com.zhaols.SSMdome.service.ISysResourcesService;
+import com.zhaols.SSMdome.utils.ResponseBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zhaols
@@ -22,5 +25,15 @@ public class SysResourcesService extends SuperService<SysResources> implements I
     @Override
     protected IEntityMapper<SysResources> getDao() {
         return resourcesMapper;
+    }
+
+    @Override
+    public List<SysResources> queryResByUid(String userId) {
+        return resourcesMapper.queryResByUid(userId);
+    }
+
+    @Override
+    public List<SysResources> queryResByRid(String roleId) {
+        return resourcesMapper.queryResByRid(roleId);
     }
 }

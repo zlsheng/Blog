@@ -10,6 +10,7 @@ import java.util.Map;
  * @date 2018-07-06 15:45
  */
 public class ResponseBean extends HashMap<String, Object> {
+
     /**
      *@Description 用户返回固定格式json数据
      * 格式 {
@@ -36,72 +37,96 @@ public class ResponseBean extends HashMap<String, Object> {
      *@Return: com.zhaols.SSMdome.utils.ResponseBean
      *@CreateTime: 2018-09-25  16:43
      */
-    public static ResponseBean getResponseBeanJson(String label,boolean  spread, ResponseBean children,boolean disabled,boolean checked) {
+    public static ResponseBean getResponseBeanJson(String label,boolean  spread, List<ResponseBean> children,boolean disabled,boolean checked,Object data) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.put("label",label);
         responseBean.put("spread",spread);
         responseBean.put("children",children);
         responseBean.put("disabled",disabled);
         responseBean.put("checked",checked);
+        responseBean.put("data",data);
         return responseBean;
+    }
+   /* private String label;
+    private boolean spread;
+    private List<ResponseBean> children;
+    private boolean disabled;
+    private boolean checked;
+    private Object data;
+
+    public String getLabel() {
+        return label;
     }
 
-    /**
-    *   功能描述: 用于返回固定格式json数据
-    *
-     * 格式 ： {code:
-     *          msg:
-     *          data:
-     *          }
-    *@Author: zlsheng
-    *@param:
-    *@Return:
-    *@CreateTime: 2018-07-06  16:21
-    */
-    public static ResponseBean getResponseBeanJson(Integer code,String msg, List<?> list) {
-        ResponseBean responseBean = new ResponseBean();
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-        return responseBean;
+    public boolean isSpread() {
+        return spread;
     }
+
+    public void setSpread(boolean spread) {
+        this.spread = spread;
+    }
+
+    public List<ResponseBean> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ResponseBean> children) {
+        this.children = children;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }*/
+
     /**
-     *   功能描述: 用于返回固定格式json数据
-     *
-     * 格式 ： {code:
-     *          msg:
-     *          data:
-     *          }
-     *@Author: zlsheng
-     *@param:
-     *@Return:
-     *@CreateTime: 2018-07-06  16:21
-     */
-    public static ResponseBean getResponseBeanJson(Integer code,String msg, Map<String,String> map) {
-        ResponseBean responseBean = new ResponseBean();
-        responseBean.put("code", code);
-        responseBean.put("msg", msg);
-        responseBean.put("data",map);
-        return responseBean;
-    }
-    /**
-     *   功能描述: 用于返回固定格式json数据
-     *
-     * 用于表格分页
-     * 格式 ： {code:
-     *          msg:
-     *          data:
-     *          count:
-     *          }
-     *@Author: zlsheng
-     *@param:
-     *@Return:
-     *@CreateTime: 2018-07-06  16:21
-     */
-    public static ResponseBean getResponseBeanJson(Integer code,String msg, List<?> list,Integer count) {
-        ResponseBean responseBean = new ResponseBean();
-        responseBean.put("code", code);
-        responseBean.put("msg", msg);
-        responseBean.put("data",list);
-        responseBean.put("count",count);
-        return responseBean;
-    }
+     * 格式 {
+     *      label: 节点名称
+     *      spread: 是否展开子项
+     *      children: {
+     *             label: 节点名称
+     *             spread: 是否展开子项
+     *             children: {
+     *                 ....
+     *             }子元素数组
+     *             disabled: 是否禁用
+     *             checked: 是否选中
+     *      }子元素数组
+     *      disabled: 是否禁用
+     *      checked: 是否选中
+     *      data: 数据
+     * }
+     *@CreateTime: 2018-09-25  16:43
+
+    public ResponseBean(String label, boolean spread, List<ResponseBean> children, boolean disabled, boolean checked, Object data) {
+        this.label = label;
+        this.spread = spread;
+        this.children = children;
+        this.disabled = disabled;
+        this.checked = checked;
+        this.data = data;
+    }*/
 }

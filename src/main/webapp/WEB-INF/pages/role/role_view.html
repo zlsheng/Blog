@@ -1,8 +1,8 @@
 <#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
 <fieldset class="layui-elem-field">
-<#if type == 'add'><legend>新增角色</legend></#if>
-<#if type == 'edit'><legend>编辑角色</legend></#if>
+<#if type?? && type == 'add'><legend>新增角色</legend></#if>
+<#if type?? && type == 'edit'><legend>编辑角色</legend></#if>
     <form class="layui-form layui-form-pane" id="LAY_role_form" >
         <input type="hidden" value="${entity.id!}" name="id">
         <div class="layui-form-item">
@@ -74,4 +74,9 @@
             return false;
         })
     });
+    function closedView() {
+        //alert("点击了关闭按钮");
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
 </script>

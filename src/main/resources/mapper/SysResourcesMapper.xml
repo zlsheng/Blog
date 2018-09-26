@@ -41,6 +41,20 @@
   </select>
 
   <select id="getAll" resultMap="ResultSysResourcesMap">
-      SELECT * FROM Sys_Resources where STATUS = '0'
+      SELECT * FROM Sys_Resources where STATUS = '0' ORDER BY SORT
   </select>
+
+    <select id="queryResByUid" parameterType="String" resultMap="ResultSysResourcesMap">
+        SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id IN (
+              SELECT role_id FROM sys_role_user WHERE user_id = #{userId}
+          )
+        )and STATUS = '0' ORDER BY SORT
+    </select>
+
+    <select id="queryResByRid" parameterType="String" resultMap="ResultSysResourcesMap">
+        SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id = #{roleId}
+        )and STATUS = '0' ORDER BY SORT
+    </select>
 </mapper>

@@ -1,42 +1,46 @@
 <#include "../common/_public.html"/>
 <link rel="stylesheet" href="${base}/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="${base}/layui/css/admin.css" media="all">
-    <link rel="stylesheet" href="${base}/eleTree/eleTree.css" media="all">
+<link rel="stylesheet" href="${base}/layui/css/admin.css" media="all">
+<link rel="stylesheet" href="${base}/eleTree/eleTree.css" media="all">
 
-<from class="layui-form">
-    <center>
-        <div class="eleTree"/>
-    </center>
-</from>
+<form class="layui-form">
+    <input type="hidden" name="roleId" value="${roleId!}">
+    <div class="eleTree"></div>
+</form>
 
-
-<script src="../layui/layui.js"></script>
+ <div class="layui-form-item">
+     <div class="layui-input-block">
+         <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="author_form" >保存</button>
+         <button class="layui-btn  layui-btn-danger"  onclick="closedView()">关闭</button>
+     </div>
+ </div>
+<script src="${base}/layui/layui.js"></script>
     <script>
         layui.config({
             base: "${base}/layui/lay/mymodules/"
         }).use(['jquery','eleTree','form'], function(){
             var $ = layui.jquery;
             var eleTree = layui.eleTree;
+            var data = [{"data":"MENU_DEFAULT","children":[{"data":"MENU_DEFAULT_OPEN_VIP","children":[],"checked":true,"disabled":false,"label":"开通VIP","spread":true},{"data":"MENU_DEFAULT_OPEN_SVIP","children":[],"checked":true,"disabled":false,"label":"开通SVIP","spread":true},{"data":"MENU_DEFAULT_OPTION_1","children":[],"checked":true,"disabled":false,"label":"选项一","spread":true},{"data":"MENU_DEFAULT_OPTION_2","children":[],"checked":true,"disabled":false,"label":"选项二","spread":true},{"data":"MENU_DEFAULT_OPTION_3","children":[],"checked":true,"disabled":false,"label":"选项三","spread":true}],"checked":false,"disabled":false,"label":"默认菜单","spread":false},{"data":"MENU_SYSTEM","children":[{"data":"MENU_SYSTEM_USER","children":[],"checked":false,"disabled":false,"label":"用户管理","spread":false},{"data":"MENU_SYSTEM_ROLE","children":[],"checked":false,"disabled":false,"label":"角色管理","spread":false}],"checked":false,"disabled":false,"label":"系统管理","spread":false},{"data":"MENU_BUSINESS","children":[{"data":"MENU_BUSINESS_SVIP","children":[],"checked":false,"disabled":false,"label":"专属特权","spread":false},{"data":"MENU_BUSINESS_ONE","children":[],"checked":false,"disabled":false,"label":"业务一","spread":false},{"data":"MENU_BUSINESS_TWO","children":[],"checked":false,"disabled":false,"label":"业务二","spread":false},{"data":"MENU_BUSINESS_THREE","children":[],"checked":false,"disabled":false,"label":"业务三","spread":false}],"checked":false,"disabled":false,"label":"业务菜单","spread":false}];
             eleTree.render({
                 elem: '.eleTree',
-                url: "../../data/home/tree.json",
+                url: "${base}/system/role_queryResouresList.do?roleId=" + ${roleId!},
                 type: "post",
-                data: data,
                 showCheckbox: true,
                 accordion: true
             });
             eleTree.on("toggleSlide",function(data) {
-                //展开合并触发事件
+                //展开合并事件
                 console.log(data);
-            })
+            });
             eleTree.on("checkbox",function(data) {
-                //选中事件
+                //选中取消事件
                 console.log(data);
-            })
-
-            $("#add").on("click",function() {
-                console.log(eleTree.checkedData);
-            })
-
+            });
         });
+
+        function closedView() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        };
     </script>

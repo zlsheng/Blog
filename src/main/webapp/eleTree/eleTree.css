@@ -1,7 +1,7 @@
 /* #region tree */
 .eleTree{
-    width: 500px;
-    height: 400px;
+    width: 350px;
+    height: 250px;
     border: 1px solid #ccc;
     margin: 30px;
     position: relative;
@@ -83,9 +83,9 @@ input.eleTree-hideen[type=checkbox]{
     position: relative;
     width: 8px;
     height: 1px;
-    background-color: #fff;
+    background-color: #ffffff;
     display: inline-block;
-    top: -4px;
+    top: 7px;
 }
 
 .eleTree-checkbox.eleTree-checkbox-disabled i{
