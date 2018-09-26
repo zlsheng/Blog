@@ -40,10 +40,10 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
     private List<SysResources> resources;
     //权限Ztree使用
     private List<ResponseBean> resourceList;
-    //
-    private String selectBeforeRes;
-    //
-    private String selectAfterRes;
+    //角色所拥有之前的权限
+    private String selectBeforeRes = "";
+    //角色授权操作后所拥有的权限
+    private String selectAfterRes = "";
     @Override
     public String list(){
         roles = roleService.queryRole();
@@ -203,6 +203,19 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
             }
         }
         return resourceList;
+    }
+
+    public String saveAuth(){
+        //取消所有旧权限
+        try{
+            sysResourcesService.updateAuth(roleId,selectBeforeRes,selectAfterRes);
+            result = new Result(true,"权限赋予成功");
+
+        }catch(Exception e ){
+            e.printStackTrace();
+            result = new Result(false,"操作失败，请联系管理员");
+        }
+        return RESULT;
     }
     @Override
     protected IRoleService getEntityManager() {

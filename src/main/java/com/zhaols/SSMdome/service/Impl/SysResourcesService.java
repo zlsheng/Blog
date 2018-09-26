@@ -9,7 +9,11 @@ import com.zhaols.SSMdome.utils.ResponseBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhaols
@@ -35,5 +39,28 @@ public class SysResourcesService extends SuperService<SysResources> implements I
     @Override
     public List<SysResources> queryResByRid(String roleId) {
         return resourcesMapper.queryResByRid(roleId);
+    }
+
+    @Override
+    public void updateAuth(String roleId, String selectBeforeRes, String selectAfterRes) {
+        //取消所有权限
+        String[] befores = selectBeforeRes.split(",");
+        clncelAuth(roleId, Arrays.asList(befores));
+
+        String[] afters = selectAfterRes.split(",");
+        //添加新权限
+    }
+
+    public void clncelAuth(String roleId,List<String> resList){
+        if(resList != null && resList.size() > 0){
+
+            for (String s :resList ) {
+                Map<String,String> map = new HashMap<>();
+                map.put("roleId",roleId);
+                map.put("resId",s);
+                resourcesMapper.clncelAuth(map);
+            }
+        }
+
     }
 }

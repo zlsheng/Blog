@@ -30,4 +30,25 @@ public interface ISysResourcesService extends ISuperService<SysResources> {
      *@CreateTime: 2018-09-26  12:55
      */
     List<SysResources> queryResByRid(String roleId);
+
+    /**
+     *@Description: 修改角色权限
+     *@Author: zhaols
+     *@param roleId 角色id
+     *@param selectBeforeRes 将要取消的权限
+     *@param selectAfterRes 将要添加的权限
+     *@Return: void
+     *@CreateTime: 2018-09-26  15:41
+     */
+    void updateAuth(String roleId, String selectBeforeRes, String selectAfterRes);
+
+    /**
+     *@Description: 取消角色权限
+     *@Author: zhaols
+     *@param roleId 角色id
+     *@param resList 取消权限List
+     *@Return: void
+     *@CreateTime: 2018-09-26  15:51
+     */
+    public void clncelAuth(String roleId,List<String> resList);
 }

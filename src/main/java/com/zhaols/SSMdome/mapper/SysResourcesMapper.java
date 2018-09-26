@@ -6,6 +6,7 @@ import com.zhaols.SSMdome.utils.ResponseBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface SysResourcesMapper extends IEntityMapper<SysResources> {
@@ -80,4 +81,14 @@ public interface SysResourcesMapper extends IEntityMapper<SysResources> {
      *@CreateTime: 2018-09-26  12:54
      */
     List<SysResources> queryResByRid(String roleId);
+
+
+    /**
+     *@Description:  取消角色权限
+     *@Author: zhaols
+     *@param map 存放用户id和权限id
+     *@Return: void
+     *@CreateTime: 2018-09-26  16:03
+     */
+    void clncelAuth(Map<String,String> map);
 }
