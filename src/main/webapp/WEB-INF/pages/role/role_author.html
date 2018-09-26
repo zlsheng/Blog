@@ -5,6 +5,8 @@
 
 <form class="layui-form">
     <input type="hidden" name="roleId" value="${roleId!}">
+    <input type="hidden" name="selectBeforeRes" value="${selectBeforeRes!}">
+    <input type="hidden" name="selectAfterRes" value="${selectAfterRes!}">
     <div class="eleTree"></div>
 </form>
 
@@ -21,21 +23,30 @@
         }).use(['jquery','eleTree','form'], function(){
             var $ = layui.jquery;
             var eleTree = layui.eleTree;
-            var data = [{"data":"MENU_DEFAULT","children":[{"data":"MENU_DEFAULT_OPEN_VIP","children":[],"checked":true,"disabled":false,"label":"开通VIP","spread":true},{"data":"MENU_DEFAULT_OPEN_SVIP","children":[],"checked":true,"disabled":false,"label":"开通SVIP","spread":true},{"data":"MENU_DEFAULT_OPTION_1","children":[],"checked":true,"disabled":false,"label":"选项一","spread":true},{"data":"MENU_DEFAULT_OPTION_2","children":[],"checked":true,"disabled":false,"label":"选项二","spread":true},{"data":"MENU_DEFAULT_OPTION_3","children":[],"checked":true,"disabled":false,"label":"选项三","spread":true}],"checked":false,"disabled":false,"label":"默认菜单","spread":false},{"data":"MENU_SYSTEM","children":[{"data":"MENU_SYSTEM_USER","children":[],"checked":false,"disabled":false,"label":"用户管理","spread":false},{"data":"MENU_SYSTEM_ROLE","children":[],"checked":false,"disabled":false,"label":"角色管理","spread":false}],"checked":false,"disabled":false,"label":"系统管理","spread":false},{"data":"MENU_BUSINESS","children":[{"data":"MENU_BUSINESS_SVIP","children":[],"checked":false,"disabled":false,"label":"专属特权","spread":false},{"data":"MENU_BUSINESS_ONE","children":[],"checked":false,"disabled":false,"label":"业务一","spread":false},{"data":"MENU_BUSINESS_TWO","children":[],"checked":false,"disabled":false,"label":"业务二","spread":false},{"data":"MENU_BUSINESS_THREE","children":[],"checked":false,"disabled":false,"label":"业务三","spread":false}],"checked":false,"disabled":false,"label":"业务菜单","spread":false}];
+            var data = [{"data":"MENU_DEFAULT","children":[{"data":"MENU_DEFAULT_OPEN_VIP","children":[],"checked":false,"disabled":false,"label":"开通VIP","spread":false},{"data":"MENU_DEFAULT_OPEN_SVIP","children":[],"checked":false,"disabled":false,"label":"开通SVIP","spread":false},{"data":"MENU_DEFAULT_OPTION_1","children":[],"checked":false,"disabled":false,"label":"选项一","spread":false},{"data":"MENU_DEFAULT_OPTION_2","children":[],"checked":false,"disabled":false,"label":"选项二","spread":false},{"data":"MENU_DEFAULT_OPTION_3","children":[],"checked":false,"disabled":false,"label":"选项三","spread":false}],"checked":false,"disabled":false,"label":"默认菜单","spread":false},{"data":"MENU_SYSTEM","children":[{"data":"MENU_SYSTEM_USER","children":[],"checked":false,"disabled":false,"label":"用户管理","spread":false},{"data":"MENU_SYSTEM_ROLE","children":[],"checked":false,"disabled":false,"label":"角色管理","spread":false}],"checked":false,"disabled":false,"label":"系统管理","spread":false},{"data":"MENU_BUSINESS","children":[{"data":"MENU_BUSINESS_SVIP","children":[],"checked":false,"disabled":false,"label":"专属特权","spread":false},{"data":"MENU_BUSINESS_ONE","children":[],"checked":false,"disabled":false,"label":"业务一","spread":false},{"data":"MENU_BUSINESS_TWO","children":[],"checked":false,"disabled":false,"label":"业务二","spread":false},{"data":"MENU_BUSINESS_THREE","children":[],"checked":false,"disabled":false,"label":"业务三","spread":false}],"checked":false,"disabled":false,"label":"业务菜单","spread":false}];
             eleTree.render({
                 elem: '.eleTree',
-                url: "${base}/system/role_queryResouresList.do?roleId=" + ${roleId!},
+                url: "${base}/system/role_queryResouresList.do",
                 type: "post",
+                where:{"roleId":"${roleId!}"},
                 showCheckbox: true,
                 accordion: true
             });
             eleTree.on("toggleSlide",function(data) {
                 //展开合并事件
-                console.log(data);
             });
             eleTree.on("checkbox",function(data) {
+                var ids = "";
                 //选中取消事件
-                console.log(data);
+                for (var i = 0;i < data.checkedData.length ;i++){
+                   ids +=  data.checkedData[i].data + ","
+                }
+                alert(ids + "          -------" + ids.length);
+                if(ids.indexOf(",") != -1 ){
+                    ids = ids.substr(0,ids.length - 1);
+                }
+                alert(ids + "          -------" + ids.length);
+                $("#selectAfterRes").attr("value",ids);
             });
         });
 

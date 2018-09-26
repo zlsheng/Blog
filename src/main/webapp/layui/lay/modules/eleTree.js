@@ -49,9 +49,12 @@ layui.define(["jquery","laytpl","layer","form"], function (exports) {
                     type: self.option.type?self.option.type:"get",
                     data: self.option.where?self.option.where:{},
                     success: function(data){
+                        //if(data.Code===0){
                             self.data=data;
                             self.init();
                             return;
+                        //}
+                        //layer.alert(data.Msg, { title: "选择器"+self.elem+"获取数据失败", icon: 2 });
                     }
                 });
                 return;
@@ -403,7 +406,7 @@ layui.define(["jquery","laytpl","layer","form"], function (exports) {
                 })){
                     // 子有一个未选中则checkbox第三种状态
                     // parentInput.prop("checked","checked");
-                    parentInput.attr("eleTree-status","1");
+                    parentInput.attr("eleTree-status","2");
                     parentCheckbox.addClass("eleTree-checkbox-checked");
                     parentIcon.removeClass("layui-icon-ok").addClass("eleTree-checkbox-line");
                 }

@@ -13,7 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.alibaba.fastjson.JSON.toJSONString;
 
@@ -38,7 +40,10 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
     private List<SysResources> resources;
     //权限Ztree使用
     private List<ResponseBean> resourceList;
-
+    //
+    private String selectBeforeRes;
+    //
+    private String selectAfterRes;
     @Override
     public String list(){
         roles = roleService.queryRole();
@@ -142,7 +147,6 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
     */
     public String toAuthor(){
         roleId = getHttpServletRequest().getParameter("id");
-        resources =  sysResourcesService.getAll();
         return "toAuthor";
     }
     /**
@@ -153,17 +157,25 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
      *@CreateTime: 2018-09-26  11:21
      */
     public String queryResouresList(){
-        List<SysResources> userHaavRes = sysResourcesService.queryResByRid(roleId);
+        roleId = getHttpServletRequest().getParameter("roleId");
+        List<SysResources> userHavRes = sysResourcesService.queryResByRid(roleId);
+        if (userHavRes != null && userHavRes.size() > 0){
+            for (SysResources r:userHavRes){
+                selectBeforeRes += r.getId() + ",";
+            }
+            if (selectBeforeRes.contains(",")){
+                selectBeforeRes = selectBeforeRes.substring(0,selectBeforeRes.length() - 1);
+            }
+        }
         resources =  sysResourcesService.getAll();
-         resourceList = new ArrayList<>();
-        if(resources != null && resources.size() > 0){
-            for(SysResources res : resources){
-                if(res.getParentCode() == null){
-                    resourceList.add(ResponseBean.getResponseBeanJson(res.getDisplay(),false,getResourcesSonTree(res.getId(),resources,userHaavRes),false,false,res.getId()));
+        resourceList = new ArrayList<>();
+        if (resources != null && resources.size() > 0){
+            for (SysResources res : resources){
+                if (res.getParentCode() == null){
+                    resourceList.add(ResponseBean.getResponseBeanJson(res.getDisplay(),false,getResourcesSonTree(res.getId(),resources,userHavRes),false,false,res.getId()));
                 }
             }
         }
-        //toJSONString(resourceList);
         return "json";
     }
     /**
@@ -174,20 +186,20 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
      *@Return: List<ResponseBean>
      *@CreateTime: 2018-09-25  17:26
      */
-    private List<ResponseBean> getResourcesSonTree(String pId,List<SysResources> resources,List<SysResources> userHaavRes) {
+    private List<ResponseBean> getResourcesSonTree(String pId,List<SysResources> resources,List<SysResources> userHavRes) {
         List<ResponseBean> resourceList = new ArrayList<>();
         boolean checked = false;
         boolean spread = false;
         for (SysResources s2 : resources) {
             if (pId.equals(s2.getParentCode())) {
-                for (SysResources r: userHaavRes) {
+                for (SysResources r: userHavRes) {
                     if(s2.getId().equals(r.getId())){
                         checked = true;
                         spread = true;
                         break;
                     }
                 }
-                resourceList.add(ResponseBean.getResponseBeanJson(s2.getDisplay(),spread,getResourcesSonTree(s2.getId(),resources,userHaavRes),false,checked,s2.getId()));
+                resourceList.add(ResponseBean.getResponseBeanJson(s2.getDisplay(),spread,getResourcesSonTree(s2.getId(),resources,userHavRes),false,checked,s2.getId()));
             }
         }
         return resourceList;
@@ -243,5 +255,21 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
+    }
+
+    public String getSelectBeforeRes() {
+        return selectBeforeRes;
+    }
+
+    public void setSelectBeforeRes(String selectBeforeRes) {
+        this.selectBeforeRes = selectBeforeRes;
+    }
+
+    public String getSelectAfterRes() {
+        return selectAfterRes;
+    }
+
+    public void setSelectAfterRes(String selectAfterRes) {
+        this.selectAfterRes = selectAfterRes;
     }
 }
