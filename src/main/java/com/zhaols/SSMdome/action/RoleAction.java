@@ -147,6 +147,15 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
     */
     public String toAuthor(){
         roleId = getHttpServletRequest().getParameter("id");
+        List<SysResources> userHavRes = sysResourcesService.queryResByRid(roleId);
+        if (userHavRes != null && userHavRes.size() > 0){
+            for (SysResources r:userHavRes){
+                selectBeforeRes += r.getId() + ",";
+            }
+            if (selectBeforeRes.contains(",")){
+                selectBeforeRes = selectBeforeRes.substring(0,selectBeforeRes.length() - 1);
+            }
+        }
         return "toAuthor";
     }
     /**
@@ -179,7 +188,7 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
         return "json";
     }
     /**
-     *@Description 查询所有资源列表 支持4级菜单
+     *@Description 查询所有资源列表
      *@Author: zhaols
      *@param pId    父资源id
      *@param resources 所有资源列表
@@ -188,23 +197,28 @@ public class RoleAction extends BasicAction<SysRole,IRoleService> {
      */
     private List<ResponseBean> getResourcesSonTree(String pId,List<SysResources> resources,List<SysResources> userHavRes) {
         List<ResponseBean> resourceList = new ArrayList<>();
-        boolean checked = false;
-        boolean spread = false;
         for (SysResources s2 : resources) {
             if (pId.equals(s2.getParentCode())) {
+                boolean checked = false;
                 for (SysResources r: userHavRes) {
                     if(s2.getId().equals(r.getId())){
                         checked = true;
-                        spread = true;
                         break;
                     }
                 }
-                resourceList.add(ResponseBean.getResponseBeanJson(s2.getDisplay(),spread,getResourcesSonTree(s2.getId(),resources,userHavRes),false,checked,s2.getId()));
+                resourceList.add(ResponseBean.getResponseBeanJson(s2.getDisplay(),false,getResourcesSonTree(s2.getId(),resources,userHavRes),false,checked,s2.getId()));
             }
         }
         return resourceList;
     }
 
+    /**
+     *@Description:  修改角色权限
+     *@Author: zhaols
+     *@param
+     *@Return: java.lang.String
+     *@CreateTime: 2018-09-30  14:01
+     */
     public String saveAuth(){
         //取消所有旧权限
         try{

@@ -91,4 +91,13 @@ public interface SysResourcesMapper extends IEntityMapper<SysResources> {
      *@CreateTime: 2018-09-26  16:03
      */
     void clncelAuth(Map<String,String> map);
+
+    /**
+     *@Description:  给角色添加权限
+     *@Author: zhaols
+     *@param map
+     *@Return: void
+     *@CreateTime: 2018-09-30  13:53
+     */
+    void addAuth(Map<String, String> map);
 }

@@ -6,7 +6,7 @@
 <form class="layui-form" id="author_form">
     <input type="hidden" name="roleId" value="${roleId!}">
     <input type="hidden" name="selectBeforeRes" value="${selectBeforeRes!}">
-    <input type="hidden" name="selectAfterRes" value="${selectAfterRes!}">
+    <input type="hidden" id="selectAfterRes" name="selectAfterRes" value="${selectAfterRes!}">
     <div class="eleTree"></div>
 </form>
 
@@ -26,12 +26,13 @@
             var form = layui.form;
             form.on('submit(author_form)',function (data) {
                 $.ajax({
-                    url:"",
-                    type:"",
+                    url:"${base}/system/role_saveAuth.do",
+                    type:"post",
                     data: $("#author_form").serialize(),
+                    dataType:"json",
                     success:function (data) {
-                        if(result.statusCode == 200){
-                            layer.msg(result.message,{
+                        if(data.statusCode == 200){
+                            layer.msg(data.message,{
                                 icon:1,
                                 time:1500,
                                 offset: '20px'
@@ -40,8 +41,8 @@
                                 window.parent.location.reload();
                                 parent.layer.close(index);
                             })
-                        }else if(result.statusCode == 300){
-                            layer.msg(result.message,{
+                        }else if(data.statusCode == 300){
+                            layer.msg(data.message,{
                                 icon:2,
                                 time:2000,
                                 offset: '20px'

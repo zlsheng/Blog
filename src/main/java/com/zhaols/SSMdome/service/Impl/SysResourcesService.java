@@ -6,6 +6,7 @@ import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.mapper.SysResourcesMapper;
 import com.zhaols.SSMdome.service.ISysResourcesService;
 import com.zhaols.SSMdome.utils.ResponseBean;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,16 +45,26 @@ public class SysResourcesService extends SuperService<SysResources> implements I
     @Override
     public void updateAuth(String roleId, String selectBeforeRes, String selectAfterRes) {
         //取消所有权限
-        String[] befores = selectBeforeRes.split(",");
-        clncelAuth(roleId, Arrays.asList(befores));
+        if(StringUtils.isNotEmpty(selectBeforeRes)){
+            String[] befores = selectBeforeRes.split(",");
+            clncelAuth(roleId, Arrays.asList(befores));
+        }
 
-        String[] afters = selectAfterRes.split(",");
-        //添加新权限
+        if(StringUtils.isNotEmpty(selectAfterRes)) {
+            String[] afters = selectAfterRes.split(",");
+            //添加新权限
+            for (String resId : afters) {
+                Map<String, String> map = new HashMap<>();
+                map.put("roleId", roleId);
+                map.put("resId", resId);
+                resourcesMapper.addAuth(map);
+
+            }
+        }
     }
 
     public void clncelAuth(String roleId,List<String> resList){
         if(resList != null && resList.size() > 0){
-
             for (String s :resList ) {
                 Map<String,String> map = new HashMap<>();
                 map.put("roleId",roleId);

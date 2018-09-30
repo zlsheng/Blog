@@ -59,6 +59,10 @@
     </select>
 
     <select id="clncelAuth" parameterType="java.util.HashMap">
-
+        DELETE FROM SYS_ROLE_RESOURCES WHERE ROLE_ID = #{roleId} AND RESOURCE_ID = #{resId}
     </select>
+
+    <update id="addAuth" parameterType="java.util.Map">
+        insert into SYS_ROLE_RESOURCES (ROLE_ID,RESOURCE_ID)values (#{roleId},#{resId})
+    </update>
 </mapper>
