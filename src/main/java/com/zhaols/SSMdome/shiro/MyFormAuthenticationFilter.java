@@ -96,4 +96,19 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         }
         return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
     }
+
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        return super.isAccessAllowed(request, response, buildPermissions(request));
+    }
+
+    protected String[] buildPermissions(ServletRequest request) {
+        System.out.println("获取请求连接");
+        String[] perms = new String[1];
+        HttpServletRequest req = (HttpServletRequest) request;
+        String path = req.getServletPath();
+        System.out.println(path);
+        perms[0] = path;
+        return perms;
+    }
 }

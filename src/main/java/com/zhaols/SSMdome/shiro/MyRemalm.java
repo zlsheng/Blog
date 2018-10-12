@@ -44,9 +44,9 @@ public class MyRemalm extends AuthorizingRealm {
     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("===============================鉴权开始");
         ActiveUser activeUser = (ActiveUser) principals.getPrimaryPrincipal();
         List<SysResources> sysResourcesList = null;
-
         try{
             sysResourcesList = sysResourcesMapper.getSysResourceListByUid(activeUser.getUserid());
         }catch(Exception e){
@@ -63,7 +63,7 @@ public class MyRemalm extends AuthorizingRealm {
         // 查到权限数据，返回授权信息(要包括 上边的permissions)
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addStringPermissions(resourceslist);
-
+        System.out.println("=============================鉴权结束");
         return simpleAuthorizationInfo;
     }
 
