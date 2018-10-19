@@ -104,24 +104,27 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                 /admin/login_toRegistration.do = anon
                 /admin/login_registration.do = anon
                 /images/kaptcha.jpg = anon
-                /logout.do = logout
+                /logout.do = anon
                 /admin/login_logout.do = anon
-                /** = authc
+                /** = authc,resourceCheckFilter
             </value>
         </property>
     </bean>
 
     <bean  id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!--注入 realm-->
-        <property name="realm" ref="Myrealm"/>
+
         <!--注入Session管理器-->
         <property name="sessionManager" ref="sessionManager"/>
         <!--记住我-->
         <property name="rememberMeManager" ref="rememberMeManager"/>
+        <!-- 缓存 -->
+        <property name="cacheManager" ref="shiroSpringCacheManager"/>
+        <!--注入 realm-->
+        <property name="realm" ref="thisMyRealm"/>
     </bean>
 
     <!--注入 realm-->
-    <bean id="Myrealm" class="com.zhaols.SSMdome.shiro.MyRemalm">
+    <bean id="thisMyRealm" class="com.zhaols.SSMdome.shiro.MyRemalm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
@@ -164,6 +167,19 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <!-- 记住我cookie生效时间30天 -->
         <property name="maxAge" value="2592000" />
     </bean>
+
+    <bean id="resourceCheckFilter" class="com.zhaols.SSMdome.shiro.ResourceCheckFilter">
+        <property name="errorUrl" value="/admin/login_error.do"/>
+    </bean>
+
+    <!-- 配置shiro自带的缓存管理器 -->
+    <bean id = "shiroSpringCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+   <!-- <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:resource/ehcache-shiro.xml"/>
+    </bean>-->
 
     <!--======================================     freemarker 配置     ===============================-->
     <bean id="freemarkerConfig"

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.zhaols.SSMdome.entity.ActiveUser;
+import com.zhaols.SSMdome.entity.SysResources;
 import com.zhaols.SSMdome.service.IUserSysService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -35,10 +38,11 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         CaptchaUsernamePasswordToken token =  createToken(request,response);
         try{
             doCaptchaValidate((HttpServletRequest) request, token);
-            Subject subject = getSubject(request, response);
+            /*Subject subject = getSubject(request, response);
             //正常验证
             subject.login(token);
-            return onLoginSuccess(token, subject, request, response);
+            return onLoginSuccess(token, subject, request, response);*/
+            return super.executeLogin(request,response);
         }catch (AuthenticationException e){
             return onLoginFailure(token, e, request, response);
         }
@@ -95,20 +99,5 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
             ip = request.getRemoteAddr();
         }
         return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
-    }
-
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        return super.isAccessAllowed(request, response, buildPermissions(request));
-    }
-
-    protected String[] buildPermissions(ServletRequest request) {
-        System.out.println("获取请求连接");
-        String[] perms = new String[1];
-        HttpServletRequest req = (HttpServletRequest) request;
-        String path = req.getServletPath();
-        System.out.println(path);
-        perms[0] = path;
-        return perms;
     }
 }

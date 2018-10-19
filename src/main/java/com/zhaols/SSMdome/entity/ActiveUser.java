@@ -20,6 +20,8 @@ public class ActiveUser implements Serializable {
     private List<SysResources> menus;
     // 权限
     private List<SysResources> permissions;
+    // 权限
+    private List<SysResources> resourceList;
     private String loginIp;
     public String getUserid() {
         return userid;
@@ -67,5 +69,13 @@ public class ActiveUser implements Serializable {
 
     public void setLoginIp(String loginIp) {
         this.loginIp = loginIp;
+    }
+
+    public List<SysResources> getResourceList() {
+        return resourceList;
+    }
+
+    public void setResourceList(List<SysResources> resourceList) {
+        this.resourceList = resourceList;
     }
 }

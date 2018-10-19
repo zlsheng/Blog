@@ -29,7 +29,7 @@
             SELECT resource_id FROM sys_role_resources WHERE role_id IN (
        SELECT role_id FROM sys_role_user WHERE user_id = #{userid,jdbcType=VARCHAR}
        )
-) and type in('1','0') ORDER BY SORT
+) ORDER BY SORT
   </select>
     <!--根据用户id获取菜单信息-->
     <select id="findMenuListByUserId" resultMap="ResultSysResourcesMap" parameterType="java.lang.String">
@@ -37,7 +37,7 @@
             SELECT resource_id FROM sys_role_resources WHERE role_id IN (
        SELECT role_id FROM sys_role_user WHERE user_id = #{userid,jdbcType=VARCHAR}
        )
-) and type = '1' ORDER BY SORT
+) and type in('1','2') ORDER BY SORT
   </select>
 
   <select id="getAll" resultMap="ResultSysResourcesMap">

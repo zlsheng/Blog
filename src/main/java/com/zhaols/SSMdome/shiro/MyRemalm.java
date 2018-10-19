@@ -11,13 +11,18 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.AntPathMatcher;
 import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.util.PatternMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -44,7 +49,6 @@ public class MyRemalm extends AuthorizingRealm {
     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("===============================鉴权开始");
         ActiveUser activeUser = (ActiveUser) principals.getPrimaryPrincipal();
         List<SysResources> sysResourcesList = null;
         try{
@@ -55,15 +59,14 @@ public class MyRemalm extends AuthorizingRealm {
         List<String> resourceslist = new ArrayList<>();
         if(sysResourcesList != null){
             for(SysResources sysResources:sysResourcesList){
-                if(sysResources.getCode() != null && !(sysResources.getCode().trim().equals(""))){
-                    resourceslist.add(sysResources.getCode());
+                if(sysResources.getUrl() != null && !(sysResources.getUrl().trim().equals(""))){
+                    resourceslist.add(sysResources.getUrl());
                 }
             }
         }
         // 查到权限数据，返回授权信息(要包括 上边的permissions)
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addStringPermissions(resourceslist);
-        System.out.println("=============================鉴权结束");
+        simpleAuthorizationInfo.setStringPermissions(new HashSet<String>(resourceslist));
         return simpleAuthorizationInfo;
     }
 
@@ -110,5 +113,46 @@ public class MyRemalm extends AuthorizingRealm {
 
         return simpleAuthenticationInfo;
 
+    }
+
+    private List<SysResources> getMenus(List<SysResources> resourceList){
+        List<SysResources> list = new ArrayList<>();
+        if(resourceList.size() > 0){
+            for (SysResources s: resourceList) {
+                if(!"0".equals(s.getType())){
+                    list.add(s);
+                }
+            }
+        }
+        return list;
+    }
+
+
+    @Override
+    public boolean isPermitted(Permission permission, AuthorizationInfo info) {
+        Collection<Permission> perms = getPermissions(info);
+        if (perms != null && !perms.isEmpty()) {
+            for (Permission perm : perms) {
+                if (implies(perm,permission)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean implies(Permission permission1,Permission permission2) {
+        if(!(permission1 instanceof Permission)){
+            return false;
+        }
+        if(!(permission2 instanceof Permission)){
+            return false;
+        }
+        return matches(permission1.toString(),permission2.toString());
+    }
+
+    private boolean matches(String ss,String ss2){
+        String url1 = ss.substring(0, ss.indexOf("_")); //+ ss.substring(ss.length() - 3, ss.length());
+        String url2 = ss.substring(0, ss2.indexOf("_")); //+ ss2.substring(ss2.length() - 3, ss.length());
+        return url1.equals(url2);
     }
 }
