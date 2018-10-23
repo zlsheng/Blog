@@ -1,0 +1,163 @@
+<#include "../common/_public.html"/>
+<head>
+    <title>系统首页</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="${base}/layui/css/myCss/style.css">
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><i class="layui-icon layui-icon-release" style="font-size: 40px; "></i><span style="font-size: 30px;">Basic</span></div>
+        <#-- 头部区域 用于用户信息展示 -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                        <i class="layui-icon layui-icon-friends" style="font-size: 20px; "></i>
+                    <input type="hidden" name="uId" id="user_info_id" value="${entity.uId!}">
+                        欢迎您【 ${entity.uName!}】
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a onclick="viewUserInfo()" class="layui-from-a">个人资料</a></dd>
+                    <dd><a onclick="changeUserPassword()" class="layui-from-a">修改密码</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a id="logout_id" href="${base}/admin/login_logout.do">注销登录</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <#--左侧导航区域使用垂直状态栏  layui-bg-green-->
+            <ul class="layui-nav layui-nav-tree "  lay-filter="menu">
+                <#if activeUser.menus?? && (activeUser.menus?size > 0)>
+                <#-- 有菜单权限-->
+                    <#list activeUser.menus as menu_1>
+                        <#if menu_1.parentCode??>
+                        <#else>
+                            <li class="layui-nav-item">
+                                <a class="" href="javascript:;" lay-data="${menu_1.url!}" id="menu_">
+                                    <i class="${menu_1.icon}" style="font-size: 14px; "></i>
+                                    &nbsp;
+                                    ${menu_1.display}</a>
+                                    <#list activeUser.menus as menu_2>
+                                        <#if menu_2.parentCode?? && (menu_1.id) == (menu_2.parentCode)>
+                                            <dl class="layui-nav-child">
+                                                <dd><a href="javascript:;" lay-data="${menu_2.url!}" id="Submenu_${menu_2_index+1}">
+                                                    &emsp;
+                                                    <i class="${menu_2.icon}" style="font-size: 14px; "></i>
+                                                    &nbsp;
+                                                    ${menu_2.display}</a></dd>
+                                            </dl>
+                                        </#if>
+                                    </#list>
+                            </li>
+                        </#if>
+                    </#list>
+                <#else>
+                <#-- 无菜单权限-->
+                </#if>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="background:#ffffff">
+    <#--lay-allowClose="true"  显示关闭按钮-->
+        <div class="layui-tab layui-tab-brief"   lay-filter="Home_tab" lay-allowClose="true" >
+            <ul class="layui-tab-title" >
+                <li class="layui-this" id="home_page" >首页</li>
+            </ul>
+            <div class="layui-tab-content" style="background:#eeeeee" >
+                <div class="layui-tab-item layui-show">
+                    <iframe src="${base}/admin/login_getUser.do" width="100%" height="89%" scrolling="no"frameborder="0" class="layui-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer" >
+        <#--底部固定区域 -->
+        <center>
+            <a href="https://github.com/zlsheng/SSMdome">Github</a> | <a href="https://gitee.com/zlsheng/SSMdome">Gitee</a> |
+            <a href="">支持</a>
+        </center>
+    </div>
+</div>
+</body>
+</html>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','layer'], function(){
+        var element = layui.element,
+                layer=layui.layer,
+                $ = layui.$;
+       element.on('nav(menu)', function(elem){
+            //layer.msg(elem.attr('id'));
+              var url =  elem.attr('lay-data');
+            var exist=$("li[lay-id='tab_" + elem.attr('id') + "']").length;
+            //alert(exist);
+            if(exist < 1 ){
+                if(url != "" && url.length > 0 ){
+                    url = '${request.contextPath}'  + elem.attr('lay-data');
+                    element.tabAdd('Home_tab', {
+                        title: elem.text()
+                        ,content: '<iframe src='+ url +' width="100%" height="89%"  frameborder="0"></iframe>'
+                        ,id: 'tab_' + elem.attr('id')
+                    });
+                }
+            }
+            element.tabChange('Home_tab', 'tab_' + elem.attr('id'));
+        });
+
+        var _tools = {
+            refresh: function(){
+                var curIframe = $(".layui-tab-content .layui-show").find('iframe');
+                var url = $(".layui-tab-content .layui-show").find('iframe').attr('src');
+                curIframe.attr('src',url);
+            }
+            ,closed: function () {
+                var id = $(".layui-tab-title .layui-this").attr('lay-id');
+                element.tabDelete('Home_tab',id);
+            }
+            ,logout_now: function () {
+                top.location = "${request.contextPath}/logout.do";
+            }
+            ,refresh_parent_now: function () {
+                location.reload(true);
+            }
+        }
+        window.tools = _tools;
+
+
+    });
+
+    function viewUserInfo() {
+        var userId = layui.$("#user_info_id").val();
+        url = '${base}/system/user_viewUserInfo.do?id=' + userId;
+        var exist=layui.$("li[lay-id='tab_" + 'UserInfo' + "']").length;
+        if(exist < 1 ) {
+            layui.element.tabAdd('Home_tab', {
+                title: '个人资料'
+                , content: '<iframe src=' + url + ' width="100%" height="89%" scrolling="no" frameborder="0"></iframe>'
+                , id: 'tab_' + 'UserInfo'
+            });
+        }
+        layui.element.tabChange('Home_tab', 'tab_' + 'UserInfo');
+    }
+
+    function changeUserPassword() {
+        var userId = layui.$("#user_info_id").val();
+        url = '${base}/system/user_toChangePassword.do?id=' + userId;
+        var exist=layui.$("li[lay-id='tab_" + 'changePassword' + "']").length;
+        if(exist < 1 ) {
+            layui.element.tabAdd('Home_tab', {
+                title: '修改密码'
+                , content: '<iframe src=' + url + ' width="100%" height="89%" scrolling="no" frameborder="0"></iframe>'
+                , id: 'tab_' + 'changePassword'
+            });
+        }
+        layui.element.tabChange('Home_tab', 'tab_' + 'changePassword');
+    }
+</script>

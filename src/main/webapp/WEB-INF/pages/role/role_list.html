@@ -1,0 +1,220 @@
+<#include "../common/_public.html"/>
+    <link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+<form class="layui-form">
+<div class="layui-fluid">
+    <div class="layui-card">
+            <div class="layui-form layui-card-header " >
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <input type="hidden" id="limit" name="limit" value="${limit!}">
+                        <input type="hidden" id="start" name="start" value="${start!}">
+                        <label class="layui-form-label">角色筛选</label>
+                        <div class="layui-input-block">
+                            <select name="role">
+                                <option value="">--请选择--</option>
+                            <#list roles as role>
+                                <option value="${role.id!}">${role.name!}</option>
+                            </#list>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn" id="search_form" lay-submit lay-filter="LAY-role-back-search">
+                            <i class="layui-icon layui-icon-search "></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+</form>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layui-btn-role layui-btn-primary layui-btn-sm" data-type="add"><i class="layui-icon" >&#xe654;</i>添加</button>
+                &nbsp;
+                <button class="layui-btn layui-btn-role layui-btn-normal  layui-btn-sm" data-type="edit"><i class="layui-icon" >&#xe642;</i>编辑</button>
+                &nbsp;
+                <button class="layui-btn layui-btn-role layui-btn-primary  layui-btn-sm" data-type="author"><i class="layui-icon" >&#xe672;</i>授权</button>
+                &nbsp;
+                <button class="layui-btn layui-btn-role layui-btn-warm layui-btn-sm" data-type="delete"><i class="layui-icon" >&#xe640;</i>删除</button>
+                &nbsp;
+                <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh"><i class="layui-icon">&#xe669;</i>刷新</button>
+                &nbsp;
+                <button  class="layui-btn  layui-btn-danger layui-btn-sm closed"><i class="layui-icon">&#x1006;</i>关闭</button>
+            </div>
+
+            <table id="LAY-user-back-role" class="layui-table" lay-filter="user_table" lay-size="sm" >
+                <thead>
+                <tr>
+                    <th style="width: 20px"></th>
+                    <th style="text-align:center;vertical-align:middle;">角色名称</th>
+                    <th style="text-align:center;vertical-align:middle;">角色编码</th>
+                    <th style="text-align:center;vertical-align:middle;">角色描述</th>
+                    <th style="text-align:center;vertical-align:middle;">创建人</th>
+                    <th style="text-align:center;vertical-align:middle;">创建时间</th>
+                    <th style="text-align:center;vertical-align:middle;">状态</th>
+                    <th style="text-align:center;vertical-align:middle;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                         <#list entitys as entity>
+                         <tr>
+                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${entity.id!}"></td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.name!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.code!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.description!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.creatorName!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${(entity.createTime?string('yyyy-MM-dd'))!}</td>
+                             <td style="text-align:center;vertical-align:middle;">
+                                 <#if entity.status == '11'>
+                                     <label style="color: green">启用</label>
+                                 </#if>
+                                 <#if entity.status == '00'>
+                                     <label style="color: red">禁用</label>
+                                 </#if>
+                             </td>
+                             <td style="text-align:center;vertical-align:middle;">
+
+
+                                 <input type="checkbox"  lay-skin="switch" lay-filter="change_enable" lay-text="启用|禁用" value="${entity.id}" <#if entity.status == '11'>checked</#if>>
+                             </td>
+                         </tr>
+                         </#list>
+                </tbody>
+            </table>
+                <#include "../common/_page.html"/>
+        </div>
+    </div>
+</div>
+
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script src="${base}/layui/lay/js/myJs.js" charset="UTF-8"></script>
+<script>
+    layui.use(['jquery','laypage','form','element','table'], function(){
+        var form = layui.form,
+            element = layui.element,
+            $ = layui.jquery,
+            laypage = layui.laypage;
+        //分页组件初始化
+        laypage.render({
+            elem: '_page'
+            ,count:${totalCount}
+            ,limit:${limit}
+            ,curr:${start}
+            ,limits:[10, 20, 30]
+            ,groups:5
+            ,layout:['limit', 'count', 'prev', 'page', 'next', 'skip']
+            ,first: '首页'
+            ,last: '尾页'
+            ,prev: '<i class="layui-icon">&#xe65a;</i>'
+            ,next: '<i class="layui-icon">&#xe65b;</i>'
+            ,jump: function(obj, first){
+                $("#start").attr('value',obj.curr);
+                $("#limit").attr('value',obj.limit);
+                //首次不执行
+                if(!first){
+                    $("#search_form").click();
+                }
+            }
+        });
+        $('.layui-btn.layui-btn-role').on('click', function(){
+            var type = $(this).data('type');
+            if(type != "add"){
+                var ids = layui.$("input:checkbox[name='checkbox']:checked");
+                if(ids.size() != 1){
+                    layer.msg('只能选择一条数据', {
+                        icon:2,
+                        time: 2000,
+                        offset:'70px'
+                    });
+                    return false;
+                }
+                if(type == "edit"){
+                    layer.open({
+                        type: 2,
+                        content: "${base}/system/role_toViewRole.do?type=edit&id=" + ids.val(),
+                        title: "编辑角色",
+                        area: ['400px', '300px'],
+                        offset:'70px'
+                    });
+                    return false;
+                }else if(type == "delete"){
+                    //删除
+                    layer.confirm('确定要删除吗', {icon: 3, title:'警告', offset:'70px'}, function(index){
+                        url = '${base}/system/role_deleteRole.do?id=' + ids.val();
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            dataType:"json",
+                            success:function(result) {
+                                if(result.statusCode == 200){
+
+                                    layer.msg(result.message,{
+                                        icon:1,
+                                        time:1500,
+                                        offset: '20px'
+                                    },function () {
+                                        layui.$("#refresh").click();
+                                    })
+                                }else if(result.statusCode == 300){
+                                    layer.msg(result.message,{
+                                        icon:2,
+                                        time:2000,
+                                        offset: '20px'
+                                    });
+                                }
+                            }
+                        });
+                    });
+                    return false;
+                }else if(type == "author"){
+                    layer.open({
+                        type: 2,
+                        content: "${base}/system/role_toAuthor.do?id=" + ids.val(),
+                        title: "授权",
+                        area: ['400px', '400px'],
+                        offset: '70px'
+                    });
+                    return false;
+                }
+            }else {
+                layer.open({
+                    type: 2,
+                    content: "${base}/system/role_toViewRole.do?type=add",
+                    title: "新增角色",
+                    area: ['400px', '300px'],
+                    offset:'70px'
+                });
+                return false;
+            }
+        });
+
+        form.on('switch(change_enable)', function(data){
+            var enable = '00';
+            if(data.elem.checked){
+                enable = '11';
+            }
+            var url = "${base}/system/role_changeEnable.do?id=" + data.value + "&isEnable=" + enable;
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType:"json",
+                success:function(result) {
+                    if(result.statusCode == 200){
+                        layer.msg(result.message,{
+                            icon:1,
+                            time:1500,
+                            offset: '20px'
+                        },function () {
+                            layui.$("#refresh").click();
+                        })
+                    }else if(result.statusCode == 300){
+                        layer.msg(result.message,{
+                            icon:2,
+                            time:2000,
+                            offset: '20px'
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>

@@ -1,13 +1,15 @@
 package com.zhaols.SSMdome.entity;
 
-import java.math.BigDecimal;
+import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
+import com.zhaols.SSMdome.utils.CommonUtils;
+
 import java.util.Date;
 
-public class UserSys  {
+public class SysUser extends BasicEntity<String> {
 
     private String uId;
 
-    private String uLoginid;
+    private String userName;
 
     /**
      * 昵称
@@ -20,14 +22,14 @@ public class UserSys  {
     private String uPassword;
 
     /**
-     * 个性签名
+     * 手机号
      */
-    private String uSignature;
+    private String uPhone;
 
     /**
      * 0 男  1 女  2 保密
      */
-    private BigDecimal uSex;
+    private Integer uSex;
 
     /**
      * 生日
@@ -57,7 +59,7 @@ public class UserSys  {
     /**
      * 年龄
      */
-    private BigDecimal uAge;
+    private Integer uAge;
 
     /**
      * 用户状态
@@ -67,12 +69,12 @@ public class UserSys  {
     /**
      * 等级
      */
-    private BigDecimal uRank;
+    private Integer uRank;
 
     /**
      * 积分
      */
-    private BigDecimal uScore;
+    private Integer uScore;
 
     /**
      * 注册时间
@@ -98,6 +100,13 @@ public class UserSys  {
      * 加密盐
      */
     private String uSalt;
+
+    /**
+     * 评分等级
+     */
+    private double uRate;
+
+    private String base64Password;
 
     /**
      * 昵称
@@ -131,27 +140,19 @@ public class UserSys  {
         this.uPassword = uPassword == null ? null : uPassword.trim();
     }
 
-    /**
-     * 个性签名
-     * @return U_SIGNATURE 个性签名
-     */
-    public String getuSignature() {
-        return uSignature;
+    public String getuPhone() {
+        return uPhone;
     }
 
-    /**
-     * 个性签名
-     * @param uSignature 个性签名
-     */
-    public void setuSignature(String uSignature) {
-        this.uSignature = uSignature == null ? null : uSignature.trim();
+    public void setuPhone(String uPhone) {
+        this.uPhone = uPhone;
     }
 
     /**
      * 0 男  1 女  2 保密
      * @return U_SEX 0 男  1 女  2 保密
      */
-    public BigDecimal getuSex() {
+    public Integer getuSex() {
         return uSex;
     }
 
@@ -159,7 +160,7 @@ public class UserSys  {
      * 0 男  1 女  2 保密
      * @param uSex 0 男  1 女  2 保密
      */
-    public void setuSex(BigDecimal uSex) {
+    public void setuSex(Integer uSex) {
         this.uSex = uSex;
     }
 
@@ -247,7 +248,7 @@ public class UserSys  {
      * 年龄
      * @return U_AGE 年龄
      */
-    public BigDecimal getuAge() {
+    public Integer getuAge() {
         return uAge;
     }
 
@@ -255,7 +256,7 @@ public class UserSys  {
      * 年龄
      * @param uAge 年龄
      */
-    public void setuAge(BigDecimal uAge) {
+    public void setuAge(Integer uAge) {
         this.uAge = uAge;
     }
 
@@ -279,7 +280,7 @@ public class UserSys  {
      * 等级
      * @return U_RANK 等级
      */
-    public BigDecimal getuRank() {
+    public Integer getuRank() {
         return uRank;
     }
 
@@ -287,7 +288,7 @@ public class UserSys  {
      * 等级
      * @param uRank 等级
      */
-    public void setuRank(BigDecimal uRank) {
+    public void setuRank(Integer uRank) {
         this.uRank = uRank;
     }
 
@@ -295,7 +296,7 @@ public class UserSys  {
      * 积分
      * @return U_SCORE 积分
      */
-    public BigDecimal getuScore() {
+    public Integer getuScore() {
         return uScore;
     }
 
@@ -303,7 +304,7 @@ public class UserSys  {
      * 积分
      * @param uScore 积分
      */
-    public void setuScore(BigDecimal uScore) {
+    public void setuScore(Integer uScore) {
         this.uScore = uScore;
     }
 
@@ -395,11 +396,35 @@ public class UserSys  {
         this.uId = uId;
     }
 
-    public String getuLoginId() {
-        return uLoginid;
+    public double getuRate() {
+        return uRate;
     }
 
-    public void setuLoginId(String uLoginid) {
-        this.uLoginid = uLoginid;
+    public void setuRate(double uRate) {
+        this.uRate = uRate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBase64Password() {
+        return base64Password;
+    }
+
+    public void setBase64Password(String base64Password) {
+        this.base64Password = base64Password;
+    }
+
+    //获取密码加密salt
+    public String getRealSalt(){
+        String salt = "";
+        salt = this.getuId() + this.getUserName();
+        salt = CommonUtils.encodeData(salt);
+        return salt;
     }
 }

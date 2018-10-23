@@ -1,11 +1,216 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:s="http://www.springframework.org/schema/beans">
-<head>
-    <meta charset="UTF-8">
-    <title>TEST_USER</title>
-</head>
-<body>
-<h1 style="color: red">这里是用户首页</h1>
-<h2 style="color: blue">测试</h2>
-</body>
-</html>
+<#include "../common/_public.html"/>
+<link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+
+<form >
+<div class="layui-fluid" >
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <input type="hidden" id="limit" name="limit" value="${limit!}">
+            <input type="hidden" id="start" name="start" value="${start!}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">账户</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="userName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-block">
+                        <select name="role">
+                            <option value="">--请选择--</option>
+                            <#list roles as role>
+                                <option value="${role.id!}">${role.name!}</option>
+                            </#list>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" id="search_user" lay-submit lay-filter="LAY-user-back-search">
+                        <i class="layui-icon layui-icon-search "></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+</form>
+        <div class="layui-card-body">
+            <div class="layui-card-body">
+                <div id="user_home_btu">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" onclick="openUserView('add','')"><i class="layui-icon">&#xe654;</i>新增</button>
+                    &nbsp;
+                    <#-- onclick="openUserView('edit')"-->
+                    <button class="layui-btn layui-btn-sm" type="button" onclick="openUserView('edit','')" ><i class="layui-icon" >&#xe642;</i>编辑</button>
+                    &nbsp;
+                    <button class="layui-btn layui-btn-warm layui-btn-sm" type="button" onclick="deleteUser()"><i class="layui-icon">&#xe640;</i>删除</button>
+                    &nbsp;
+                    <button id="refresh" class="layui-btn layui-btn-normal layui-btn-sm refresh"><i class="layui-icon">&#xe669;</i>刷新</button>
+                    &nbsp;
+                    <button  class="layui-btn  layui-btn-danger layui-btn-sm closed"><i class="layui-icon">&#x1006;</i>关闭</button>
+                </div>
+                <div class="layui-form">
+                    <table class="layui-table" lay-filter="user_table" lay-size="sm" >
+                        <input type="hidden" id="rate_curr" value="20">
+                        <thead>
+                        <tr>
+                            <th style="width: 20px"></th>
+                            <th style="text-align:center;vertical-align:middle;">账户</th>
+                            <th style="text-align:center;vertical-align:middle;">头像</th>
+                            <th style="text-align:center;vertical-align:middle;">昵称</th>
+                            <th style="text-align:center;vertical-align:middle;">性别</th>
+                            <th style="text-align:center;vertical-align:middle;">生日</th>
+                            <th style="text-align:center;vertical-align:middle;">邮箱</th>
+                            <th style="text-align:center;vertical-align:middle;">真实姓名</th>
+                            <th style="text-align:center;vertical-align:middle;">年龄</th>
+                            <th style="text-align:center;vertical-align:middle;">等级</th>
+                            <th style="text-align:center;vertical-align:middle;">积分</th>
+                            <th style="text-align:center;vertical-align:middle;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                         <#list entitys as entity>
+                         <tr>
+                             <td style="text-align:center;vertical-align:middle;"><input type="checkbox" name="checkbox" lay-skin="primary" value="${entity.uId}"></td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.userName!}</td>
+                             <td style="text-align:center;vertical-align:middle;"><img src="${base}/layui/images/avatar/${entity.uHeadportrait!'defalut.jpg'}" style="display: inline-block; width: 50px ; height: 50px;"></td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uNickname!}</td>
+                             <td style="text-align:center;vertical-align:middle;">
+                                <#if entity.uSex?? >
+                                    <#if entity.uSex == 0>男</#if>
+                                    <#if entity.uSex == 1>女</#if>
+                                    <#if entity.uSex == 2>保密</#if>
+                                </#if>
+                             </td>
+                             <td style="text-align:center;vertical-align:middle;">${(entity.uBirthday?string('yyyy-MM-dd'))!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uEmail!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uName!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uAge!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uRank!}</td>
+                             <td style="text-align:center;vertical-align:middle;">${entity.uScore!}</td>
+                             <td style="text-align:center;vertical-align:middle;">
+                                 <button class="layui-btn layui-btn-normal  layui-btn-xs" type="button" onclick="openUserView('addRole','${entity.uId}')" ><i class="layui-icon" >&#xe654;</i>添加角色</button>
+                             </td>
+                         </tr>
+                         </#list>
+                        </tbody>
+                    </table>
+                    <center>
+                    <div id="_page"></div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script src="${base}/layui/lay/js/myJs.js" charset="UTF-8"></script>
+<script>
+    layui.use(['laypage','form','table','rate','element','jquery'], function(){
+        var form = layui.form,
+                table = layui.table,
+                rate = layui.rate,
+                $=layui.$,
+                laypage = layui.laypage;
+        laypage.render({
+            elem: '_page'
+            ,count:${totalCount}
+            ,limit:${limit}
+            ,curr:${start}
+            ,limits:[10, 20, 30]
+            ,groups:5
+            ,layout:['limit', 'count', 'prev', 'page', 'next', 'skip']
+            ,first: '首页'
+            ,last: '尾页'
+            ,prev: '<i class="layui-icon">&#xe65a;</i>'
+            ,next: '<i class="layui-icon">&#xe65b;</i>'
+            ,jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                $("#start").attr('value',obj.curr);
+                $("#limit").attr('value',obj.limit);
+                //首次不执行
+                if(!first){
+                   $("#search_user").click();
+                }
+            }
+        });
+    });
+    function openUserView(type,id) {
+        var url;
+        var title;
+        if('add' == type){
+            url = '${base}/system/user_toAddOrEdit.do?type=add';
+            title= '新增用户'
+        }
+        if('edit' == type){
+            var ids = layui.$("input:checkbox[name='checkbox']:checked");
+            if(ids.size() == 1){
+                url ='${base}/system/user_toAddOrEdit.do?type=edit&id=' + ids.val();
+                title= '编辑用户'
+
+            }else{
+                layer.msg('请选择一条数据', {
+                    icon:2,
+                    time: 2000,
+                    offset:'70px'
+                });
+                return false;
+            }
+        }
+        if('addRole' == type){
+            url ='${base}/system/user_toAddRole.do?type=addRole&id=' + id;
+            title= '添加角色'
+        }
+        layer.open({
+            type: 2,
+            content: url, //no 去除滚动条
+            title: title,
+            area: ['400px', '350px'],
+            offset:'70px'
+        });
+    }
+    function deleteUser() {
+        var id = layui.$("input:checkbox[name='checkbox']:checked");
+        if(id.size() < 1){
+            layer.msg('请选择一条数据', {
+                icon:2,
+                time: 2000,
+                offset:'70px'
+            });
+            return false;
+        }else if(id.size() > 1){
+            layer.msg('只能选择一条数据', {
+                icon:2,
+                time: 2000,
+                offset:'70px'
+            });
+            return false;
+        }
+
+        layer.confirm('确定要删除吗', {icon: 3, title:'警告', offset:'70px'}, function(index){
+                url = '${base}/system/user_delete.do?id=' + id.val();
+                layui.$.ajax({
+                    url: url,
+                    type: 'post',
+                    dataType:"json",
+                    success:function(result) {
+                        if(result.statusCode == 200){
+                            layer.msg(result.message,{
+                                icon:1,
+                                time:1500,
+                                offset: '20px'
+                            },function () {
+                                layui.$("#refresh").click();
+                            })
+                        }else if(result.statusCode == 300){
+                            layer.msg(result.message,{
+                                icon:2,
+                                time:2000,
+                                offset: '20px'
+                            });
+                        }
+                    }
+                });
+        });
+    }
+
+</script>

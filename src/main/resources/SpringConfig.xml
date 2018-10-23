@@ -25,7 +25,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                    3 定义类别名的包   entity包名
         3. 配置 mapper 接口所在路径
     -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
@@ -36,12 +36,15 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatisConfig.xml"/>
         <property name="typeAliasesPackage" value="com.zhaols.SSMdome.entity"/>
-        <!--<property name="mapperLocations" value="classpath:mapper/*.xml"/>-->
     </bean>
 
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.zhaols.SSMdome.mapper"/>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
 
     <!--事物处理-->
@@ -90,52 +93,39 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="filters">
             <map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <!--退出过滤器-->
+                <entry key="logout" value-ref="systemLogoutFilter" />
             </map>
         </property>
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源放行-->
                 /layui/** = anon
-                <!--**/*.js = anon
-                **/*.eot = anon
-                **/*.svg = anon
-                **/*.woff = anon
-                **/*.ttf = anon
-                **/*.jpg = anon
-                **/*.png = anon
-                **/*.gif = anon-->
-
-
-
-                <!-- 验证码，可匿名访问
-                /validatecode.jsp = anon-->
-                <!-- 配置记住我或认证通过可以访问的地址
-                /index.jsp = user
-                /first.action = user
-                /welcome.jsp = user-->
-                <!-- 删除用户需要有删除用户的权限
-                /user_deleteUser.action = perms[user:delete]-->
-                <!-- 请求 logout.action地址，shiro去清除session-->
-
-                /admin/login_toLogin.do = anon
+                /eleTree/** = anon
                 /admin/login_error.do = anon
-                /logout.do = logout
-                /** = authc
+                /admin/login_toRegistration.do = anon
+                /admin/login_registration.do = anon
+                /images/kaptcha.jpg = anon
+                /admin/login_logout.do = logout
+                /** = authc,resourceCheckFilter
             </value>
         </property>
     </bean>
 
     <bean  id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!--注入 realm-->
-        <property name="realm" ref="Myrealm"/>
+
         <!--注入Session管理器-->
         <property name="sessionManager" ref="sessionManager"/>
         <!--记住我-->
         <property name="rememberMeManager" ref="rememberMeManager"/>
+        <!-- 缓存 -->
+        <property name="cacheManager" ref="shiroSpringCacheManager"/>
+        <!--注入 realm-->
+        <property name="realm" ref="thisMyRealm"/>
     </bean>
 
     <!--注入 realm-->
-    <bean id="Myrealm" class="com.zhaols.SSMdome.shiro.MyRemalm">
+    <bean id="thisMyRealm" class="com.zhaols.SSMdome.shiro.MyRemalm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
@@ -143,22 +133,21 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <!-- 凭证匹配器 -->
     <bean id="credentialsMatcher"
           class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <property name="hashAlgorithmName" value="md5" />
-        <property name="hashIterations" value="2" />
+        <property name="hashAlgorithmName" value="MD5" />
+        <property name="hashIterations" value="1024" />
     </bean>
 
     <!-- 会话session管理器 -->
     <bean id="sessionManager"
           class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- session的失效时长，单位毫秒 -->
-        <property name="globalSessionTimeout" value="600000" />
+        <property name="globalSessionTimeout" value="1800000" />
         <!-- 删除失效的session -->
         <property name="deleteInvalidSessions" value="true" />
     </bean>
 
 
     <!-- 自定义form认证过虑器 -->
-    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置-->
     <bean id="formAuthenticationFilter" class="com.zhaols.SSMdome.shiro.MyFormAuthenticationFilter">
         <!-- 表单中账号的input名称-->
         <property name="usernameParam" value="username" />
@@ -180,6 +169,43 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="maxAge" value="2592000" />
     </bean>
 
-    <!--======================================     freemarker 配置     ===============================-->
+    <bean id="resourceCheckFilter" class="com.zhaols.SSMdome.shiro.ResourceCheckFilter">
+        <property name="errorUrl" value="/admin/login_error.do"/>
+    </bean>
+    <bean id="systemLogoutFilter" class="com.zhaols.SSMdome.shiro.SystemLogoutFilter"/>
 
+    <!-- 配置shiro自带的缓存管理器 -->
+    <bean id = "shiroSpringCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+   <!-- <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:resource/ehcache-shiro.xml"/>
+    </bean>-->
+
+    <!--======================================     freemarker 配置     ===============================-->
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/pages" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 针对freemarker的视图配置 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true" />
+        <property name="suffix" value=".html" />
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="requestContextAttribute" value="request" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+    </bean>
 </beans>

@@ -1,0 +1,82 @@
+<#include "../common/_public.html"/>
+<link rel="stylesheet" href="${base}/layui/css/layui.css"  media="all">
+<fieldset class="layui-elem-field">
+<#if type?? && type == 'add'><legend>新增角色</legend></#if>
+<#if type?? && type == 'edit'><legend>编辑角色</legend></#if>
+    <form class="layui-form layui-form-pane" id="LAY_role_form" >
+        <input type="hidden" value="${entity.id!}" name="id">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red">*</span>角色名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" lay-verify="required" value="${entity.name!}" placeholder="请输入名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>角色编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code"  lay-verify="code" value="${entity.code!}" placeholder="请输入编码" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色描述</label>
+            <div class="layui-input-inline">
+                <input type="text" name="description"   value="${entity.description!}" placeholder="请输入描述" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="roleForm" >保存</button>
+                <button class="layui-btn  layui-btn-danger"  onclick="closedView()">关闭</button>
+            </div>
+        </div>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    layui.use(['element','layer','form'], function() {
+        var element = layui.element,
+                layer = layui.layer,
+                $ = layui.$,
+                form = layui.form;
+        form.verify({
+            code:function (value) {
+                if(value.length != 0) {
+                    if (new RegExp("^w+$").test(value)) {
+                        return '编码只能包含字母数字下划线';
+                    }
+                }
+            }
+        });
+        form.on('submit(roleForm)',function (data) {
+            $.ajax({
+                url:'${base}/system/role_saveAndUpdate.do',
+                type:'post',
+                data:$("#LAY_role_form").serialize(),
+                dataType:"json",
+                success:function(result) {
+                    if(result.statusCode == 200){
+                        layer.msg(result.message,{
+                            icon:1,
+                            time:1500,
+                            offset: '20px'
+                        }, function(){
+                            var index = parent.layer.getFrameIndex(window.name);
+                            window.parent.location.reload();
+                            parent.layer.close(index);
+                        })
+                    }else if(result.statusCode == 300){
+                        layer.msg(result.message,{
+                            icon:2,
+                            time:2000,
+                            offset: '20px'
+                        });
+                    }
+                }
+            });
+            return false;
+        })
+    });
+    function closedView() {
+        //alert("点击了关闭按钮");
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>

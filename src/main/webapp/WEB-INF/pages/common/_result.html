@@ -1,0 +1,14 @@
+{
+
+<#if (result.success)! == true>
+    "statusCode":"200",
+</#if>
+<#if (result.success)! == false>
+    "statusCode":"300",
+</#if>
+<#if (result.closeCurrent)! == true >
+    "closeCurrent":"true",
+</#if>
+"forward":"${(result.forward)!}",
+"message":"${(result.message)!}"
+}

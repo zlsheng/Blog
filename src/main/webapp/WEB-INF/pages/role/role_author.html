@@ -1,0 +1,80 @@
+<#include "../common/_public.html"/>
+<link rel="stylesheet" href="${base}/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="${base}/layui/css/admin.css" media="all">
+<link rel="stylesheet" href="${base}/eleTree/eleTree.css" media="all">
+
+<form class="layui-form" id="author_form">
+    <input type="hidden" name="roleId" value="${roleId!}">
+    <input type="hidden" name="selectBeforeRes" value="${selectBeforeRes!}">
+    <input type="hidden" id="selectAfterRes" name="selectAfterRes" value="${selectAfterRes!}">
+    <div class="eleTree"></div>
+</form>
+
+ <div class="layui-form-item">
+     <div class="layui-input-block">
+         <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="author_form" >保存</button>
+         <button class="layui-btn  layui-btn-danger"  onclick="closedView()">关闭</button>
+     </div>
+ </div>
+<script src="${base}/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: "${base}/layui/lay/mymodules/"
+        }).use(['jquery','eleTree','form'], function(){
+            var $ = layui.jquery;
+            var eleTree = layui.eleTree;
+            var form = layui.form;
+            form.on('submit(author_form)',function (data) {
+                $.ajax({
+                    url:"${base}/system/role_saveAuth.do",
+                    type:"post",
+                    data: $("#author_form").serialize(),
+                    dataType:"json",
+                    success:function (data) {
+                        if(data.statusCode == 200){
+                            layer.msg(data.message,{
+                                icon:1,
+                                time:1500,
+                                offset: '20px'
+                            }, function(){
+                                var index = parent.layer.getFrameIndex(window.name);
+                                window.parent.location.reload();
+                                parent.layer.close(index);
+                            })
+                        }else if(data.statusCode == 300){
+                            layer.msg(data.message,{
+                                icon:2,
+                                time:2000,
+                                offset: '20px'
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+            eleTree.render({
+                elem: '.eleTree',
+                url: "${base}/system/role_queryResouresList.do",
+                type: "post",
+                where:{"roleId":"${roleId!}"},
+                showCheckbox: true,
+                accordion: true
+            });
+            eleTree.on("checkbox",function(data) {
+                var ids = "";
+                //选中取消事件
+                for (var i = 0;i < data.checkedData.length ;i++){
+                   ids +=  data.checkedData[i].data + ","
+                }
+                if(ids.indexOf(",") != -1 ){
+                    ids = ids.substr(0,ids.length - 1);
+                }
+                $("#selectAfterRes").attr("value",ids);
+            });
+        });
+
+        function closedView() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        };
+    </script>

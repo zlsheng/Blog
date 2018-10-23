@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="system" namespace="/system" extends="nec-default">
+        <action name="user_*" class="com.zhaols.SSMdome.action.UserAction" method="{1}">
+
+            <result name="success" type="freemarker">/WEB-INF/pages/user/user_list.html</result>
+            <result name="toAddOrEdit" type="freemarker">/WEB-INF/pages/user/user_view.html</result>
+            <result name="viewUserInfo" type="freemarker">/WEB-INF/pages/user/user_info.html</result>
+            <result name="toChangePassword" type="freemarker">/WEB-INF/pages/user/password.html</result>
+            <result name="toAddRole" type="freemarker">/WEB-INF/pages/user/user_view.html</result>
+            <result name="json" type="json">
+                <param name="root">map</param>
+            </result>
+        </action>
+
+        <action name="role_*" class="com.zhaols.SSMdome.action.RoleAction" method="{1}">
+            <result name="success" type="freemarker">/WEB-INF/pages/role/role_list.html</result>
+            <result name="toViewRole" type="freemarker">/WEB-INF/pages/role/role_view.html</result>
+            <result name="toAuthor" type="freemarker">/WEB-INF/pages/role/role_author.html</result>
+            <result name="json" type="json">
+                <param name="root">resourceList</param>
+            </result>
+        </action>
+    </package>
+</struts>

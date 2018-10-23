@@ -1,9 +1,12 @@
 package com.zhaols.SSMdome.entity;
 
+import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
+import com.zhaols.SSMdome.BasicClassDri.Entity;
+
 import java.util.Date;
 
 
-public class SysResources {
+public class SysResources extends BasicEntity<String> {
     /**
      * 主键
      */
@@ -44,25 +47,12 @@ public class SysResources {
      */
     private String status;
 
-    /**
-     * 排序
-     */
-    private Long sortby;
 
     /**
      * 图标
      */
     private String icon;
 
-    /**
-     * ？？？？
-     */
-    private Short platform;
-
-    /**
-     * 所属子系统id
-     */
-    private String subsystemId;
 
     /**
      * null
@@ -98,6 +88,12 @@ public class SysResources {
      * 敏感度标记
      */
     private Short sensitivity;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
+
 
     /**
      * 主键
@@ -228,22 +224,6 @@ public class SysResources {
     }
 
     /**
-     * 排序
-     * @return SORTBY 排序
-     */
-    public Long getSortby() {
-        return sortby;
-    }
-
-    /**
-     * 排序
-     * @param sortby 排序
-     */
-    public void setSortby(Long sortby) {
-        this.sortby = sortby;
-    }
-
-    /**
      * 图标
      * @return ICON 图标
      */
@@ -259,37 +239,6 @@ public class SysResources {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    /**
-     * ？？？？
-     * @return PLATFORM ？？？？
-     */
-    public Short getPlatform() {
-        return platform;
-    }
-
-    /**
-     * ？？？？
-     * @param platform ？？？？
-     */
-    public void setPlatform(Short platform) {
-        this.platform = platform;
-    }
-
-    /**
-     * 所属子系统id
-     * @return SUBSYSTEM_ID 所属子系统id
-     */
-    public String getSubsystemId() {
-        return subsystemId;
-    }
-
-    /**
-     * 所属子系统id
-     * @param subsystemId 所属子系统id
-     */
-    public void setSubsystemId(String subsystemId) {
-        this.subsystemId = subsystemId == null ? null : subsystemId.trim();
-    }
 
     /**
      * null
@@ -401,5 +350,13 @@ public class SysResources {
      */
     public void setSensitivity(Short sensitivity) {
         this.sensitivity = sensitivity;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

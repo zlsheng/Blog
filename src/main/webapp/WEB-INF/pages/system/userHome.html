@@ -1,0 +1,111 @@
+<#include "../common/_public.html"/>
+<link rel="stylesheet" type="text/css" href="${base}/layui/css/layui.css" />
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-lg12">
+            <div class="grid-demo grid-demo-bg1">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            欢迎您 &ensp;【<font style="color: red">${entity.uName!}</font>】
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="layui-row">
+                                <div class="layui-col-sm3">
+                                    <div class="layui-form-item">
+                                        <img src="${base}/layui/images/avatar/${entity.uHeadportrait!'defalut.jpg'}" style="height: 300px; width:300px;">
+                                    </div>
+                                </div>
+                                <div class="layui-col-sm9">
+                                    <input type="hidden" id="rate_curr" value="${entity.uRate!0}">
+                                        <font style="font-weight: bold" size="4"> 昵 称：【<span style="color: blue">${entity.uNickname!}</span>】</font><br/>
+                                        <font style="font-weight: bold" size="4"> 生 日：【<span style="color: blue">${(entity.uBirthday?string('yyyy-MM-dd'))!.now?string('yyyy-MM-dd')}</span>】</font><br/>
+                                        <font style="font-weight: bold" size="4"> 邮 箱：【<span style="color: blue">${entity.uEmail!}</span>】<font><br/>
+                                            <hr class="layui-bg-gray">  <#--分割线-->
+                                        <font style="font-weight: bold" size="4"> 等 级：【<span style="color: blue">${entity.uRank!}</span>】<font><br/>
+                                        <font style="font-weight: bold" size="4"> 评 分：<div id="user_rate"></div><br/><font>
+                                        <font style="font-weight: bold" size="4"> 简 介：<br/><font>
+                                        <font style="font-weight: 500" size="3">&emsp;&emsp;${entity.uIntro!'主人很懒，什么都没写'} <font>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-sm8">
+            <#--<div class="layui-card-header">-->
+                <center><font style="color: red">文章</font></center>
+            <#--</div>-->
+            <div class="layui-card-body">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th style="align-content: center">id</th>
+                        <th style="align-content: center">标题</th>
+                        <th style="align-content: center">作者</th>
+                        <th style="align-content: center">状态</th>
+                        <th style="align-content: center">发布时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     <#list 1..5 as i>
+                     <tr>
+                         <td style="align-content: center">${i}</td>
+                         <td style="align-content: center">这是第_${i}_篇文章</td>
+                         <td style="align-content: center">zhaols</td>
+                         <td style="align-content: center">未发布</td>
+                         <td style="align-content: center">${.now}</td>
+                     </tr>
+                     </#list>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="layui-col-sm4">
+            <#--<div class="layui-card-header">-->
+                <center><font style="color: red">公告</font></center>
+            <#--</div>-->
+            <div class="layui-card-body">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th style="align-content: center">id</th>
+                        <th style="align-content: center">标题</th>
+                        <th style="align-content: center">时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     <#list 1..5 as i>
+                     <tr>
+                         <td style="align-content: center">${i}</td>
+                         <td style="align-content: center">这是第_${i}_条公告</td>
+                         <td style="align-content: center">${.now}</td>
+                     </tr>
+                     </#list>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="${base}/layui/layui.js" charset="UTF-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','rate','layer'], function(){
+        var element = layui.element,
+                rate = layui.rate,
+                layer = layui.layer,
+                $ = layui.$;
+        var rate_value = layui.$("#rate_curr").val();
+        rate.render({
+             elem: '#user_rate'  //绑定元素
+            ,value:rate_value
+            ,length:5
+            ,half:true
+            ,readonly:true
+        });
+    });
+</script>

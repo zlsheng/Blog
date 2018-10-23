@@ -10,6 +10,8 @@
     <constant name="struts.objectFactory" value="spring" />
 
     <constant name="struts.devMode" value="true" />
+    <!--修改默认上传文件大小-->
+    <constant name="struts.multipart.maxSize" value="15000000"/>
     <!-- 错误处理页面，其他配置文件可以继承这个package
     <package name="default" namespace="/" extends="struts-default">-->
         <!-- 全局结果集，所有action都可以使用
@@ -26,13 +28,31 @@
         </global-exception-mappings>
     </package>-->
 
-    <package name="nec-default" extends="struts-default"   namespace="/">
+
+
+    <package name="nec-default" extends="json-default"   namespace="/">
+        <global-results>
+            <result name="result" type="freemarker">/WEB-INF/pages/common/_result.html</result>
+            <result name="toRegistration" type="freemarker">/WEB-INF/pages/system/registerPage.html</result>
+            <result name="responseBean" type="freemarker">/WEB-INF/pages/common/_result.html</result>
+            <result name="error">/</result>
+        </global-results>
         <!-- 关键地方  struts2.5 为了提升安全性新添加的属性 不添加无法实现动态调用-->
         <global-allowed-methods>regex:.*</global-allowed-methods>
-        <action name="login1_*" class="com.zhaols.SSMdome.action.UserAction">
-            <result name="success" >/WEB-INF/pages/user/user_list.html</result>
-        </action>
+
+        <!-- struts2异常处理框架 -->
+        <global-exception-mappings>
+            <exception-mapping result="error" exception="com.zhaols.SSMdome.MyExcption.MessageExcption"></exception-mapping>
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
+        <!-- 全局结果视图 -->
+
+
+
+
     </package>
 
     <include file="action/loginAction.xml"/>
+    <include file="action/sys_Security.xml"/>
+    <include file="action/uploadFile.xml"/>
 </struts>
