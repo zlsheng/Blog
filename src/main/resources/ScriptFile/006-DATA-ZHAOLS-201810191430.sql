@@ -1,5 +1,5 @@
 INSERT INTO  sys_resources(ID,CODE,TYPE,URL,SORT) VALUES ('COMMON_URL_1','COMMON_URL_1','0','/admin/login_index.do',1);
-INSERT INTO  sys_resources(ID,CODE,TYPE,URL,SORT) VALUES ('COMMON_URL_2','COMMON_URL_2','0','/system/user_getUser.do',2);
+INSERT INTO  sys_resources(ID,CODE,TYPE,URL,SORT) VALUES ('COMMON_URL_2','COMMON_URL_2','0','/admin/login_getUser.do',2);
 INSERT INTO  sys_resources(ID,CODE,TYPE,URL,SORT) VALUES ('COMMON_URL','COMMON_URL','0','',0);
 INSERT INTO sys_role_resources(role_id,resource_id) VALUES ('MBWl3eRWp8GsS7FBwcyq9PZdhufMMR','COMMON_URL_1');
 INSERT INTO sys_role_resources(role_id,resource_id) VALUES ('sGrFljdZcXIgnWW9xadGC8shBwXf4D','COMMON_URL_1');

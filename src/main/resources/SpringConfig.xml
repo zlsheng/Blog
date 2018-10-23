@@ -93,6 +93,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="filters">
             <map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <!--退出过滤器-->
+                <entry key="logout" value-ref="systemLogoutFilter" />
             </map>
         </property>
         <property name="filterChainDefinitions">
@@ -104,8 +106,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                 /admin/login_toRegistration.do = anon
                 /admin/login_registration.do = anon
                 /images/kaptcha.jpg = anon
-                /logout.do = anon
-                /admin/login_logout.do = anon
+                /admin/login_logout.do = logout
                 /** = authc,resourceCheckFilter
             </value>
         </property>
@@ -171,6 +172,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <bean id="resourceCheckFilter" class="com.zhaols.SSMdome.shiro.ResourceCheckFilter">
         <property name="errorUrl" value="/admin/login_error.do"/>
     </bean>
+    <bean id="systemLogoutFilter" class="com.zhaols.SSMdome.shiro.SystemLogoutFilter"/>
 
     <!-- 配置shiro自带的缓存管理器 -->
     <bean id = "shiroSpringCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>

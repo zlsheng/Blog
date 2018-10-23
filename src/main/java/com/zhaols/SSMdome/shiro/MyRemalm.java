@@ -152,7 +152,7 @@ public class MyRemalm extends AuthorizingRealm {
 
     private boolean matches(String ss,String ss2){
         String url1 = ss.substring(0, ss.indexOf("_")); //+ ss.substring(ss.length() - 3, ss.length());
-        String url2 = ss.substring(0, ss2.indexOf("_")); //+ ss2.substring(ss2.length() - 3, ss.length());
+        String url2 = ss2.substring(0, ss2.indexOf("_")); //+ ss2.substring(ss2.length() - 3, ss.length());
         return url1.equals(url2);
     }
 }

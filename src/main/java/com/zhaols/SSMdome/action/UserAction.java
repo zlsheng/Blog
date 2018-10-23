@@ -37,22 +37,7 @@ public class UserAction extends BasicAction<SysUser,IUserSysService> {
     private List<SysRole> hasRoles;
 
 
-    /**
-     * 首页展示用户信息
-     * @return
-     */
-    public String getUser(){
-        Subject subject = SecurityUtils.getSubject();
-        activeUser = (ActiveUser) subject.getPrincipal();
 
-        try{
-            entity = userSysService.getUserById(activeUser.getUserid());
-        }catch(Exception e){
-        e.printStackTrace();
-        }
-
-        return "userHome";
-    }
 
     /**
     *   功能描述: 获取user列表展示

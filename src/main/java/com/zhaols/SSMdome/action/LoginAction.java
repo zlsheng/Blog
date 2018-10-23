@@ -89,6 +89,23 @@ public class LoginAction extends BasicAction<SysUser,IUserSysService> {
         subject.logout();
     }
 
+    /**
+     * 首页展示用户信息
+     * @return
+     */
+    public String getUser(){
+        Subject subject = SecurityUtils.getSubject();
+        activeUser = (ActiveUser) subject.getPrincipal();
+
+        try{
+            entity = userSysService.getUserById(activeUser.getUserid());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return "userHome";
+    }
+
     public String getErrorMsg() {
         return errorMsg;
     }
