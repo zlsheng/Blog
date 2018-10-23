@@ -45,7 +45,6 @@ public class ResourceCheckFilter  extends AccessControlFilter {
         String url = getPathWithinApplication(servletRequest);
         List<String> commonUrl = new ArrayList<>();
         commonUrl.add("/admin/login_toLogin.do");
-        logger.debug("当前用户正在访问的 url => " + url);
         for (String s : commonUrl) {
             if(s.equals(url)){
                 return true;
@@ -65,8 +64,6 @@ public class ResourceCheckFilter  extends AccessControlFilter {
      */
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        logger.debug("当 isAccessAllowed 返回 false 的时候，才会执行 method onAccessDenied ");
-
         HttpServletRequest request =(HttpServletRequest) servletRequest;
         HttpServletResponse response =(HttpServletResponse) servletResponse;
         response.sendRedirect(request.getContextPath() + this.errorUrl);
