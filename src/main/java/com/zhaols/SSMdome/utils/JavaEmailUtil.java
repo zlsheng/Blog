@@ -29,7 +29,7 @@ public class JavaEmailUtil {
     static final ApplicationContext actx = new ClassPathXmlApplicationContext("SpringConfig.xml");
     static final JavaMailSender javaMailSender = (JavaMailSender) actx.getBean("javaMailSender");
     static final SimpleMailMessage simpleMailMessage = (SimpleMailMessage) actx.getBean("simpleMailMessage");
-    //static final FreeMarkerConfigurer freeMarkerConfigurer = (FreeMarkerConfigurer) actx.getBean("freemarkerConfig");
+    static final FreeMarkerConfigurer freeMarkerConfigurer = (FreeMarkerConfigurer) actx.getBean("freemarkerConfig");
 
 
 
@@ -41,45 +41,44 @@ public class JavaEmailUtil {
      *@CreateTime: 2018-10-24  11:39
      */
     public static  void send(Email email) {
+        String receiver = email.getReceiver();
         String text = "";
         Map<String,String> map = new HashMap<>();
-        map.put("nickName",nickName);
-        map.put("content",content);
-       /* try {
+        map.put("nickName",email.getSenderName());
+        map.put("content",email.getMessage());
+        try {
             // 根据模板内容，动态把map中的数据填充进去，生成HTML
             Template template = freeMarkerConfigurer.getConfiguration().getTemplate("/common/_mail.html");
             // map中的key，对应模板中的${key}表达式
-            text = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+            email.setMessage(FreeMarkerTemplateUtils.processTemplateIntoString(template, map));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
             e.printStackTrace();
-        }*/
-        sendMail(to,"测试邮件",content);
+        }
+        sendMail(email);
     }
 
     /**
      *@Description:  执行发送邮件
      *@Author: zhaols
-     *@param to 发送邮件地址
-     *@param subject 邮件主题
-     *@param content 内容
+     *@param email  邮件实体
      *@Return: void
      *@CreateTime: 2018-10-24  11:44
      */
-    public static void sendMail(String to, String subject, String content) {
+    public static void sendMail(Email email) {
         try{
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,"UTF-8");
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,Email.ENCODEING);
             mimeMessageHelper.setFrom(simpleMailMessage.getFrom());
 
-            if (subject != null) {
-                mimeMessageHelper.setSubject(subject);
+            if (email.getMessage() != null) {
+                mimeMessageHelper.setSubject(email.getMessage());
             } else {
                 mimeMessageHelper.setSubject(simpleMailMessage.getSubject());
             }
-            mimeMessageHelper.setTo(to);
-            mimeMessageHelper.setText(content, true);
+            mimeMessageHelper.setTo(email.getReceiver());
+            mimeMessageHelper.setText(email.getMessage(), true);
             javaMailSender.send(mimeMessage);
         }catch(MessagingException e){
             e.printStackTrace();

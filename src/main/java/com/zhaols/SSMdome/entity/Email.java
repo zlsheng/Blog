@@ -10,6 +10,25 @@ import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
  */
 public class Email extends BasicEntity<String> {
 
+    public Email(String sender, String receiver, String message, String title, String senderName) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.message = message;
+        this.title = title;
+        this.senderName = senderName;
+    }
+
+    public Email(String receiver, String message) {
+        this.receiver = receiver;
+        this.message = message;
+    }
+
+    public Email(String receiver, String message, String title) {
+        this.receiver = receiver;
+        this.message = message;
+        this.title = title;
+    }
+
     /** 序列号 */
     private static final long serialVersionUID = -3562218214168975242L;
 
