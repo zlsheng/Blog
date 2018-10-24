@@ -21,6 +21,7 @@
         <struts2.version>2.5.17</struts2.version>
         <log4j.version>2.11.0</log4j.version>
       <shiro.version>1.4.0</shiro.version>
+      <junit.version>4.12</junit.version>
   </properties>
 
   <dependencies>
@@ -58,6 +59,19 @@
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-aop</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <!-- spring test -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+          <version>${spring.version}</version>
+          <scope>test</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
           <version>${spring.version}</version>
       </dependency>
 
@@ -181,7 +195,7 @@
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-context-support</artifactId>
-          <version>3.2.4.RELEASE</version>
+          <version>${spring.version}</version>
       </dependency>
 
       <!--Struts2 jar包-->
@@ -319,6 +333,27 @@
           <artifactId>fastjson</artifactId>
           <version>1.2.49</version>
       </dependency>
+
+      <!--JAVA EMAIL-->
+      <dependency>
+          <groupId>com.sun.mail</groupId>
+          <artifactId>javax.mail</artifactId>
+          <version>1.6.2</version>
+      </dependency>
+      <!-- junit 测试  -->
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-api</artifactId>
+          <version>RELEASE</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>${junit.version}</version>
+          <scope>test</scope>
+      </dependency>
+
 
   </dependencies>
 
