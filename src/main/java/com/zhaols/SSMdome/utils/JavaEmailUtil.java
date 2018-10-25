@@ -3,10 +3,8 @@ package com.zhaols.SSMdome.utils;
 import com.zhaols.SSMdome.entity.Email;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author zhaols
@@ -30,6 +29,7 @@ public class JavaEmailUtil {
     static final JavaMailSender javaMailSender = (JavaMailSender) actx.getBean("javaMailSender");
     static final SimpleMailMessage simpleMailMessage = (SimpleMailMessage) actx.getBean("simpleMailMessage");
     static final FreeMarkerConfigurer freeMarkerConfigurer = (FreeMarkerConfigurer) actx.getBean("freemarkerConfig");
+    static final ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) actx.getBean("threadPoolExecutor");
 
 
 
@@ -48,7 +48,7 @@ public class JavaEmailUtil {
         map.put("content",email.getMessage());
         try {
             // 根据模板内容，动态把map中的数据填充进去，生成HTML
-            Template template = freeMarkerConfigurer.getConfiguration().getTemplate("/common/_mail.html");
+            Template template = freeMarkerConfigurer.getConfiguration().getTemplate("E:/javaFiles/IDEA/SSMdome/src/main/webapp/WEB-INF/pages/common/_mail.html");
             // map中的key，对应模板中的${key}表达式
             email.setMessage(FreeMarkerTemplateUtils.processTemplateIntoString(template, map));
         } catch (IOException e) {
@@ -68,7 +68,7 @@ public class JavaEmailUtil {
      */
     public static void sendMail(Email email) {
         try{
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,Email.ENCODEING);
             mimeMessageHelper.setFrom(simpleMailMessage.getFrom());
 
@@ -79,7 +79,13 @@ public class JavaEmailUtil {
             }
             mimeMessageHelper.setTo(email.getReceiver());
             mimeMessageHelper.setText(email.getMessage(), true);
-            javaMailSender.send(mimeMessage);
+            threadPoolExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    javaMailSender.send(mimeMessage);
+                }
+            });
+
         }catch(MessagingException e){
             e.printStackTrace();
         }
