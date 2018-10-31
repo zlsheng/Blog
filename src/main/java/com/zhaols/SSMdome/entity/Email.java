@@ -10,12 +10,12 @@ import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
  */
 public class Email extends BasicEntity<String> {
 
-    public Email(String sender, String receiver, String message, String title, String senderName) {
-        this.sender = sender;
+    public Email( String receiver, String message, String title, String senderName,String receiverName) {
         this.receiver = receiver;
         this.message = message;
         this.title = title;
         this.senderName = senderName;
+        this.receiverName = receiverName;
     }
 
     public Email(String receiver, String message) {
@@ -41,10 +41,13 @@ public class Email extends BasicEntity<String> {
     /** 邮件接收人邮箱地址 */
     private String receiver;
 
+    /** 邮件接收人昵称 */
+    private String receiverName;
+
     /** 邮件正文 */
     private String message;
 
-    /** 邮件标题(支持HTML) */
+    /** 邮件标题 */
     private String title;
 
     /** 发件人昵称 */
@@ -92,5 +95,13 @@ public class Email extends BasicEntity<String> {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 }

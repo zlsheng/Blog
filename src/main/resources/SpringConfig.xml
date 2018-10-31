@@ -3,10 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- 引入属性文件,jdbc.properties,mail.properties位于src/main/resources目录下 -->
     <!--<context:property-placeholder location="classpath:properties/jdbc.properties,classpath:properties/mail.properties" />-->
@@ -197,7 +198,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <!--======================================     freemarker 配置     ===============================-->
     <bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/pages" />
+        <!--<property name="templateLoaderPath" value="/WEB-INF/pages" />-->
         <property name="freemarkerSettings">
             <props>
                 <prop key="template_update_delay">0</prop>
@@ -249,16 +250,16 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <!-- ======================================= 线程池配置 ================================== -->
     <bean id="threadPoolExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <!-- 核心线程数  -->
-        <property name="corePoolSize" value="3" />
+        <property name="corePoolSize" value="20" />
         <!-- 最大线程数 -->
-        <property name="maxPoolSize" value="20" />
+            <property name="maxPoolSize" value="50" />
         <!-- 队列最大长度 >=mainExecutor.maxSize -->
         <property name="queueCapacity" value="1000" />
         <!-- 线程池维护线程所允许的空闲时间 -->
         <property name="keepAliveSeconds" value="300" />
         <!-- 线程池对拒绝任务(无线程可用)的处理策略 -->
-        <property name="rejectedExecutionHandler">
+        <!--<property name="rejectedExecutionHandler">
             <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
-        </property>
+        </property>-->
     </bean>
 </beans>
