@@ -2,6 +2,8 @@ package com.zhaols.SSMdome.entity;
 
 import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
 
+import java.util.Map;
+
 /**
  * @author zhaols
  * @version V1.0
@@ -10,12 +12,26 @@ import com.zhaols.SSMdome.BasicClassDri.BasicEntity;
  */
 public class Email extends BasicEntity<String> {
 
-    public Email( String receiver, String message, String title, String senderName,String receiverName) {
+
+    /**
+     *@Description:
+     *@Author: zhaols
+     *@param receiver 收件人邮箱
+     *@param content  邮件信息
+     *@param title  邮件标题
+     *@param senderName 发送人名称
+     *@param receiverName 接收人名称
+     *@param url url地址
+     *@Return:
+     *@CreateTime: 2018-11-02  15:15
+     */
+    public Email( String receiver, String content, String title, String senderName,String receiverName,String url) {
         this.receiver = receiver;
-        this.message = message;
+        this.content = content;
         this.title = title;
         this.senderName = senderName;
         this.receiverName = receiverName;
+        this.url = url;
     }
 
     public Email(String receiver, String message) {
@@ -23,11 +39,8 @@ public class Email extends BasicEntity<String> {
         this.message = message;
     }
 
-    public Email(String receiver, String message, String title) {
-        this.receiver = receiver;
-        this.message = message;
-        this.title = title;
-    }
+    public Email() { }
+
 
     /** 序列号 */
     private static final long serialVersionUID = -3562218214168975242L;
@@ -44,7 +57,7 @@ public class Email extends BasicEntity<String> {
     /** 邮件接收人昵称 */
     private String receiverName;
 
-    /** 邮件正文 */
+    /** 邮件正文(HTML) */
     private String message;
 
     /** 邮件标题 */
@@ -53,9 +66,12 @@ public class Email extends BasicEntity<String> {
     /** 发件人昵称 */
     private String senderName;
 
-    public static String getENCODEING() {
-        return ENCODEING;
-    }
+    /** 绑定邮箱及修改密码的URL存放地址 */
+    private String url;
+
+    /** 邮件正文 */
+    private String content;
+
 
     public String getSender() {
         return sender;
@@ -103,5 +119,21 @@ public class Email extends BasicEntity<String> {
 
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

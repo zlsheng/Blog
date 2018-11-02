@@ -26,22 +26,7 @@ public void before() throws Exception {
 @After
 public void after() throws Exception {
     System.out.println("结束测试");
-} 
-
-/** 
-* 
-* Method: send(String nickName, String content, String email) 
-* 
-*/ 
-@Test
-public void testSend() throws Exception { 
-//TODO: Test goes here...
-     Email email = new Email("1219466321@qq.com","测试邮件,测试URL和Html页面是否能耐够发送","这是一份测试邮件","66","亲爱的用户");
-    System.out.println("正在发送邮件");
-    JavaEmailUtil.send(email);
-    System.out.println("邮件发送结束");
-
-} 
+}
 
 /** 
 * 
@@ -52,7 +37,12 @@ public void testSend() throws Exception {
 public void testSendMail() throws Exception { 
 //TODO: Test goes here...
     System.out.println("正在发送邮件");
-    Email email = new Email("1219466321@qq.com","测试邮件,测试URL和Html页面是否能耐够发送","这是一份测试邮件","66","亲爱的用户");
+    Email email = new Email();
+    email.setReceiver("1219466321@qq.com");
+    email.setTitle("邮箱绑定邮件 勿回！");
+    email.setUrl("www.baidu.com");
+    email.setContent("点击上面链接完成邮箱绑定");
+    email.setReceiverName("zhaols");
     JavaEmailUtil.sendMail(email);
     System.out.println("邮件发送结束");
 } 

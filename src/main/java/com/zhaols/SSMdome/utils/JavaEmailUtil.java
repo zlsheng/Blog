@@ -34,43 +34,6 @@ public class JavaEmailUtil {
     static final SimpleMailMessage simpleMailMessage = (SimpleMailMessage) actx.getBean("simpleMailMessage");
 //    static final ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) actx.getBean("threadPoolExecutor");
 
-
-
-    /**
-     *@Description: 从freemarker模板中构建邮件内容
-     *@Author: zhaols
-     *@param email  邮件实体
-     *@Return: void
-     *@CreateTime: 2018-10-24  11:39
-     */
-    public static  void send(Email email) {
-        String receiver = email.getReceiver();
-        String text = "";
-        Map<String,String> map = new HashMap<>();
-        map.put("userName",email.getReceiverName());
-        map.put("content",email.getMessage());
-        map.put("url","www.baidu.com");
-        email.setTitle("来自一位想飞的帅小伙");
-        email.setMessage(getHtml(map).toString());
-
-        sendMail(email);
-    }
-
-
-    /**
-     *      try {
-     *             // 根据模板内容，动态把map中的数据填充进去，生成HTML
-     *             Template template = freeMarkerConfigurer.getConfiguration().getTemplate("/common/_mail.html");
-     *
-     *             // map中的key，对应模板中的${key}表达式
-     *             email.setMessage(FreeMarkerTemplateUtils.processTemplateIntoString(template, map));
-     *         } catch (IOException e) {
-     *             e.printStackTrace();
-     *         } catch (TemplateException e) {
-     *             e.printStackTrace();
-     *         }
-     *
-     */
     /**
      *@Description:  执行发送邮件
      *@Author: zhaols
@@ -83,7 +46,7 @@ public class JavaEmailUtil {
             final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,Email.ENCODEING);
             mimeMessageHelper.setFrom(simpleMailMessage.getFrom());
-
+            email.setMessage(getHtml(email).toString());
             if (email.getMessage() != null) {
                 mimeMessageHelper.setSubject(email.getTitle());
             } else {
@@ -105,16 +68,23 @@ public class JavaEmailUtil {
     }
 
 
-    private static StringBuffer getHtml(Map<String,String> map){
+    /**
+     *@Description:  获取邮件内容
+     *@Author: zhaols
+     *@param email
+     *@Return: java.lang.StringBuffer
+     *@CreateTime: 2018-11-02  15:26
+     */
+    private static StringBuffer getHtml(Email email){
         StringBuffer mail = new StringBuffer();
         String h = "<br/>";
-        String heard = "<h2><font color='green'>" + map.get("userName") +"，您好！</font></h2>";
-        String title = "<p>注意：30分钟后链接将失效!</p>";
+        String heard = "<h2><font color='green'>" + email.getReceiverName() +"，您好！</font></h2>";
+        String title = "<h4 style='color: red' >注意：30分钟后链接将失效!,请在30分钟内完后邮箱绑定</h4>";
         String url = "";
-        if(StringUtils.isNotEmpty(map.get("url"))){
-            url = map.get("url");
+        if(StringUtils.isNotEmpty(email.getUrl())){
+            url = email.getUrl();
         }
-        String content = map.get("content");
+        String content = "<span>" + email.getContent() + "</span>" ;
         mail.append(heard).append(h).append(title).append(h).append(url).append(h).append(content).append(h);
 
         return mail;
