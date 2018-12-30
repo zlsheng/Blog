@@ -2,19 +2,40 @@ package com.zhaols.TargetManagementSystem.entity;
 
 import com.zhaols.SSMdome.BasicClassDri.Entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- *@Description: 目标实体类
+ *@Description: 目标详情实体类
  *@Author: zhaols
  *@Return:
- *@CreateTime: 2018-12-30  9:40
+ *@CreateTime: 2018-12-30  9:42
  */
-public class TargetForm extends Entity<String> {
+public class TargetInfo extends Entity<String> {
     /**
-     * 目标记录表ID
+     * 目标记录详情ID
      */
     private String id;
+
+    /**
+     * 目标创建人性别
+     */
+    private String createTargetPersonSex;
+
+    /**
+     * 目标初始状态描述
+     */
+    private String beginTargetDescription;
+
+    /**
+     * 目标实现初始资金
+     */
+    private BigDecimal beginTargetFunds;
+
+    /**
+     * 实现方式
+     */
+    private String beginTargetType;
 
     /**
      * 目标名称
@@ -30,11 +51,6 @@ public class TargetForm extends Entity<String> {
      * 定目标的目的
      */
     private String purpose;
-
-    /**
-     * 目标详情ID
-     */
-    private String targntInfoId;
 
     /**
      * 目标创建人姓名
@@ -55,6 +71,21 @@ public class TargetForm extends Entity<String> {
      * 实现目标结束时间
      */
     private Date endTargetTime;
+
+    /**
+     * 目标结束状态描述
+     */
+    private String endTargetDescription;
+
+    /**
+     * 目标结束资金
+     */
+    private BigDecimal endTargetFunds;
+
+    /**
+     * 目标结束方式
+     */
+    private String endTargetType;
 
     /**
      * 记录更新人ID
@@ -92,24 +123,83 @@ public class TargetForm extends Entity<String> {
     private String isEnable;
 
     /**
-     * 记录完成状态  00 未完成  11 已完成  22 进行中
-     */
-    private String isComplete;
-
-    /**
-     * 目标记录表ID
-     * @return ID 目标记录表ID
+     * 目标记录详情ID
+     * @return ID 目标记录详情ID
      */
     public String getId() {
         return id;
     }
 
     /**
-     * 目标记录表ID
-     * @param id 目标记录表ID
+     * 目标记录详情ID
+     * @param id 目标记录详情ID
      */
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    /**
+     * 目标创建人性别
+     * @return CREATE_TARGET_PERSON_SEX 目标创建人性别
+     */
+    public String getCreateTargetPersonSex() {
+        return createTargetPersonSex;
+    }
+
+    /**
+     * 目标创建人性别
+     * @param createTargetPersonSex 目标创建人性别
+     */
+    public void setCreateTargetPersonSex(String createTargetPersonSex) {
+        this.createTargetPersonSex = createTargetPersonSex == null ? null : createTargetPersonSex.trim();
+    }
+
+    /**
+     * 目标初始状态描述
+     * @return BEGIN_TARGET_DESCRIPTION 目标初始状态描述
+     */
+    public String getBeginTargetDescription() {
+        return beginTargetDescription;
+    }
+
+    /**
+     * 目标初始状态描述
+     * @param beginTargetDescription 目标初始状态描述
+     */
+    public void setBeginTargetDescription(String beginTargetDescription) {
+        this.beginTargetDescription = beginTargetDescription == null ? null : beginTargetDescription.trim();
+    }
+
+    /**
+     * 目标实现初始资金
+     * @return BEGIN_TARGET_FUNDS 目标实现初始资金
+     */
+    public BigDecimal getBeginTargetFunds() {
+        return beginTargetFunds;
+    }
+
+    /**
+     * 目标实现初始资金
+     * @param beginTargetFunds 目标实现初始资金
+     */
+    public void setBeginTargetFunds(BigDecimal beginTargetFunds) {
+        this.beginTargetFunds = beginTargetFunds;
+    }
+
+    /**
+     * 实现方式
+     * @return BEGIN_TARGET_TYPE 实现方式
+     */
+    public String getBeginTargetType() {
+        return beginTargetType;
+    }
+
+    /**
+     * 实现方式
+     * @param beginTargetType 实现方式
+     */
+    public void setBeginTargetType(String beginTargetType) {
+        this.beginTargetType = beginTargetType == null ? null : beginTargetType.trim();
     }
 
     /**
@@ -158,22 +248,6 @@ public class TargetForm extends Entity<String> {
      */
     public void setPurpose(String purpose) {
         this.purpose = purpose == null ? null : purpose.trim();
-    }
-
-    /**
-     * 目标详情ID
-     * @return TARGNT_INFO_ID 目标详情ID
-     */
-    public String getTargntInfoId() {
-        return targntInfoId;
-    }
-
-    /**
-     * 目标详情ID
-     * @param targntInfoId 目标详情ID
-     */
-    public void setTargntInfoId(String targntInfoId) {
-        this.targntInfoId = targntInfoId == null ? null : targntInfoId.trim();
     }
 
     /**
@@ -238,6 +312,54 @@ public class TargetForm extends Entity<String> {
      */
     public void setEndTargetTime(Date endTargetTime) {
         this.endTargetTime = endTargetTime;
+    }
+
+    /**
+     * 目标结束状态描述
+     * @return END_TARGET_DESCRIPTION 目标结束状态描述
+     */
+    public String getEndTargetDescription() {
+        return endTargetDescription;
+    }
+
+    /**
+     * 目标结束状态描述
+     * @param endTargetDescription 目标结束状态描述
+     */
+    public void setEndTargetDescription(String endTargetDescription) {
+        this.endTargetDescription = endTargetDescription == null ? null : endTargetDescription.trim();
+    }
+
+    /**
+     * 目标结束资金
+     * @return END_TARGET_FUNDS 目标结束资金
+     */
+    public BigDecimal getEndTargetFunds() {
+        return endTargetFunds;
+    }
+
+    /**
+     * 目标结束资金
+     * @param endTargetFunds 目标结束资金
+     */
+    public void setEndTargetFunds(BigDecimal endTargetFunds) {
+        this.endTargetFunds = endTargetFunds;
+    }
+
+    /**
+     * 目标结束方式
+     * @return END_TARGET_TYPE 目标结束方式
+     */
+    public String getEndTargetType() {
+        return endTargetType;
+    }
+
+    /**
+     * 目标结束方式
+     * @param endTargetType 目标结束方式
+     */
+    public void setEndTargetType(String endTargetType) {
+        this.endTargetType = endTargetType == null ? null : endTargetType.trim();
     }
 
     /**
@@ -350,21 +472,5 @@ public class TargetForm extends Entity<String> {
      */
     public void setIsEnable(String isEnable) {
         this.isEnable = isEnable == null ? null : isEnable.trim();
-    }
-
-    /**
-     * 记录完成状态  00 未完成  11 已完成  22 进行中
-     * @return IS_COMPLETE 记录完成状态  00 未完成  11 已完成  22 进行中
-     */
-    public String getIsComplete() {
-        return isComplete;
-    }
-
-    /**
-     * 记录完成状态  00 未完成  11 已完成  22 进行中
-     * @param isComplete 记录完成状态  00 未完成  11 已完成  22 进行中
-     */
-    public void setIsComplete(String isComplete) {
-        this.isComplete = isComplete == null ? null : isComplete.trim();
     }
 }

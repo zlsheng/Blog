@@ -78,6 +78,7 @@ abstract public class BasicAction<T extends Entity,M extends ISuperService> exte
      *
      * @return
      */
+    @Override
     public String execute() {
         return list();
     }
@@ -97,16 +98,25 @@ abstract public class BasicAction<T extends Entity,M extends ISuperService> exte
 
     protected ModelSetup setupModel() {
         MyBatisModelSetup model = (MyBatisModelSetup) getModelSetupFromRequest(ORMType.MYBATIS);
-        model.setCountName("com.zhaols.SSMdome.mapper." + entityClass.getSimpleName() + "Mapper.count");
-        model.setSqlName("com.zhaols.SSMdome.mapper." + entityClass.getSimpleName() + "Mapper.select");
+        String path = getMapperPath(entity);
+        model.setCountName(path + ".mapper." + entityClass.getSimpleName() + "Mapper.count");
+        model.setSqlName(path + ".mapper." + entityClass.getSimpleName() + "Mapper.select");
         return model;
 
     }
+    protected String getMapperPath(Entity entity){
+        String path = "";
+        path = entity.getClass().getPackage().getName();
+        path = path.substring(0,path.lastIndexOf("."));
+        return path;
+    }
     protected void doPageEntity(ModelSetup modelSetup) {
-        if (limit == 0)
+        if (limit == 0){
             limit = Page.DEFAULT_PAGE_SIZE;
-        if (start < 1)
+        }
+        if (start < 1){
             start = 1;
+        }
         //int pageNo=start/limit+1;
         Page page = getEntityManager().pagedQuery(modelSetup, start, limit);
         this.setEntitys(page.getResult());

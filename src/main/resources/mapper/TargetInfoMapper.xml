@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaols.TargetManagementSystem.mapper.TargetInfoMapper" >
+  <resultMap id="TargetInfoMap" type="com.zhaols.TargetManagementSystem.entity.TargetInfo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CREATE_TARGET_PERSON_SEX" property="createTargetPersonSex" jdbcType="VARCHAR" />
+    <result column="BEGIN_TARGET_DESCRIPTION" property="beginTargetDescription" jdbcType="VARCHAR" />
+    <result column="BEGIN_TARGET_FUNDS" property="beginTargetFunds" jdbcType="DECIMAL" />
+    <result column="BEGIN_TARGET_TYPE" property="beginTargetType" jdbcType="VARCHAR" />
+    <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
+    <result column="TARGET_INTRODUCTION" property="targetIntroduction" jdbcType="VARCHAR" />
+    <result column="PURPOSE" property="purpose" jdbcType="VARCHAR" />
+    <result column="CREATE_TARGET_PERSON_NAME" property="createTargetPersonName" jdbcType="VARCHAR" />
+    <result column="CREATE_TARGET_TIME" property="createTargetTime" jdbcType="TIMESTAMP" />
+    <result column="BEGIN_TARGET_TIME" property="beginTargetTime" jdbcType="TIMESTAMP" />
+    <result column="END_TARGET_TIME" property="endTargetTime" jdbcType="TIMESTAMP" />
+    <result column="END_TARGET_DESCRIPTION" property="endTargetDescription" jdbcType="VARCHAR" />
+    <result column="END_TARGET_FUNDS" property="endTargetFunds" jdbcType="DECIMAL" />
+    <result column="END_TARGET_TYPE" property="endTargetType" jdbcType="VARCHAR" />
+    <result column="UPDATER" property="updater" jdbcType="VARCHAR" />
+    <result column="UPDATER_NAME" property="updaterName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="IS_ENABLE" property="isEnable" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CREATE_TARGET_PERSON_SEX, BEGIN_TARGET_DESCRIPTION, BEGIN_TARGET_FUNDS, BEGIN_TARGET_TYPE, 
+    TARGET_NAME, TARGET_INTRODUCTION, PURPOSE, CREATE_TARGET_PERSON_NAME, CREATE_TARGET_TIME, 
+    BEGIN_TARGET_TIME, END_TARGET_TIME, END_TARGET_DESCRIPTION, END_TARGET_FUNDS, END_TARGET_TYPE, 
+    UPDATER, UPDATER_NAME, UPDATE_TIME, CREATER, CREATER_NAME, CREATE_TIME, IS_ENABLE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="TargetInfoMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TARGET_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TARGET_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.zhaols.TargetManagementSystem.entity.TargetInfo" >
+    insert into TARGET_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="createTargetPersonSex != null" >
+        CREATE_TARGET_PERSON_SEX,
+      </if>
+      <if test="beginTargetDescription != null" >
+        BEGIN_TARGET_DESCRIPTION,
+      </if>
+      <if test="beginTargetFunds != null" >
+        BEGIN_TARGET_FUNDS,
+      </if>
+      <if test="beginTargetType != null" >
+        BEGIN_TARGET_TYPE,
+      </if>
+      <if test="targetName != null" >
+        TARGET_NAME,
+      </if>
+      <if test="targetIntroduction != null" >
+        TARGET_INTRODUCTION,
+      </if>
+      <if test="purpose != null" >
+        PURPOSE,
+      </if>
+      <if test="createTargetPersonName != null" >
+        CREATE_TARGET_PERSON_NAME,
+      </if>
+      <if test="createTargetTime != null" >
+        CREATE_TARGET_TIME,
+      </if>
+      <if test="beginTargetTime != null" >
+        BEGIN_TARGET_TIME,
+      </if>
+      <if test="endTargetTime != null" >
+        END_TARGET_TIME,
+      </if>
+      <if test="endTargetDescription != null" >
+        END_TARGET_DESCRIPTION,
+      </if>
+      <if test="endTargetFunds != null" >
+        END_TARGET_FUNDS,
+      </if>
+      <if test="endTargetType != null" >
+        END_TARGET_TYPE,
+      </if>
+      <if test="updater != null" >
+        UPDATER,
+      </if>
+      <if test="updaterName != null" >
+        UPDATER_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="isEnable != null" >
+        IS_ENABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTargetPersonSex != null" >
+        #{createTargetPersonSex,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTargetDescription != null" >
+        #{beginTargetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTargetFunds != null" >
+        #{beginTargetFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="beginTargetType != null" >
+        #{beginTargetType,jdbcType=VARCHAR},
+      </if>
+      <if test="targetName != null" >
+        #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="targetIntroduction != null" >
+        #{targetIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="createTargetPersonName != null" >
+        #{createTargetPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTargetTime != null" >
+        #{createTargetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTargetTime != null" >
+        #{beginTargetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTargetTime != null" >
+        #{endTargetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTargetDescription != null" >
+        #{endTargetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="endTargetFunds != null" >
+        #{endTargetFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="endTargetType != null" >
+        #{endTargetType,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterName != null" >
+        #{updaterName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isEnable != null" >
+        #{isEnable,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.TargetManagementSystem.entity.TargetInfo" >
+    update TARGET_INFO
+    <set >
+      <if test="createTargetPersonSex != null" >
+        CREATE_TARGET_PERSON_SEX = #{createTargetPersonSex,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTargetDescription != null" >
+        BEGIN_TARGET_DESCRIPTION = #{beginTargetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTargetFunds != null" >
+        BEGIN_TARGET_FUNDS = #{beginTargetFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="beginTargetType != null" >
+        BEGIN_TARGET_TYPE = #{beginTargetType,jdbcType=VARCHAR},
+      </if>
+      <if test="targetName != null" >
+        TARGET_NAME = #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="targetIntroduction != null" >
+        TARGET_INTRODUCTION = #{targetIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null" >
+        PURPOSE = #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="createTargetPersonName != null" >
+        CREATE_TARGET_PERSON_NAME = #{createTargetPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTargetTime != null" >
+        CREATE_TARGET_TIME = #{createTargetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTargetTime != null" >
+        BEGIN_TARGET_TIME = #{beginTargetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTargetTime != null" >
+        END_TARGET_TIME = #{endTargetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTargetDescription != null" >
+        END_TARGET_DESCRIPTION = #{endTargetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="endTargetFunds != null" >
+        END_TARGET_FUNDS = #{endTargetFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="endTargetType != null" >
+        END_TARGET_TYPE = #{endTargetType,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        UPDATER = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterName != null" >
+        UPDATER_NAME = #{updaterName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isEnable != null" >
+        IS_ENABLE = #{isEnable,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="select" parameterType="java.util.HashMap" resultMap="TargetInfoMap">
+    SELECT Base_Column_List FROM TARGET_FORM t WHERE IS_ENABLE = '00'
+  </select>
+  <select id="count" parameterType="java.util.HashMap" resultType="int">
+    SELECT COUNT(1) FROM TARGET_FORM t WHERE IS_ENABLE = '00'
+  </select>
+  <select id="get" parameterType="java.util.HashMap" resultType="TargetInfoMap">
+    SELECT Base_Column_List FROM TARGET_FORM t WHERE IS_ENABLE = '00' AND ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAll" parameterType="java.util.HashMap" resultType="TargetInfoMap">
+    SELECT Base_Column_List FROM TARGET_FORM t
+  </select>
+
+
+</mapper>

@@ -8,6 +8,8 @@
     <mapper resource="mapper/SysRoleMapper.xml"/>
     <mapper resource="mapper/SysRoleUserMapper.xml"/>
     <mapper resource="mapper/SysRoleResourcesMapper.xml"/>
+    <!--<mapper resource="mapper/TargetInfoMapper.xml"/>-->
+
 </mappers>
 
 </configuration>

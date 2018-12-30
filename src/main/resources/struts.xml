@@ -55,4 +55,5 @@
     <include file="action/loginAction.xml"/>
     <include file="action/sys_Security.xml"/>
     <include file="action/uploadFile.xml"/>
+    <include file="action/targetAction.xml"/>
 </struts>

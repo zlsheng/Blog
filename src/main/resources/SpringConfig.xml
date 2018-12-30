@@ -47,12 +47,13 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatisConfig.xml"/>
-        <property name="typeAliasesPackage" value="com.zhaols.SSMdome.entity"/>
+        <property name="typeAliasesPackage" value="com.zhaols.SSMdome.entity,com.zhaols.TargetManagementSystem.entity"/>
     </bean>
 
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.zhaols.SSMdome.mapper"/>
+        <property name="basePackage" value="com.zhaols.*.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
