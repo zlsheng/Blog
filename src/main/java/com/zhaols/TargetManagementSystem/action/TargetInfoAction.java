@@ -20,4 +20,13 @@ public class TargetInfoAction extends BasicAction<TargetInfo, ITargetInfoService
     protected ITargetInfoService getEntityManager() {
         return targetInfoService;
     }
+
+    @Override
+    public String list() {
+        System.out.println("dsadsadsacdsfsa ");
+        super.list();
+        System.out.println(entitys.size() + "      ----------");
+
+        return SUCCESS;
+    }
 }

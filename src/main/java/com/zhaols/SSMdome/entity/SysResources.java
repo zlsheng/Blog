@@ -99,6 +99,7 @@ public class SysResources extends BasicEntity<String> {
      * 主键
      * @return ID 主键
      */
+    @Override
     public String getId() {
         return id;
     }
@@ -107,6 +108,7 @@ public class SysResources extends BasicEntity<String> {
      * 主键
      * @param id 主键
      */
+    @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }

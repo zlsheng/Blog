@@ -114,6 +114,7 @@ public class TargetImplementationPlan extends Entity<String> {
      * 目标记录详情ID
      * @return ID 目标记录详情ID
      */
+    @Override
     public String getId() {
         return id;
     }
@@ -122,6 +123,7 @@ public class TargetImplementationPlan extends Entity<String> {
      * 目标记录详情ID
      * @param id 目标记录详情ID
      */
+    @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }

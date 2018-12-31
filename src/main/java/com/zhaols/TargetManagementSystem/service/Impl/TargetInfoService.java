@@ -4,8 +4,11 @@ import com.zhaols.SSMdome.BasicClassDri.IEntityMapper;
 import com.zhaols.SSMdome.BasicClassDri.SuperService;
 import com.zhaols.TargetManagementSystem.entity.TargetInfo;
 import com.zhaols.TargetManagementSystem.mapper.TargetInfoMapper;
+import com.zhaols.TargetManagementSystem.service.ITargetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zhaols
@@ -14,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2018-12-29 16:53
  */
 @Service
-public class TargetInfoService extends SuperService<TargetInfo> {
+public class TargetInfoService extends SuperService<TargetInfo> implements ITargetInfoService {
 
     @Autowired
     private TargetInfoMapper targetInfoMapper;

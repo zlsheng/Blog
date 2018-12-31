@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhaols.TargetManagementSystem.mapper.TargetInfoMapper" >
-  <resultMap id="TargetInfoMap" type="com.zhaols.TargetManagementSystem.entity.TargetInfo" >
+  <resultMap id="TargetInfo" type="com.zhaols.TargetManagementSystem.entity.TargetInfo" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="CREATE_TARGET_PERSON_SEX" property="createTargetPersonSex" jdbcType="VARCHAR" />
     <result column="BEGIN_TARGET_DESCRIPTION" property="beginTargetDescription" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     BEGIN_TARGET_TIME, END_TARGET_TIME, END_TARGET_DESCRIPTION, END_TARGET_FUNDS, END_TARGET_TYPE, 
     UPDATER, UPDATER_NAME, UPDATE_TIME, CREATER, CREATER_NAME, CREATE_TIME, IS_ENABLE
   </sql>
-  <select id="selectByPrimaryKey" resultMap="TargetInfoMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="TargetInfo" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from TARGET_INFO
@@ -249,17 +249,17 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="select" parameterType="java.util.HashMap" resultMap="TargetInfoMap">
+  <select id="select" parameterType="java.util.HashMap" resultMap="TargetInfo">
     SELECT Base_Column_List FROM TARGET_FORM t WHERE IS_ENABLE = '00'
   </select>
   <select id="count" parameterType="java.util.HashMap" resultType="int">
     SELECT COUNT(1) FROM TARGET_FORM t WHERE IS_ENABLE = '00'
   </select>
-  <select id="get" parameterType="java.util.HashMap" resultType="TargetInfoMap">
+  <select id="get" parameterType="java.util.HashMap" resultType="TargetInfo">
     SELECT Base_Column_List FROM TARGET_FORM t WHERE IS_ENABLE = '00' AND ID = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="getAll" parameterType="java.util.HashMap" resultType="TargetInfoMap">
+  <select id="getAll" parameterType="java.util.HashMap" resultType="TargetInfo">
     SELECT Base_Column_List FROM TARGET_FORM t
   </select>
 

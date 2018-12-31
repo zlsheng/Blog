@@ -107,5 +107,6 @@
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>/WEB-INF/pages/login/login.html</welcome-file>
+        <!--<welcome-file>/WEB-INF/pages/blog/home/index.html</welcome-file>-->
     </welcome-file-list>
 </web-app>

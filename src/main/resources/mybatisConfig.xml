@@ -2,14 +2,14 @@
         <!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.4//EN"
                 "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-<mappers>
+    <!--<mappers>
     <mapper resource="mapper/SysUserMapper.xml"/>
-    <mapper resource="mapper/SysResourcesMapper.xml"/>
-    <mapper resource="mapper/SysRoleMapper.xml"/>
-    <mapper resource="mapper/SysRoleUserMapper.xml"/>
-    <mapper resource="mapper/SysRoleResourcesMapper.xml"/>
-    <!--<mapper resource="mapper/TargetInfoMapper.xml"/>-->
+        <mapper resource="mapper/SysResourcesMapper.xml"/>
+        <mapper resource="mapper/SysRoleMapper.xml"/>
+        <mapper resource="mapper/SysRoleUserMapper.xml"/>
+        <mapper resource="mapper/SysRoleResourcesMapper.xml"/>
+        <mapper resource="mapper/TargetInfoMapper.xml"/>-
 
-</mappers>
+</mappers>-->
 
 </configuration>

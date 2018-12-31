@@ -100,6 +100,7 @@ public class TargetForm extends Entity<String> {
      * 目标记录表ID
      * @return ID 目标记录表ID
      */
+    @Override
     public String getId() {
         return id;
     }
@@ -108,6 +109,7 @@ public class TargetForm extends Entity<String> {
      * 目标记录表ID
      * @param id 目标记录表ID
      */
+    @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }

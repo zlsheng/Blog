@@ -31,40 +31,40 @@ tablespace BASIC_DATABASE
   );
 -- Add comments to the table 
 comment on table SYS_RESOURCES
-  is 'ÏµÍ³×ÊÔ´±í';
+  is 'ç³»ç»Ÿèµ„æºè¡¨';
 -- Add comments to the columns 
 comment on column SYS_RESOURCES.id
-  is 'Ö÷¼ü';
+  is 'ä¸»é”®';
 comment on column SYS_RESOURCES.code
-  is '×ÊÔ´±àÂë';
+  is 'èµ„æºç¼–ç ';
 comment on column SYS_RESOURCES.display
-  is '×ÊÔ´Ãû³Æ';
+  is 'èµ„æºåç§°';
 comment on column SYS_RESOURCES.description
-  is '×ÊÔ´ÃèÊö';
+  is 'èµ„æºæè¿°';
 comment on column SYS_RESOURCES.parent_code
-  is '¸¸×ÊÔ´id';
+  is 'çˆ¶èµ„æºid';
 comment on column SYS_RESOURCES.type
-  is '×ÊÔ´ÀàĞÍ 1-²Ëµ¥ 2-°´Å¥ 0-Url';
+  is 'èµ„æºç±»å‹ 1-èœå• 2-æŒ‰é’® 0-Url';
 comment on column SYS_RESOURCES.url
-  is '·ÃÎÊµØÖ·';
+  is 'è®¿é—®åœ°å€';
 comment on column SYS_RESOURCES.status
-  is 'ÊÇ·ñÆôÓÃ^0ÆôÓÃ1²»ÆôÓÃ';
+  is 'æ˜¯å¦å¯ç”¨^0å¯ç”¨1ä¸å¯ç”¨';
 comment on column SYS_RESOURCES.updator
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column SYS_RESOURCES.updator_name
-  is '¸üĞÂÈËname';
+  is 'æ›´æ–°äººname';
 comment on column SYS_RESOURCES.update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column SYS_RESOURCES.creator
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column SYS_RESOURCES.creator_name
-  is '´´½¨ÈËname';
+  is 'åˆ›å»ºäººname';
 comment on column SYS_RESOURCES.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column SYS_RESOURCES.sort
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column SYS_RESOURCES.icon
-  is 'Í¼±ê';
+  is 'å›¾æ ‡';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table SYS_RESOURCES
   add constraint PK_SYS_RESOURCES primary key (ID)
@@ -112,32 +112,32 @@ tablespace BASIC_DATABASE
   );
 -- Add comments to the table 
 comment on table SYS_ROLE
-  is 'ÏµÍ³½ÇÉ«±í';
+  is 'ç³»ç»Ÿè§’è‰²è¡¨';
 -- Add comments to the columns 
 comment on column SYS_ROLE.code
-  is '½ÇÉ«±àÂë';
+  is 'è§’è‰²ç¼–ç ';
 comment on column SYS_ROLE.name
-  is '½ÇÉ«Ãû³Æ';
+  is 'è§’è‰²åç§°';
 comment on column SYS_ROLE.remark
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column SYS_ROLE.description
-  is '½ÇÉ«ÃèÊö';
+  is 'è§’è‰²æè¿°';
 comment on column SYS_ROLE.updator
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column SYS_ROLE.updator_name
-  is '¸üĞÂÈËname';
+  is 'æ›´æ–°äººname';
 comment on column SYS_ROLE.update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column SYS_ROLE.creator
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column SYS_ROLE.creator_name
-  is '´´½¨ÈËname';
+  is 'åˆ›å»ºäººname';
 comment on column SYS_ROLE.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column SYS_ROLE.status
-  is '½ÇÉ«×´Ì¬ 11-Õı³£ 00-½ûÓÃ';
+  is 'è§’è‰²çŠ¶æ€ 11-æ­£å¸¸ 00-ç¦ç”¨';
 comment on column SYS_ROLE.is_del
-  is 'ÊÇ·ñÉ¾³ı 11-Õı³£ 00-É¾³ı';
+  is 'æ˜¯å¦åˆ é™¤ 11-æ­£å¸¸ 00-åˆ é™¤';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table SYS_ROLE
   add constraint PK_SYS_ROLE primary key (ID)
@@ -174,12 +174,12 @@ tablespace BASIC_DATABASE
   );
 -- Add comments to the table 
 comment on table SYS_ROLE_RESOURCES
-  is '½ÇÉ«×ÊÔ´¹ØÁª±í';
+  is 'è§’è‰²èµ„æºå…³è”è¡¨';
 -- Add comments to the columns 
 comment on column SYS_ROLE_RESOURCES.role_id
-  is '½ÇÉ«ID';
+  is 'è§’è‰²ID';
 comment on column SYS_ROLE_RESOURCES.resource_id
-  is '×ÊÔ´id';
+  is 'èµ„æºid';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table SYS_ROLE_RESOURCES
   add constraint PK_SYS_ROLE_RESOURCES primary key (ROLE_ID, RESOURCE_ID)
@@ -216,12 +216,12 @@ tablespace BASIC_DATABASE
   );
 -- Add comments to the table 
 comment on table SYS_ROLE_USER
-  is 'ÓÃ»§½ÇÉ«¹ØÁª±í';
+  is 'ç”¨æˆ·è§’è‰²å…³è”è¡¨';
 -- Add comments to the columns 
 comment on column SYS_ROLE_USER.user_id
-  is '²©Ö÷id';
+  is 'åšä¸»id';
 comment on column SYS_ROLE_USER.role_id
-  is '½ÇÉ«id';
+  is 'è§’è‰²id';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table SYS_ROLE_USER
   add constraint PK_SYS_ROLE_USER primary key (USER_ID, ROLE_ID)
@@ -284,62 +284,62 @@ tablespace BASIC_DATABASE
   );
 -- Add comments to the table 
 comment on table SYS_USER
-  is 'ÓÃ»§±í';
+  is 'ç”¨æˆ·è¡¨';
 -- Add comments to the columns 
 comment on column SYS_USER.user_name
-  is 'µÇÂ¼ÕÊºÅ(ºóÆÚÊµÏÖ ÓÊÏä/ÊÖ»úºÅµÇÂ½)';
+  is 'ç™»å½•å¸å·(åæœŸå®ç° é‚®ç®±/æ‰‹æœºå·ç™»é™†)';
 comment on column SYS_USER.u_nickname
-  is 'êÇ³Æ';
+  is 'æ˜µç§°';
 comment on column SYS_USER.u_password
-  is 'ÃÜÂë';
+  is 'å¯†ç ';
 comment on column SYS_USER.u_phone
-  is 'ÊÖ»úºÅÂë';
+  is 'æ‰‹æœºå·ç ';
 comment on column SYS_USER.u_sex
-  is '0 ÄĞ  1 Å®  2 ±£ÃÜ';
+  is '0 ç”·  1 å¥³  2 ä¿å¯†';
 comment on column SYS_USER.u_birthday
-  is 'ÉúÈÕ';
+  is 'ç”Ÿæ—¥';
 comment on column SYS_USER.u_name
-  is 'ÕæÊµĞÕÃû';
+  is 'çœŸå®å§“å';
 comment on column SYS_USER.u_email
-  is 'ÓÊÏä';
+  is 'é‚®ç®±';
 comment on column SYS_USER.u_intro
-  is '¼ò½é';
+  is 'ç®€ä»‹';
 comment on column SYS_USER.u_headportrait
-  is 'Í·Ïñ';
+  is 'å¤´åƒ';
 comment on column SYS_USER.u_age
-  is 'ÄêÁä';
+  is 'å¹´é¾„';
 comment on column SYS_USER.u_userstateid
-  is 'ÓÃ»§×´Ì¬      11-Õı³£ 22-±»Ëø¶¨  33-ÒÑ·Ï³ı';
+  is 'ç”¨æˆ·çŠ¶æ€      11-æ­£å¸¸ 22-è¢«é”å®š  33-å·²åºŸé™¤';
 comment on column SYS_USER.u_rank
-  is 'ÓÃ»§µÈ¼¶';
+  is 'ç”¨æˆ·ç­‰çº§';
 comment on column SYS_USER.u_score
-  is '»ı·Ö';
+  is 'ç§¯åˆ†';
 comment on column SYS_USER.u_registertime
-  is '×¢²áÊ±¼ä';
+  is 'æ³¨å†Œæ—¶é—´';
 comment on column SYS_USER.u_logintime
-  is '×îºóµÇÂ¼Ê±¼ä';
+  is 'æœ€åç™»å½•æ—¶é—´';
 comment on column SYS_USER.u_loginip
-  is '×îºóµÇÂ¼ip';
+  is 'æœ€åç™»å½•ip';
 comment on column SYS_USER.u_activatecode
-  is '¼¤»îÂë';
+  is 'æ¿€æ´»ç ';
 comment on column SYS_USER.u_salt
-  is '¼ÓÃÜÑÎ -×Ö¶Î·ÏÆú';
+  is 'åŠ å¯†ç› -å­—æ®µåºŸå¼ƒ';
 comment on column SYS_USER.u_rate
-  is 'ÆÀ·ÖµÈ¼¶';
+  is 'è¯„åˆ†ç­‰çº§';
 comment on column SYS_USER.updator
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column SYS_USER.updator_name
-  is '¸üĞÂÈËname';
+  is 'æ›´æ–°äººname';
 comment on column SYS_USER.update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column SYS_USER.creator
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column SYS_USER.creator_name
-  is '´´½¨ÈËname';
+  is 'åˆ›å»ºäººname';
 comment on column SYS_USER.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column SYS_USER.base64_password
-  is 'Base64¼ÓÃÜºóÃÜÂë';
+  is 'Base64åŠ å¯†åå¯†ç ';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table SYS_USER
   add constraint U_ID primary key (U_ID, USER_NAME)

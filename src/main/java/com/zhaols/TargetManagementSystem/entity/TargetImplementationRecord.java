@@ -86,6 +86,7 @@ public class TargetImplementationRecord extends Entity<String> {
      * id
      * @return ID id
      */
+    @Override
     public String getId() {
         return id;
     }
@@ -94,6 +95,7 @@ public class TargetImplementationRecord extends Entity<String> {
      * id
      * @param id id
      */
+    @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
