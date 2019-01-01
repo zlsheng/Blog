@@ -1,0 +1,189 @@
+<#include "../../common/_public.html"/>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客首页</title>
+    <link href="${base}/bootstrap/css/bootstrap.css" rel="stylesheet" charset="utf-8" type="text/css">
+    <script src="${base}/bootstrap/js/jquery.min.js"></script>
+    <script src="${base}/bootstrap/js/bootstrap.js"></script>
+
+</head>
+<body>
+<header style="background-color: white">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="row clearfix">
+                    <div class="col-md-4 column ">
+                        <img  src="${base}/bootstrap/images/t01.jpg" class="img-responsive" />
+                    </div>
+                    <div class="col-md-8 column">
+                        <h4 class="">zlsheng个人博客</h4>
+                        <a style="cursor:pointer;">【登录】</a>&nbsp;/&nbsp;<a style="cursor:pointer;">【注册】</a>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li ><a href="#">Java</a></li>
+                    <li><a href="#">Spring</a></li>
+                    <li><a href="#">Struts2</a></li>
+                    <li><a href="#">Java EE</a></li>
+                    <li><a href="#">Other</a></li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<article>
+    <div class="container">
+
+        <div class="row clearfix">
+            <div class="col-md-8 column">
+                <#list blogList as blog>
+                <div class="row clearfix">
+                    <div class="col-md-2 column">
+                        <img alt="140x140" src="${base}/bootstrap/images/${blog.headPortrait}" class="img-thumbnail" />
+                    </div>
+                    <div class="col-md-10 column">
+                        <dl>
+                            <dt>
+                                ${blog.title}
+                            </dt>
+                            <dd>
+                                ${blog.introduction}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-md-6 column">
+                       [<a>${blog.creatorName}</a>] 发布于 <span>${blog.createTime?string("yyyy-MM-dd HH:mm:ss")!}</span>
+                    </div>
+                    <div class="col-md-3 column">
+                        <span>浏览次数</span> ： <span>${blog.readTimes}</span>
+                    </div>
+                    <div class="col-md-3 column">
+                        <span>评价</span>
+                        &nbsp;
+                        <a href="#">
+                            <span class="	glyphicon glyphicon-thumbs-up"></span>
+                        </a>
+                        &ensp;
+                        <a href="#">
+                        <span class="	glyphicon glyphicon-thumbs-down"></span>
+                        </a>
+
+                    </div>
+                </div>
+                <hr/>
+            </#list>
+            <center>
+                <div>
+                    <ul class="pagination">
+                        <li>
+                            <a href="#">Prev</a>
+                        </li>
+                        <li>
+                            <a href="#">1</a>
+                        </li>
+                        <li>
+                            <a href="#">2</a>
+                        </li>
+                        <li>
+                            <a href="#">3</a>
+                        </li>
+                        <li>
+                            <a href="#">4</a>
+                        </li>
+                        <li>
+                            <a href="#">5</a>
+                        </li>
+                        <li>
+                            <a href="#">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </center>
+            </div>
+            <div class="col-md-4 column">
+                <div class="col-md-12 column">
+                    <h3>博客人气排行榜 (动态加载最多显示10条)</h3>
+                    <table class="table table-bordered table-hover table-condensed">
+                        <thead>
+                        <tr> <!--tr class属性值  success  error   warning   info-->
+                            <th>
+                                编号
+                            </th>
+                            <th>
+                                昵称
+                            </th>
+                            <th>
+                                热度
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                            <td>
+                                动态加载
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</article>
+
+<footer class="jumbotron text-center" style="margin-bottom:0">
+ <!--固定底-->
+    <p>Design by <a  target="_blank">zlsheng</a> <a href="/">皖ICP备11002373号-1</a></p>
+</footer>
+</body>
+</html>

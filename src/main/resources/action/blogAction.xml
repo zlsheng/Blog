@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="blog" extends="nec-default" namespace="/blog">
+        <action name="blog_*" class="com.zhaols.blog.Action.BlogAction" method="{1}">
+            <result name="success" type="freemarker">/WEB-INF/pages/blog/home/homeBlogs.html</result>
+        </action>
+    </package>
+</struts>

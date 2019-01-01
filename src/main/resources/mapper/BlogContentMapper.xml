@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaols.blog.mapper.BlogContentMapper">
+  <resultMap id="BaseResultMap" type="com.zhaols.blog.entity.BlogContent">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CONTENT_TEXT" jdbcType="VARCHAR" property="contentText" />
+    <result column="CONTENT_PHOTO" jdbcType="VARCHAR" property="contentPhoto" />
+    <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
+    <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CONTENT_TEXT, CONTENT_PHOTO, UPDATOR, UPDATOR_NAME, UPDATE_TIME, CREATOR, CREATOR_NAME, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BLOG_CONTENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BLOG_CONTENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zhaols.blog.entity.BlogContent">
+    insert into BLOG_CONTENT (ID, CONTENT_TEXT, CONTENT_PHOTO, 
+      UPDATOR, UPDATOR_NAME, UPDATE_TIME, 
+      CREATOR, CREATOR_NAME, CREATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{contentText,jdbcType=VARCHAR}, #{contentPhoto,jdbcType=VARCHAR}, 
+      #{updator,jdbcType=VARCHAR}, #{updatorName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{creatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaols.blog.entity.BlogContent">
+    insert into BLOG_CONTENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="contentText != null">
+        CONTENT_TEXT,
+      </if>
+      <if test="contentPhoto != null">
+        CONTENT_PHOTO,
+      </if>
+      <if test="updator != null">
+        UPDATOR,
+      </if>
+      <if test="updatorName != null">
+        UPDATOR_NAME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+      <if test="creatorName != null">
+        CREATOR_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="contentText != null">
+        #{contentText,jdbcType=VARCHAR},
+      </if>
+      <if test="contentPhoto != null">
+        #{contentPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null">
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null">
+        #{updatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null">
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaols.blog.entity.BlogContent">
+    update BLOG_CONTENT
+    <set>
+      <if test="contentText != null">
+        CONTENT_TEXT = #{contentText,jdbcType=VARCHAR},
+      </if>
+      <if test="contentPhoto != null">
+        CONTENT_PHOTO = #{contentPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null">
+        UPDATOR = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null">
+        UPDATOR_NAME = #{updatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null">
+        CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaols.blog.entity.BlogContent">
+    update BLOG_CONTENT
+    set CONTENT_TEXT = #{contentText,jdbcType=VARCHAR},
+      CONTENT_PHOTO = #{contentPhoto,jdbcType=VARCHAR},
+      UPDATOR = #{updator,jdbcType=VARCHAR},
+      UPDATOR_NAME = #{updatorName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

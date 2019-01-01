@@ -18,6 +18,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                 <!-- 引入属性文件,jdbc.properties,mail.properties位于src/main/resources目录下 -->
                 <value>classpath:properties/jdbc.properties</value>
                 <value>classpath:properties/mail.properties</value>
+                <value>classpath:properties/values.properties</value>
             </list>
         </property>
     </bean>
@@ -48,7 +49,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatisConfig.xml"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml" />
-        <property name="typeAliasesPackage" value="com.zhaols.SSMdome.entity,com.zhaols.TargetManagementSystem.entity"/>
+        <property name="typeAliasesPackage" value="${AliasesPackage.type}"/>
     </bean>
 
 
