@@ -250,17 +250,17 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <select id="select" parameterType="java.util.HashMap" resultMap="TargetInfo">
-    SELECT Base_Column_List FROM TARGET_FORM t WHERE IS_ENABLE = '00'
+    SELECT *  FROM TARGET_FORM t WHERE IS_ENABLE = '00'
   </select>
   <select id="count" parameterType="java.util.HashMap" resultType="int">
     SELECT COUNT(1) FROM TARGET_FORM t WHERE IS_ENABLE = '00'
   </select>
   <select id="get" parameterType="java.util.HashMap" resultType="TargetInfo">
-    SELECT Base_Column_List FROM TARGET_FORM t WHERE IS_ENABLE = '00' AND ID = #{id,jdbcType=VARCHAR}
+    SELECT * FROM TARGET_FORM t WHERE IS_ENABLE = '00' AND ID = #{id,jdbcType=VARCHAR}
   </select>
 
   <select id="getAll" parameterType="java.util.HashMap" resultType="TargetInfo">
-    SELECT Base_Column_List FROM TARGET_FORM t
+    SELECT * FROM TARGET_FORM t
   </select>
 
 
