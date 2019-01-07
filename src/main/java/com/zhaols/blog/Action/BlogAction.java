@@ -20,4 +20,10 @@ public class BlogAction extends BasicAction<Blog, IBlogService> {
     protected IBlogService getEntityManager() {
         return blogService;
     }
+
+    @Override
+    public String list(){
+        System.out.println("haha");
+        return SUCCESS;
+    }
 }
